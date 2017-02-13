@@ -103,7 +103,7 @@ class StudentController extends Controller {
         $scoresCheck = $this->validateScores($request);
 
         if ($validator->fails()) {
-            return redirect('/student/' . $id . '/edit')->withErrors($validator)->withInput();
+            return Redirect::back()->withErrors($validator)->withInput();
         } elseif (!$scoresCheck) {
             Session::flash('error', "Please ensure the scores are in correct format.");
             return Redirect::back()->withInput();
