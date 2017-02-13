@@ -287,11 +287,43 @@ class StudentController extends Controller {
         $student = Student::findOrFail($id);
         $student->delete();
 
+        Session::flash('alert-success', $student->name . "'s record deleted!");
         return Redirect::to('/');
     }
 
-    /*public function fillscores() {
-        foreach (Student::all() as $student) {
+    /*
+    public function fillscores() {
+        $studentDB = unserialize(file_get_contents('../students.txt'));
+
+        foreach ($studentDB as $entry) {
+            $student = Student::create([
+                'name' => $entry["name"],
+                'nick' => $entry["nick"],
+                'image' => $entry["image"],
+                'kattis' => $entry["kattis"],
+                'country_iso2' => $entry["country_iso2"],
+                'country_iso3' => $entry["country_iso3"],
+            ]);
+
+            $mc = $this->implodeToString($entry["scores"]["mc"], "x.y", 9);
+            $tc = $this->implodeToString($entry["scores"]["tc"], "xy.z", 2);
+            $hw = $this->implodeToString($entry["scores"]["hw"], "x.y", 10);
+            $pb = $this->implodeToString($entry["scores"]["pb"], "x", 9);
+            $ks = $this->implodeToString($entry["scores"]["ks"], "x", 12);
+            $ac = $this->implodeToString($entry["scores"]["ac"], "x", 8);
+
+            Score::create([
+                'student_id' => $student->id,
+                'mc' => $mc,
+                'tc' => $tc,
+                'hw' => $hw,
+                'pb' => $pb,
+                'ks' => $ks,
+                'ac' => $ac
+            ]);
+        }
+
+        /*foreach (Student::all() as $student) {
             $id = $student->id;
 
             $mcs = (array_slice((array) DB::table('mcs')->where('student_id', $id)->first(), 2, 9));
@@ -318,6 +350,19 @@ class StudentController extends Controller {
                 'ac' => $acs,
             ]);
         }
+    }
+
+    private function implodeToString($arr, $placeHolder, $len) {
+        $str = "";
+        for ($i = 0; $i < $len; $i++) {
+            if ($i < count($arr)) {
+                $str .= $arr[$i] . ",";
+            } else {
+                $str .= $placeHolder . ",";
+            }
+        }
+
+        return rtrim($str, ",");
     }
 
     /*public function implodeToString($arr, $def) {

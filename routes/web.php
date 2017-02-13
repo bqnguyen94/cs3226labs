@@ -26,7 +26,7 @@ Route::post('create', 'StudentController@check');
 
 Route::get('student/{id}/edit', 'StudentController@edit');
 
-Route::post('student/{id}/edit', 'StudentController@checkEdit')
+Route::post('student/{id}/edit', 'StudentController@checkEdit');
 
 //Route::get('fillscores', 'StudentController@fillscores');
 
