@@ -10,6 +10,7 @@ use App\Student;
 use App\Score;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 
 class StudentController extends Controller {
@@ -96,6 +97,10 @@ class StudentController extends Controller {
     }
 
     public function edit($id) {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
         $student = Student::where('id', $id)->first();
         if (!$student) {
             Session::flash('error', "Student record does not exists!");
@@ -106,10 +111,18 @@ class StudentController extends Controller {
     }
 
     public function create() {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
         return view('create');
     }
 
     public function check(Request $request) {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
         $validator = $this->makeNameValidator($request);
 
         if ($validator->fails()) {
@@ -133,6 +146,11 @@ class StudentController extends Controller {
     }
 
     public function checkEdit(Request $request, $id) {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
+
         $validator = $this->makeNameValidator($request);
         $scoresCheck = $this->validateScores($request);
 
@@ -318,6 +336,11 @@ class StudentController extends Controller {
     }
 
     public function destroy($id) {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
+        
         $student = Student::findOrFail($id);
         if ($student) {
             Session::flash('alert-success', $student->name . "'s record deleted!");
