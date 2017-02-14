@@ -15,9 +15,15 @@
     <body>
         @include('header')
         @if (Session::has('error'))
-            <div class="alert alert-danger" align="center">{{ Session::get('error') }}</div>
+            <div class="alert alert-danger alert-dismissable fade in" role="alert" align="center">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>{{ Session::get('error') }}</strong>
+            </div>
         @elseif (Session::has('alert-success'))
-            <div class="alert alert-success" align="center">{{ Session::get('alert-success') }}</div>
+            <div class="alert alert-success alert-dismissable fade in" role="alert" align="center">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>{{ Session::get('alert-success') }}</strong>
+            </div>
         @endif
         @yield('main') <!-- Blade command: include section from child file -->
         @include('footer') <!-- Blade command: include other blade file -->
@@ -25,6 +31,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     @yield('script')
 </html>
