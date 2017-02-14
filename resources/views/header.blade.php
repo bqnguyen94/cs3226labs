@@ -4,9 +4,15 @@
             <a class="navbar-brand" href="/">
                 <img alt="Brand" src="/img/brand.png" width="21" height="28">
             </a>
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-        <!-- /.navbar--->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <!-- /.navbar--->    
+        <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Rank List</a></li>
                 @if (Auth::check())
