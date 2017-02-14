@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 
 class AuthController extends Controller {
@@ -21,13 +22,13 @@ class AuthController extends Controller {
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            Session::flash('error', "Oi wrong email or password lah. Or both.");
-            return Redirect::back()->withInput(['email']);
+            return back();
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return back();
         } else {
+            Session::flash('error', "Oi wrong email or password lah! Or both.");
             return back();
         }
     }
