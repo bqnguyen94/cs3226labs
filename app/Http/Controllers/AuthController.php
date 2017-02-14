@@ -22,6 +22,7 @@ class AuthController extends Controller {
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
+            Session::flash('error', "Oi wrong email or password lah! Or both.");
             return back();
         }
 
@@ -36,6 +37,7 @@ class AuthController extends Controller {
     public function logout() {
         if (Auth::check()) {
             Auth::logout();
+            Session::flash('alert-success', "Meow~~~~");
             return back();
         }
     }
