@@ -285,9 +285,13 @@ class StudentController extends Controller {
 
     public function destroy($id) {
         $student = Student::findOrFail($id);
-        $student->delete();
+        if ($student) {
+            Session::flash('alert-success', $student->name . "'s record deleted!");
+            $student->delete();    
+        } else {
+            Session::flash('error', "Student record does not exists!");
+        }
 
-        Session::flash('alert-success', $student->name . "'s record deleted!");
         return Redirect::to('/');
     }
 
