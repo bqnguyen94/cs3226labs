@@ -37,6 +37,37 @@ class StudentController extends Controller {
         return view('index')->with('students', $students)->with('scoresDB', $scoresDB);
     }
 
+    private function findTopStudent() {
+
+        $curTopScore = 0;
+        $topStudent = array();
+        foreach(Score::all() as $score) {
+            $mcs = array_map("floatval", array_filter(explode(",", $score->mc), "is_numeric"));
+            $tcs = array_map("floatval", array_filter(explode(",", $score->tc), "is_numeric"));
+            $hws = array_map("floatval", array_filter(explode(",", $score->hw), "is_numeric"));
+            $pbs = array_map("floatval", array_filter(explode(",", $score->pb), "is_numeric"));
+            $kss = array_map("floatval", array_filter(explode(",", $score->ks), "is_numeric"));
+            $acs = array_map("floatval", array_filter(explode(",", $score->ac), "is_numeric"));
+            $thisTopScore = array_sum($mcs) + array_sum($tcs) + array_sum($hws) + array_sum($pbs) + array_sum($kss) + array_sum($acs);
+            if ($curTopScore < $thisTopScore) {
+                $topStudent = [
+                    'name' => Student::where('id', $score->student_id)
+                                                ->first()
+                                                ->name,
+                    'mc' => array_sum($mcs),
+                    'tc' => array_sum($tcs),
+                    'hw' => array_sum($hws),
+                    'pb' => array_sum($pbs),
+                    'ks' => array_sum($kss),
+                    'ac' => array_sum($acs),
+                ];
+                $curTopScore = $thisTopScore;
+            }
+        }
+
+        return $topStudent;
+    }
+
     public function detail($id) {
         $student = Student::where('id', $id)->first();
         if (!$student) {
@@ -58,7 +89,10 @@ class StudentController extends Controller {
             'ks' => $kss,
             'ac' => $acs,
         ];
-        return view('detail')->with('student', $student)->with('scores', $scores);
+        return view('detail')
+                    ->with('student', $student)
+                    ->with('scores', $scores)
+                    ->with('topStudent', $this->findTopStudent());
     }
 
     public function edit($id) {
@@ -287,7 +321,7 @@ class StudentController extends Controller {
         $student = Student::findOrFail($id);
         if ($student) {
             Session::flash('alert-success', $student->name . "'s record deleted!");
-            $student->delete();    
+            $student->delete();
         } else {
             Session::flash('error', "Student record does not exists!");
         }
