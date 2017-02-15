@@ -32,6 +32,29 @@ $(document).ready(function() {
         }
     });
 
+    table.on('click', 'thead th', function() {
+        var colIndex = table.column(this).index() + 1;
+        if (colIndex >= 4 && colIndex <= 13) {
+            $('tbody tr').each(function() {
+                //console.log(true);
+                $(this).height(37);
+            });
+            console.log(colIndex);
+            $('tbody tr').each(function() {
+                cur = $(this).find('td:nth-child(' + colIndex + ')').text();
+                next = $(this).next('tr').find('td:nth-child(' + colIndex + ')').text();
+                if (next.length > 0) { // if next row exists, change next row's height depending on sum difference
+                    $(this).next().height($(this).next().height() + Math.abs(cur - next) * 30);
+                }
+            });
+        } else {
+            $('tbody tr').each(function() {
+                //console.log(true);
+                $(this).height(37);
+            });
+        }
+    })
+
     $('#ranktable tbody').on('mouseleave', 'td', function() {
         $(table.cells().nodes()).removeClass('highlight');
     });
