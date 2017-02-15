@@ -125,13 +125,15 @@
         <div class="col-xs-12 col-md-4 col-md-offset-4">
             <canvas id="myChart" style="background-color: white" width="200" height="200"></canvas>
         </div>
-        <div class="col-xs-12" style="height:50px;"></div>
-        {!! Form::open(['method' => 'DELETE', 'onsubmit' => 'return ConfirmDelete()']) !!}
-        <div class="form-group col-md-6 col-lg-4 col-lg-offset-2">
-            {!! Form::hidden('id', $student->id) !!}
-            {!! Form::submit('Delete', ['class' => 'form-control btn-danger']) !!}
-        </div>
-        <a class="col-md-6 col-lg-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
+        @if (Auth::check())
+            <div class="col-xs-12" style="height:50px;"></div>
+            {!! Form::open(['method' => 'DELETE', 'onsubmit' => 'return ConfirmDelete()']) !!}
+            <div class="form-group col-md-6 col-lg-4 col-lg-offset-2">
+                {!! Form::hidden('id', $student->id) !!}
+                {!! Form::submit('Delete', ['class' => 'form-control btn-danger']) !!}
+            </div>
+            <a class="col-md-6 col-lg-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
+        @endif
     </div>
 
     </div>

@@ -28,6 +28,10 @@ Route::get('student/{id}/edit', 'StudentController@edit');
 
 Route::post('student/{id}/edit', 'StudentController@checkEdit');
 
+Route::post('login', 'AuthController@authenticate');
+
+Route::get('logout', 'AuthController@logout');
+
 //Route::get('fillscores', 'StudentController@fillscores');
 
 //Route::get('filltable', 'StudentController@filltable');
