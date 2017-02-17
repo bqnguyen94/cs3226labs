@@ -15,7 +15,9 @@ function drawChart() {
         var temp = [];
         temp.push(i.toString());
         //console.log(json.rank.length);
-        data.addRow(temp.concat(json.rank[i]));
+        if (json.rank[i].length == data.getNumberOfColumns()) {
+            data.addRow(temp.concat(json.rank[i]));
+        }
     }
 
     var columnsTable = new google.visualization.DataTable();
