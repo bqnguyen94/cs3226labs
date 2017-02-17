@@ -35,7 +35,12 @@ class StudentController extends Controller {
                 'ac' => $acs,
             ];
         }
-        return view('index')->with('students', $students)->with('scoresDB', $scoresDB);
+
+        $updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
+        return view('index')
+                ->with('students', $students)
+                ->with('scoresDB', $scoresDB)
+                ->with('updated_at', $updated_at);
     }
 
     private function findTopStudent() {
@@ -340,7 +345,7 @@ class StudentController extends Controller {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
-        
+
         $student = Student::findOrFail($id);
         if ($student) {
             Session::flash('alert-success', $student->name . "'s record deleted!");

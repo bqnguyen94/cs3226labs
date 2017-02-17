@@ -1,8 +1,18 @@
 @extends('template') <!-- use template from previous slide -->
 @section('main') <!-- define a section called main -->
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
+    <center>
+        <h5>
+            Last updated: {{ date('l F jS, Y H:i', strtotime($updated_at)) }}
+        </h5>
+        <br />
+    </center>
+    <ul  class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#table" data-toggle="tab">Rank List</a></li>
+        <li><a href="#multiseries-graph" data-toggle="tab">Week chart</a></li>
+    </ul>
+    <div class="row tab-content">
+        <div class="tab-pane active col-xs-12" id="table">
             <table id="ranktable" class="table table-condensed hover">
                 <thead>
                     <tr>
