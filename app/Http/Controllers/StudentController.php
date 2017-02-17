@@ -35,12 +35,16 @@ class StudentController extends Controller {
                 'ac' => $acs,
             ];
         }
-
         $updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
+        $scores_updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
+        if (strtotime($updated_at) < strtotime($scores_updated_at)) {
+            $updated_at = $scores_updated_at;
+        }
         return view('index')
                 ->with('students', $students)
                 ->with('scoresDB', $scoresDB)
-                ->with('updated_at', $updated_at);
+                ->with('updated_at', $updated_at)
+                ->with('data', Score::getWeeklyRanks());
     }
 
     private function findTopStudent() {
@@ -189,6 +193,7 @@ class StudentController extends Controller {
 
             $student->save();
             $score->save();
+
 
             Session::flash('alert-success', $student->name . "'s profile updated!");
             return Redirect::to('student/' . $id);
@@ -350,6 +355,7 @@ class StudentController extends Controller {
         if ($student) {
             Session::flash('alert-success', $student->name . "'s record deleted!");
             $student->delete();
+
         } else {
             Session::flash('error', "Student record does not exists!");
         }
