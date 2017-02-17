@@ -15,7 +15,7 @@ function drawChart() {
         var temp = [];
         temp.push(i.toString());
         //console.log(json.rank.length);
-        if (json.rank[i].length == data.getNumberOfColumns()) {
+        if (json.rank[i].length == data.getNumberOfColumns() - 1) {
             data.addRow(temp.concat(json.rank[i]));
         }
     }
