@@ -7,11 +7,6 @@
         </h5>
         <br />
     </center>
-    <ul  class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#table" data-toggle="tab">Rank List</a></li>
-        <li><a id="chart-tab" href="#chart" data-toggle="tab">Week chart</a></li>
-    </ul>
-    <br />
     <div class="row">
         <div class="col-xs-12" id="table">
             <table id="ranktable" class="table table-condensed hover">

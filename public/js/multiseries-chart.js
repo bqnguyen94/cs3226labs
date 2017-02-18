@@ -13,7 +13,7 @@ function drawChart() {
 
     for (var i = 0; i < json.rank.length; i++) {
         var temp = [];
-        temp.push(i.toString());
+        temp.push((i + 1).toString());
         //console.log(json.rank.length);
         if (json.rank[i].length == data.getNumberOfColumns() - 1) {
             data.addRow(temp.concat(json.rank[i]));
@@ -40,7 +40,7 @@ function drawChart() {
         containerId: 'chart',
         dataTable: data,
         options: {
-            title: 'CS3233 Ranking',
+            title: 'CS3233 Ranking - Higher is better',
             backgroundColor: 'none',
             legend: {
                 position: 'top',

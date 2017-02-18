@@ -63,11 +63,11 @@ class Score extends Model
         for ($i = 0; $i < count($data["scores"]); $i++) {
             $data["rank"][] = array();
             $temp = $data["scores"][$i];
-            rsort($temp);
+            sort($temp);
             foreach($data["scores"][$i] as $score) {
                 foreach($temp as $key => $value) {
                     if ($value === $score) {
-                        $data["rank"][$i][] = $key;
+                        $data["rank"][$i][] = $key + 1;
                         break;
                     }
                 }
