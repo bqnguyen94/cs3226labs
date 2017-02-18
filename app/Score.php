@@ -20,6 +20,7 @@ class Score extends Model
         $data = array();
         $data["student_name"] = array();
         $data["rank"] = array();
+        $data["scores"] = array();
         $k = 0;
         $data[] = array();
         $data[] = array();
@@ -46,18 +47,31 @@ class Score extends Model
                     }
                 }
                 if ($k == 0) {
-                    $data["rank"][] = array();
+                    $data["scores"][] = array();
                 }
                 if ($i > 0) {
-                    $data["rank"][$i][$k] = $sum + $data["rank"][$i - 1][$k];
+                    $data["scores"][$i][$k] = $sum + $data["scores"][$i - 1][$k];
                 } else {
-                    $data["rank"][$i][$k] = $sum;
+                    $data["scores"][$i][$k] = $sum;
                 }
                 //$weekSums[] = $sum;
             }
             $data["student_name"][] = Student::where('id', $score->student_id)->first()->name;
             $k++;
             //$scores[] = $weekSums;
+        }
+        for ($i = 0; $i < count($data["scores"]); $i++) {
+            $data["rank"][] = array();
+            $temp = $data["scores"][$i];
+            rsort($temp);
+            foreach($data["scores"][$i] as $score) {
+                foreach($temp as $key => $value) {
+                    if ($value === $score) {
+                        $data["rank"][$i][] = $key;
+                        break;
+                    }
+                }
+            }
         }
         return $data;
         /*for ($j = 0; $j < 4; $j++) {

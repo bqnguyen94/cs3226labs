@@ -11,10 +11,11 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <!-- /.navbar--->    
+        <!-- /.navbar--->
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Rank List</a></li>
+                <li><a href="/chart">Chart</a></li>
                 @if (Auth::check())
                 <li><a href="/create">Create</a></li>
                 @endif

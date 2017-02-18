@@ -1,5 +1,5 @@
 google.load('visualization', '1.0', {'packages':['corechart']});
-//google.setOnLoadCallback(drawChart);
+google.setOnLoadCallback(drawChart);
 
 function drawChart() {
     var data = new google.visualization.DataTable();
@@ -110,11 +110,8 @@ function drawChart() {
     setChartView();
     columnFilter.draw();
 }
-
+/*
 $("a[href='#chart']").on('shown.bs.tab', function (e) {
     drawChart();
 });
-
-$("a[href='#chart']").on('shown.bs.tab', function (e) {
-    chart.clearchart();
-});
+*/

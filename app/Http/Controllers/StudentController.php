@@ -43,8 +43,11 @@ class StudentController extends Controller {
         return view('index')
                 ->with('students', $students)
                 ->with('scoresDB', $scoresDB)
-                ->with('updated_at', $updated_at)
-                ->with('data', Score::getWeeklyRanks());
+                ->with('updated_at', $updated_at);
+    }
+
+    public function chart() {
+        return view('chart')->with('data', Score::getWeeklyRanks());
     }
 
     private function findTopStudent() {

@@ -12,8 +12,8 @@
         <li><a id="chart-tab" href="#chart" data-toggle="tab">Week chart</a></li>
     </ul>
     <br />
-    <div class="row tab-content">
-        <div class="tab-pane active col-xs-12" id="table">
+    <div class="row">
+        <div class="col-xs-12" id="table">
             <table id="ranktable" class="table table-condensed hover">
                 <thead>
                     <tr>
@@ -224,19 +224,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane" id="chart" style='width: 100%; height: 700px'></div>
-        <div id="chartfilter"></div>
     </div>
 </div>
 @stop
 
 @section('script')
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
 <script type="text/javascript" src="/js/index.js"></script>
-<script type="text/javascript">
-    var json = <?php echo json_encode($data); ?>;
-</script>
-<script type="text/javascript" src="/js/multiseries-chart.js"></script>
 @stop
