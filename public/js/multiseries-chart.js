@@ -40,7 +40,7 @@ function drawChart() {
         containerId: 'chart',
         dataTable: data,
         options: {
-            title: 'CS3233 Ranking - Higher is better',
+            title: 'CS3233 Ranking',
             backgroundColor: 'none',
             legend: {
                 position: 'top',

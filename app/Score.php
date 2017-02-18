@@ -68,6 +68,7 @@ class Score extends Model
                 foreach($temp as $key => $value) {
                     if ($value === $score) {
                         $data["rank"][$i][] = $key + 1;
+                        unset($temp[$key]);
                         break;
                     }
                 }
