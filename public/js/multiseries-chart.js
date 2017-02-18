@@ -47,10 +47,12 @@ function drawChart() {
                 maxLines: 5
             },
             fontName: 'Tahoma',
-
-
             chartArea: {
                 width: '85%'
+            },
+            vAxis: {
+                direction: -1,
+                ticks: [0, 10, 20, 30, 40, 50]
             }
         }
     });
