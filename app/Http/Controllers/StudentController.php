@@ -354,6 +354,7 @@ class StudentController extends Controller {
             return Redirect::to('/');
         }
 
+
         $student = Student::findOrFail($id);
         if ($student) {
             Session::flash('alert-success', $student->name . "'s record deleted!");
