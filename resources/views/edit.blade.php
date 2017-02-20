@@ -5,47 +5,52 @@
         <b>Update profile of <?php echo $student->name ?></b>
     </p>
     {!! Form::open(['files' => true]) !!}
-    <div class="form-group">
-        {!! Form::label('nick', 'Nick name:', ['class' => 'control-label']) !!}
-        @if ($errors->first('nick'))
-            {!! $errors->first('nick', '<br /><small class="error">:message</small>') !!}
-        @endif
-        {!! Form::text('nick', $student->nick, ['class' => 'form-control']) !!}
-
-    </div>
-    <div class="form-group">
-        {!! Form::label('name', 'Full name:', ['class' => 'control-label']) !!}
-        @if ($errors->first('name'))
-            {!! $errors->first('name', '<br /><small class="error">:message</small>') !!}
-        @endif
-        {!! Form::text('name', $student->name, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('kattis', 'Kattis account:', ['class' => 'control-label']) !!}
-        @if ($errors->first('kattis'))
-            {!! $errors->first('kattis', '<br /><small class="error">:message</small>') !!}
-        @endif
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
-            {!! Form::text('kattis', $student->kattis, ['class' => 'form-control']) !!}
+    <div class="row">
+        <div class="form-group col-md-6 col-xs-6">
+            {!! Form::label('nick', 'Nick name:', ['class' => 'control-label']) !!}
+            @if ($errors->first('nick'))
+                {!! $errors->first('nick', '<br /><small class="error">:message</small>') !!}
+            @endif
+            {!! Form::text('nick', $student->nick, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group col-md-6 col-xs-6">
+            {!! Form::label('name', 'Full name:', ['class' => 'control-label']) !!}
+            @if ($errors->first('name'))
+                {!! $errors->first('name', '<br /><small class="error">:message</small>') !!}
+            @endif
+            {!! Form::text('name', $student->name, ['class' => 'form-control']) !!}
         </div>
     </div>
-    <div class="form-group">
-        {!! Form::label('country', 'Nationality:', ['class' => 'control-label']) !!}
-        @if ($errors->first('country'))
-            {!! $errors->first('country', '<br /><small class="error">:message</small>') !!}
-        @endif
-        <br />
-        {!! Form::select('country', [
-            'SG' => 'SGP - Singaporean',
-            'CN' => 'CHN - Chinese',
-            'VN' => 'VNM - Vietnamese',
-            'ID' => 'IDN - Indonesia',
-            'OT' => 'Other Nationality'
-            ],
-            $student->country_iso2,
-            ['class' => 'form-control dropdown']) !!}
+
+    <div class="row">
+        <div class="form-group col-md-6 col-xs-6">
+            {!! Form::label('kattis', 'Kattis account:', ['class' => 'control-label']) !!}
+            @if ($errors->first('kattis'))
+                {!! $errors->first('kattis', '<br /><small class="error">:message</small>') !!}
+            @endif
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
+                {!! Form::text('kattis', $student->kattis, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+        <div class="form-group col-md-6 col-xs-6">
+            {!! Form::label('country', 'Nationality:', ['class' => 'control-label']) !!}
+            @if ($errors->first('country'))
+                {!! $errors->first('country', '<br /><small class="error">:message</small>') !!}
+            @endif
+            <br />
+            {!! Form::select('country', [
+                'SG' => 'SGP - Singaporean',
+                'CN' => 'CHN - Chinese',
+                'VN' => 'VNM - Vietnamese',
+                'ID' => 'IDN - Indonesia',
+                'OT' => 'Other Nationality'
+                ],
+                $student->country_iso2,
+                ['class' => 'form-control dropdown']) !!}
+        </div>
     </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -75,7 +80,7 @@
                     for ($i = 0; $i < count($mcs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('mc[]', $mcs[$i], ['class' => 'score-input form-control']) !!}
+                        {!! Form::text('mc[]', $mcs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
                     </td>
                     <?php
                     }
@@ -91,7 +96,7 @@
                     for ($i = 0; $i < count($tcs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('tc[]', $tcs[$i], ['class' => 'score-input form-control']) !!}
+                        {!! Form::text('tc[]', $tcs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
                     </td>
                     <?php
                     }
@@ -107,7 +112,7 @@
                     for ($i = 0; $i < count($hws); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('hw[]', $hws[$i], ['class' => 'score-input form-control']) !!}
+                        {!! Form::text('hw[]', $hws[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
                     </td>
                     <?php
                     }
@@ -123,7 +128,7 @@
                     for ($i = 0; $i < count($pbs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('pb[]', $pbs[$i], ['class' => 'score-input form-control']) !!}
+                        {!! Form::text('pb[]', $pbs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
                     </td>
                     <?php
                     }
@@ -139,7 +144,7 @@
                     for ($i = 0; $i < count($kss); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('ks[]', $kss[$i], ['class' => 'score-input form-control']) !!}
+                        {!! Form::text('ks[]', $kss[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
                     </td>
                     <?php
                     }
@@ -155,7 +160,7 @@
                     for ($i = 0; $i < count($acs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('ac[]', $acs[$i], ['class' => 'score-input form-control']) !!}
+                        {!! Form::text('ac[]', $acs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
                     </td>
                     <?php
                     }
@@ -170,5 +175,4 @@
     </div>
     {!! Form::close() !!}
 </div>
-
 @stop
