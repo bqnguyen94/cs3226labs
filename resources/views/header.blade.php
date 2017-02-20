@@ -18,6 +18,7 @@
                 <li><a href="/chart">Chart</a></li>
                 @if (Auth::check())
                 <li><a href="/create">Create</a></li>
+                <li><a href="/batch">Batch Mode</a></li>
                 @endif
                 <li><a href="/help">Help</a></li>
             </ul>

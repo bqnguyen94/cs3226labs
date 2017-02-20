@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller {
 
+    public function batch() {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
+
+        $students = Student::orderBy('name')->get();
+        return view('batch')->with('students', $students);
+    }
+
     public function index() {
         $students = Student::all();
         $scoresDB = array();
@@ -155,6 +165,63 @@ class StudentController extends Controller {
             }
             return $this->store($nick, $name, $kattis, $country, $image);
         }
+    }
+
+    public function checkBatch(Request $request) {
+        if (!Auth::check()) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
+
+        $scores = $request->get('scores');
+        $category = $request->get('category');
+        $week = $request->get('week');
+
+        if (!$this->validateScoresBatch($request)) {
+            Session::flash('error', "There seems to be one or many invalid scores entered!");
+            return Redirect::back()->withInput();
+        }
+
+        $i = 0;
+        foreach (Student::orderBy('name')->get() as $student) {
+            $score = Score::where('student_id', $student->id)->first();
+            $temp = explode(",", $score->$category);
+            $temp[$week - 1] = $scores[$i];
+            $score->$category = implode(",", $temp);
+            $score->save();
+            $i++;
+        }
+
+        return Redirect::to('/');
+    }
+
+    private function validateScoresBatch(Request $request) {
+        $scores = $request->get('scores');
+        $category = $request->category;
+        $week = $request->week;
+
+        if ($category === "mc" || $category === "tc" || $category === "hw") {
+            foreach ($scores as $score) {
+                if (is_numeric($score)) {
+                    if (fmod($score, 0.5) !== 0.0 || $score > 4.0) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            foreach ($scores as $score) {
+                if (is_numeric($score)) {
+                    if (!ctype_digit($score) || $score > 4) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public function checkEdit(Request $request, $id) {
