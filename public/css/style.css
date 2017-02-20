@@ -138,3 +138,7 @@ table.dataTable tbody td {
     overflow-y: hidden;
 }
 */
+
+.score-input {
+    text-align: center;
+}

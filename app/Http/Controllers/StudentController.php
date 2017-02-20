@@ -187,12 +187,12 @@ class StudentController extends Controller {
             $student->country_iso2 = $request->country;
             $student->country_iso3 = $iso3;
 
-            $score->mc = $request->mc;
-            $score->tc = $request->tc;
-            $score->hw = $request->hw;
-            $score->pb = $request->pb;
-            $score->ks = $request->ks;
-            $score->ac = $request->ac;
+            $score->mc = implode(",", $request->get('mc'));
+            $score->tc = implode(",", $request->get('tc'));
+            $score->hw = implode(",", $request->get('hw'));
+            $score->pb = implode(",", $request->get('pb'));
+            $score->ks = implode(",", $request->get('ks'));
+            $score->ac = implode(",", $request->get('ac'));
 
             $student->save();
             $score->save();
@@ -204,12 +204,13 @@ class StudentController extends Controller {
     }
 
     public function validateScores(Request $request) {
-        $mc = explode(",", $request->mc);
-        $tc = explode(",", $request->tc);
-        $hw = explode(",", $request->hw);
-        $pb = explode(",", $request->pb);
-        $ks = explode(",", $request->ks);
-        $ac = explode(",", $request->ac);
+
+        $mc = $request->get('mc');
+        $tc = $request->get('tc');
+        $hw = $request->get('hw');
+        $pb = $request->get('pb');
+        $ks = $request->get('ks');
+        $ac = $request->get('ac');
 
         if (count($mc) === 9) {
             foreach ($mc as $var) {
@@ -300,9 +301,9 @@ class StudentController extends Controller {
 
     private function makeNameValidator(Request $request) {
         $rules = [
-            'nick' => 'required|min:5|max:30',
-            'name' => 'required|min:5|max:30',
-            'kattis' => 'required|min:5|max:30',
+            'nick' => 'required|min:4|max:30',
+            'name' => 'required|min:4|max:30',
+            'kattis' => 'required|min:4|max:30',
             'country' => 'required'
         ];
 
