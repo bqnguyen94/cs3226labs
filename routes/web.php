@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/user/add',['as'=>'user.add','uses'=>'Auth\AuthController@showRegistrationForm']);
-
+Route::get('user/add',['as'=>'user.add','uses'=>'Auth\AuthController@showRegistrationForm']);
+Route::post('user/add-validate',['as'=>'user.add-validate','uses'=>'Auth\AuthController@register']);
 // nicer one stop view of all routes
 Route::get('/', 'StudentController@index');
 
