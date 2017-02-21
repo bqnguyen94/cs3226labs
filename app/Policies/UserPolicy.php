@@ -19,5 +19,7 @@ class UserPolicy
         //
     }
 
-    public function 
+    public function isAdmin(User $user){
+        return $user->role == User::ROLE_ADMIN;
+    }
 }
