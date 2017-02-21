@@ -11,10 +11,13 @@ class User extends Authenticatable
 
     const ROLE_USER = 1;
     const ROLE_ADMIN = 2;
+    const ROLE_MODERATOR = 3;
 
     public static $roles = [
         self::ROLE_USER,
-        self::ROLE_ADMIN=>'Admin'];
+        self::ROLE_ADMIN=>'Admin',
+        self::ROLE_MODERATOR=>'Moderator',
+    ];
 
     /**
      * The attributes that are mass assignable.

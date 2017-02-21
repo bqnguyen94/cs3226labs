@@ -22,8 +22,8 @@
 
                             @if ($errors->has('name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -37,8 +37,8 @@
 
                             @if ($errors->has('email'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -51,8 +51,8 @@
 
                             @if ($errors->has('password'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -66,8 +66,8 @@
 
                             @if ($errors->has('password_confirmation'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -86,8 +86,8 @@
 @stop
 
 @section('script')
-    <script type="text/javascript" charset="utf8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.6.0/js/canvas-to-blob.min.js"></script>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/fileinput.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.6.0/js/canvas-to-blob.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/fileinput.min.js"></script>
 @stop
