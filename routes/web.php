@@ -37,17 +37,7 @@ Route::get('logout', 'AuthController@logout');
 
 Route::get('/chart', 'StudentController@chart');
 
-Route::get('fillscores', 'StudentController@fillscores');
-
-//Route::get('filltable', 'StudentController@filltable');
-
-//Route::get('student/{id}/edit', 'StudentController@edit');
-
-//Route::post('student/{id}/edit', 'StudentController@edit');
-
-//Route::get('removetests', 'StudentController@removetests');
-
-//Route::get('changeimage', 'StudentController@changeImage');
+//Route::get('fillscores', 'StudentController@fillscores');
 
 /*Route::get('/init', function() {
     $faker = Faker\Factory::create();
