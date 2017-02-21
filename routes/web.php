@@ -36,7 +36,7 @@ Route::get('logout', 'AuthController@logout');
 
 Route::get('/chart', 'StudentController@chart');
 
-//Route::get('fillscores', 'StudentController@fillscores');
+Route::get('fillscores', 'StudentController@fillscores');
 
 //Route::get('filltable', 'StudentController@filltable');
 
