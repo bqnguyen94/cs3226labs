@@ -16,7 +16,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Rank List</a></li>
                 <li><a href="/chart">Chart</a></li>
-                @if (Auth::check())
+                @if (Auth::check() && Auth::user()->role == 2)
                 <li><a href="/create">Create</a></li>
                 <li><a href="/batch">Batch Mode</a></li>
                 @endif

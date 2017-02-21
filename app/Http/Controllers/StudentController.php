@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 class StudentController extends Controller {
 
     public function batch() {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role == 1) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -119,7 +119,7 @@ class StudentController extends Controller {
     }
 
     public function edit($id) {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role == 1) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -133,7 +133,7 @@ class StudentController extends Controller {
     }
 
     public function create() {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role != 2) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -141,7 +141,7 @@ class StudentController extends Controller {
     }
 
     public function check(Request $request) {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role != 2) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -168,7 +168,7 @@ class StudentController extends Controller {
     }
 
     public function checkBatch(Request $request) {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role != 2) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -225,7 +225,7 @@ class StudentController extends Controller {
     }
 
     public function checkEdit(Request $request, $id) {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role == 1) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -270,7 +270,7 @@ class StudentController extends Controller {
         }
     }
 
-    public function validateScores(Request $request) {
+    private function validateScores(Request $request) {
 
         $mc = $request->get('mc');
         $tc = $request->get('tc');
@@ -417,7 +417,7 @@ class StudentController extends Controller {
     }
 
     public function destroy($id) {
-        if (!Auth::check()) {
+        if (!Auth::check() || Auth::user()->role != 2) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -435,7 +435,7 @@ class StudentController extends Controller {
         return Redirect::to('/');
     }
 
-
+    /*
     public function fillscores() {
         $studentDB = unserialize(file_get_contents('../students.txt'));
 
@@ -493,7 +493,7 @@ class StudentController extends Controller {
                 'ks' => $kss,
                 'ac' => $acs,
             ]);
-        }*/
+        }
     }
 
     private function implodeToString($arr, $placeHolder, $len) {
