@@ -34,6 +34,17 @@ class AuthController extends Controller {
         }
     }
 
+    public function register(Request $request)
+    {
+        $user = new User($request->only(['name', 'email']));
+        $user->password = bcrypt($request->password);
+        $user->role = User::ROLE_USER;
+        $user->save();
+
+        Session::flash('alert-success', "Added Successfully");
+        return back();
+    }
+
     public function logout() {
         if (Auth::check()) {
             Auth::logout();
