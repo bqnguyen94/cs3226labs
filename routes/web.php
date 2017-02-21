@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/user/add',['as'=>'user.add','uses'=>'Auth\AuthController@showRegistrationForm']);
+
 // nicer one stop view of all routes
 Route::get('/', 'StudentController@index');
 
