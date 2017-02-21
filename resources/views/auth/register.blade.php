@@ -1,70 +1,93 @@
 @extends('template')
 
 @section('link')
-<link media="all" rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css">
+    <link media="all" rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css">
 @stop
 
 @section('main')
-<div class="container-fluid">
-    <p>
-        <b>Create New Student in CS3233 S2 AY 2016/17</b>
-    </p>
-    {!! Form::open(['files' => true]) !!}
-    <div class="form-group">
-        {!! Form::label('nick', 'Nick name:', ['class' => 'control-label']) !!}
-        @if ($errors->first('nick'))
-            {!! $errors->first('nick', '<br /><small class="error">:message</small>') !!}
-        @endif
-        {!! Form::text('nick', null, ['class' => 'form-control']) !!}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">Register</div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form" method="POST" action="{{ route('user.add') }}">
 
-    </div>
-    <div class="form-group">
-        {!! Form::label('name', 'Full name:', ['class' => 'control-label']) !!}
-        @if ($errors->first('name'))
-            {!! $errors->first('name', '<br /><small class="error">:message</small>') !!}
-        @endif
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('kattis', 'Kattis account:', ['class' => 'control-label']) !!}
-        @if ($errors->first('kattis'))
-            {!! $errors->first('kattis', '<br /><small class="error">:message</small>') !!}
-        @endif
-        <div class="input-group">
-            <span class="input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
-            {!! Form::text('kattis', null, ['class' => 'form-control']) !!}
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <label for="name" class="col-md-4 control-label">Name</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
+
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <label for="email" class="col-md-4 control-label">Login ID</label>
+
+                        <div class="col-md-6">
+                            <input id="email" type="input" class="form-control" name="email"
+                                   value="{{ old('email') }}">
+
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label for="password" class="col-md-4 control-label">Password</label>
+
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control" name="password">
+
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                        <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                        <div class="col-md-6">
+                            <input id="password-confirm" type="password" class="form-control"
+                                   name="password_confirmation">
+
+                            @if ($errors->has('password_confirmation'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-btn fa-user"></i> Register
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        {!! Form::label('country', 'Nationality:', ['class' => 'control-label']) !!}
-        @if ($errors->first('country'))
-            {!! $errors->first('country', '<br /><small class="error">:message</small>') !!}
-        @endif
-        <br />
-        {!! Form::select('country', [
-            'SG' => 'SGP - Singaporean',
-            'CN' => 'CHN - Chinese',
-            'VN' => 'VNM - Vietnamese',
-            'ID' => 'IDN - Indonesia',
-            'OT' => 'Other Nationality'
-            ],
-            null,
-            ['placeholder' => 'Select Nationality'],
-            ['class' => 'form-control dropdown']) !!}
-    </div>
-    <div class="form-group">
-        <label class="control-label">Upload a profile picture</label>
-        <input name='image' id="input-1" type="file" class="file">
-    </div>
-    <div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-success">Submit</button>
-    </div>
-    {!! Form::close() !!}
-</div>
-</div>
 @stop
 
 @section('script')
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.6.0/js/canvas-to-blob.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/fileinput.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.6.0/js/canvas-to-blob.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/fileinput.min.js"></script>
 @stop
