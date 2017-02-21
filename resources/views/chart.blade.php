@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.template')
 @section('main')
 <div class="container-fluid">
     <div id="chart" style='width: 100%; height: 900px'></div>

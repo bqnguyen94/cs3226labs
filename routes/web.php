@@ -11,7 +11,10 @@
 |
 */
 
-// nicer one stop view of all routes
+Route::get('user/add',['as'=>'user.add','uses'=>'AuthController@showRegistrationForm']);
+
+Route::post('user/add-validate',['as'=>'user.add-validate','uses'=>'AuthController@register']);
+
 Route::get('/', 'StudentController@index');
 
 Route::get('student/{id}', 'StudentController@detail');
@@ -39,16 +42,6 @@ Route::get('/batch', 'StudentController@batch');
 Route::post('/batch', 'StudentController@checkBatch');
 
 //Route::get('fillscores', 'StudentController@fillscores');
-
-//Route::get('filltable', 'StudentController@filltable');
-
-//Route::get('student/{id}/edit', 'StudentController@edit');
-
-//Route::post('student/{id}/edit', 'StudentController@edit');
-
-//Route::get('removetests', 'StudentController@removetests');
-
-//Route::get('changeimage', 'StudentController@changeImage');
 
 /*Route::get('/init', function() {
     $faker = Faker\Factory::create();
