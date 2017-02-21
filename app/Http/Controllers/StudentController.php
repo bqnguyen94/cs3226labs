@@ -102,7 +102,7 @@ class StudentController extends Controller {
             'ks' => $kss,
             'ac' => $acs,
         ];
-        return view('detail')
+        return view('student.detail')
                     ->with('student', $student)
                     ->with('scores', $scores)
                     ->with('topStudent', $this->findTopStudent());
@@ -119,7 +119,7 @@ class StudentController extends Controller {
             return Redirect::to('/');
         }
         $score = Score::where('student_id', $id)->first();
-        return view('edit')->with('student', $student)->with('score', $score);
+        return view('student.edit')->with('student', $student)->with('score', $score);
     }
 
     public function create() {
@@ -127,7 +127,7 @@ class StudentController extends Controller {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
-        return view('create');
+        return view('student.create');
     }
 
     public function check(Request $request) {
