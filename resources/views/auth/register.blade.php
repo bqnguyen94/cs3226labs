@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.template')
 
 @section('link')
     <link media="all" rel="stylesheet" type="text/css"

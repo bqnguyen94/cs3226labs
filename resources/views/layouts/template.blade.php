@@ -13,7 +13,7 @@
         @yield('link')
     </head>
     <body>
-        @include('header')
+        @include('layouts.header')
         @if (Session::has('error'))
             <div class="alert alert-danger alert-dismissable fade in" role="alert" align="center">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -26,7 +26,7 @@
             </div>
         @endif
         @yield('main') <!-- Blade command: include section from child file -->
-        @include('footer') <!-- Blade command: include other blade file -->
+        @include('layouts.footer') <!-- Blade command: include other blade file -->
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>

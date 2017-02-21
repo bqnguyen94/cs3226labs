@@ -1,4 +1,4 @@
-@extends('template') <!-- use template from previous slide -->
+@extends('layouts.template') <!-- use template from previous slide -->
 @section('main') <!-- define a section called main -->
 <div class="container-fluid">
     <center>

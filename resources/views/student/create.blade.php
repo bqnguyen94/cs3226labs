@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.template')
 
 @section('link')
 <link media="all" rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/css/fileinput.min.css">
