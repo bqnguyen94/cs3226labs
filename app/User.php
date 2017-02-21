@@ -9,9 +9,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ROLE_USER = 1;
     const ROLE_ADMIN = 2;
 
-    public static $roles = [self::ROLE_ADMIN=>'Admin'];
+    public static $roles = [
+        self::ROLE_USER,
+        self::ROLE_ADMIN=>'Admin'];
 
     /**
      * The attributes that are mass assignable.
