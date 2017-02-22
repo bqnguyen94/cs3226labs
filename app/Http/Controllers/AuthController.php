@@ -46,6 +46,10 @@ class AuthController extends Controller {
 
     public function register(Request $request)
     {
+        if (User::where('email', $request->email)->first()) {
+            Session::flash('error', "Oi, someone used " . $request->email . " already leh.");
+            return redirect()->back()->withInput();
+        }
         $user = new User($request->only(['name', 'email']));
         $user->password = bcrypt($request->password);
         $user->role = User::ROLE_USER;
