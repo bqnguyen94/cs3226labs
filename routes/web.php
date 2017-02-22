@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('user/add',['as'=>'user.add','uses'=>'AuthController@showRegistrationForm']);
 
 Route::post('user/add-validate',['as'=>'user.add-validate','uses'=>'AuthController@register']);

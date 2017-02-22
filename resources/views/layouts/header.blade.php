@@ -50,6 +50,9 @@
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success btn-block">Sign in</button>
                                         </div>
+                                        <a class="btn btn-link" href="{{ url('/password/reset') }}">
+                                            Forgot Your Password?
+                                        </a>
                                     {!! Form::close() !!}
                                 </div>
                             </div>
