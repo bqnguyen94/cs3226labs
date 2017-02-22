@@ -125,9 +125,9 @@
         <div class="col-xs-12 col-md-4 col-md-offset-4">
             <canvas id="myChart" style="background-color: white" width="200" height="200"></canvas>
         </div>
-        @if (Auth::check() && Auth::user()->role != 1)
+        @if (Auth::check())
             <div class="col-xs-12" style="height:50px;"></div>
-            @if (Auth::user()->role == 2)
+            @can('isAdmin', Auth::user())
                 {!! Form::open(['method' => 'DELETE', 'onsubmit' => 'return ConfirmDelete()']) !!}
                 <div class="form-group col-md-6 col-lg-4 col-lg-offset-2">
                     {!! Form::hidden('id', $student->id) !!}
@@ -135,9 +135,10 @@
                 </div>
                 {!! Form::close() !!}
                 <a class="col-md-6 col-lg-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
-            @else
+            @endcan
+            @can('isModerator', Auth::user())
                 <a class="col-md-8 col-lg-4 col-md-offset-2 col-lg-offset-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
-            @endif
+            @endcan
         @endif
     </div>
 

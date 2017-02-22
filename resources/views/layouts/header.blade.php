@@ -16,8 +16,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Rank List</a></li>
                 <li><a href="/chart">Chart</a></li>
-                @if (Auth::check() && Auth::user()->role == User::ROLE_ADMIN)
-                    @can('isAdmin',new App\User)
+                @if (Auth::check())
+                    @can('isAdmin', Auth::user())
                         <li><a href="/create">Create</a></li>
                         <li><a href="/batch">Batch Mode</a></li>
                     @endcan
@@ -57,9 +57,9 @@
                     </ul>
                 </li>
                 @else
-                    <li>
-                        <a href="/logout">Logout</a>
-                    </li>
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
                 @endif
             </ul>
         </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Student;
 use App\Score;
+use App\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 class StudentController extends Controller {
 
     public function batch() {
-        if (!Auth::check() || Auth::user()->role == 1) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -119,7 +120,7 @@ class StudentController extends Controller {
     }
 
     public function edit($id) {
-        if (!Auth::check() || Auth::user()->role == 1) {
+        if (!Auth::check() || Auth::user()->role == User::ROLE_USER) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -133,7 +134,7 @@ class StudentController extends Controller {
     }
 
     public function create() {
-        if (!Auth::check() || Auth::user()->role != 2) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -141,7 +142,7 @@ class StudentController extends Controller {
     }
 
     public function check(Request $request) {
-        if (!Auth::check() || Auth::user()->role != 2) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -168,7 +169,7 @@ class StudentController extends Controller {
     }
 
     public function checkBatch(Request $request) {
-        if (!Auth::check() || Auth::user()->role != 2) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -225,7 +226,7 @@ class StudentController extends Controller {
     }
 
     public function checkEdit(Request $request, $id) {
-        if (!Auth::check() || Auth::user()->role == 1) {
+        if (!Auth::check() || Auth::user()->role == User::ROLE_USER) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
@@ -417,7 +418,7 @@ class StudentController extends Controller {
     }
 
     public function destroy($id) {
-        if (!Auth::check() || Auth::user()->role != 2) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
             Session::flash('error', "In the name of all those that are holy you are forbidden!");
             return Redirect::to('/');
         }
