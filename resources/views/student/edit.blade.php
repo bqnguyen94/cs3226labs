@@ -80,7 +80,7 @@
                     for ($i = 0; $i < count($mcs); $i++) {
                     ?>
                     <td>
-                        <input required="required" class="score-input form-control" name="mc[]" type="text" value="<?php echo $mcs[$i] ?>">
+                        <input required="required" class="score-input form-control" name="mc[]" type="text" pattern="(^(?!0$)[0-3](?:[,.][05])?$)|x.y|4|4.0" value="<?php echo $mcs[$i] ?>">
                     </td>
                     <?php
                     }
@@ -96,7 +96,7 @@
                     for ($i = 0; $i < count($tcs); $i++) {
                     ?>
                     <td>
-                        <input required="required" class="score-input form-control" name="tc[]" type="text" value="<?php echo $tcs[$i] ?>">
+                        <input required="required" class="score-input form-control" name="tc[]" type="text" pattern="(^(?!$)[0-3](?:[,.][05])?$)|x.y|4|4.0" value="<?php echo $tcs[$i] ?>">
                     </td>
                     <?php
                     }
@@ -112,7 +112,7 @@
                     for ($i = 0; $i < count($hws); $i++) {
                     ?>
                     <td>
-                        <input required="required" class="score-input form-control" name="hw[]" type="text" value="<?php echo $hws[$i] ?>">
+                        <input required="required" class="score-input form-control" name="hw[]" type="text" pattern="(^(?!$)[0-3](?:[,.][05])?$)|x.y|4|4.0" value="<?php echo $hws[$i] ?>">
                     </td>
                     <?php
                     }
@@ -128,7 +128,7 @@
                     for ($i = 0; $i < count($pbs); $i++) {
                     ?>
                     <td>
-                        <input required="required" class="score-input form-control" name="pb[]" type="text" value="<?php echo $pbs[$i] ?>">
+                        <input required="required" class="score-input form-control" name="pb[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $pbs[$i] ?>">
                     </td>
                     <?php
                     }
@@ -144,7 +144,7 @@
                     for ($i = 0; $i < count($kss); $i++) {
                     ?>
                     <td>
-                        <input required="required" class="score-input form-control" name="ks[]" type="text" value="<?php echo $kss[$i] ?>">
+                        <input required="required" class="score-input form-control" name="ks[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $kss[$i] ?>">
                     </td>
                     <?php
                     }
@@ -160,7 +160,7 @@
                     for ($i = 0; $i < count($acs); $i++) {
                     ?>
                     <td>
-                        <input required="required" class="score-input form-control" name="ac[]" type="text" value="<?php echo $acs[$i] ?>">
+                        <input required="required" class="score-input form-control" name="ac[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $acs[$i] ?>">
                     </td>
                     <?php
                     }

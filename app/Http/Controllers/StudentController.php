@@ -232,14 +232,14 @@ class StudentController extends Controller {
         }
 
         $validator = $this->makeNameValidator($request);
-        $scoresCheck = $this->validateScores($request);
+        //$scoresCheck = $this->validateScores($request);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
-        } elseif (!$scoresCheck) {
+        } /*elseif (!$scoresCheck) {
             Session::flash('error', "Please ensure the scores are in correct format.");
             return Redirect::back()->withInput();
-        } else {
+        } else {*/
             $student = Student::where('id', $id)->first();
             $score = Score::where('student_id', $id)->first();
 
@@ -268,9 +268,9 @@ class StudentController extends Controller {
 
             Session::flash('alert-success', $student->name . "'s profile updated!");
             return Redirect::to('student/' . $id);
-        }
+        //}
     }
-
+    /*
     private function validateScores(Request $request) {
 
         $mc = $request->get('mc');
@@ -299,7 +299,7 @@ class StudentController extends Controller {
                 return false;
             }
         }
-    
+
         foreach ($hw as $var) {
             if (is_numeric($var)) {
                 if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
@@ -309,7 +309,7 @@ class StudentController extends Controller {
                 return false;
             }
         }
-    
+
         foreach ($pb as $var) {
             if (is_numeric($var)) {
                 if (!ctype_digit($var) || $var > 4) {
@@ -318,7 +318,7 @@ class StudentController extends Controller {
             } elseif ($var !== "x") {
                 return false;
             }
-        }    
+        }
 
         foreach ($ks as $var) {
             if (is_numeric($var)) {
@@ -328,7 +328,7 @@ class StudentController extends Controller {
             } elseif ($var !== "x") {
                 return false;
             }
-        }    
+        }
 
         foreach ($ac as $var) {
             if (is_numeric($var)) {
@@ -338,11 +338,11 @@ class StudentController extends Controller {
             } elseif ($var !== "x") {
                 return false;
             }
-        }        
+        }
 
         return true;
     }
-
+    */
     private function makeNameValidator(Request $request) {
         $rules = [
             'nick' => 'required|min:4|max:30',
