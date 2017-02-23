@@ -280,89 +280,65 @@ class StudentController extends Controller {
         $ks = $request->get('ks');
         $ac = $request->get('ac');
 
-        if (count($mc) === 9) {
-            foreach ($mc as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "x.y") {
+        foreach ($mc as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "x.y") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($tc) === 2) {
-            foreach ($tc as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "xy.z") {
+        foreach ($tc as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "xy.z") {
+                return false;
             }
-        } else {
-            return false;
         }
+    
+        foreach ($hw as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
+                    return false;
+                }
+            } elseif ($var !== "x.y") {
+                return false;
+            }
+        }
+    
+        foreach ($pb as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
+                    return false;
+                }
+            } elseif ($var !== "x") {
+                return false;
+            }
+        }    
 
-        if (count($hw) === 10) {
-            foreach ($hw as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "x.y") {
+        foreach ($ks as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
-        }
+        }    
 
-        if (count($pb) === 9) {
-            foreach ($pb as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
+        foreach ($ac as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
-        }
-
-        if (count($ks) === 12) {
-            foreach ($ks as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
-
-        if (count($ac) === 8) {
-            foreach ($ac as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
+        }        
 
         return true;
     }
