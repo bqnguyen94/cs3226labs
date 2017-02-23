@@ -16,14 +16,10 @@ class CreateAchivementsTable extends Migration
         Schema::create('achivements', function (Blueprint $table) {
             $table->increments('id');
 			$table->timestamps();
-			$table->integer('letitbegins')->default(0);
-			$table->integer('quickstarter')->default(0);
-			$table->integer('activeinclass')->default(0);
-			$table->integer('surpriseus')->default(0);
-			$table->integer('highdetermination')->default(0);
-			$table->integer('bookworm')->default(0);
-			$table->integer('kattisapprentice')->default(0);
-			$table->integer('codeforcespecialist')->default(0);
+			$table->string('achievementName');
+			$table->integer('stars');
+			$table->string('reason');
+			$table->string('date');
         });
     }
 
