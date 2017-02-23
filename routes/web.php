@@ -43,7 +43,9 @@ Route::get('/batch', 'StudentController@batch');
 
 Route::post('/batch', 'StudentController@checkBatch');
 
-//Route::get('fillscores', 'StudentController@fillscores');
+Route::get('user/change-roles', 'UserController@changeRoles');
+
+Route::get('fillscores', 'StudentController@fillscores');
 
 /*Route::get('/init', function() {
     $faker = Faker\Factory::create();
