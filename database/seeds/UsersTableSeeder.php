@@ -14,15 +14,15 @@ class UsersTableSeeder extends Seeder
     {
         //
         User::create([
-            'username'=>'admin','role'=>User::ROLE_ADMIN,'password'=>bcrypt('123456'),'email' => 'admin@unicorn.com'
+            'name'=>'admin','role'=>User::ROLE_ADMIN,'password'=>bcrypt('123456'),'email' => 'admin@unicorn.com'
         ]);
 
         User::create([
-            'username'=>'mod','role'=>User::ROLE_MODERATOR,'password'=>bcrypt('123456'),'email' => 'mod@unicorn.com'
+            'name'=>'mod','role'=>User::ROLE_MODERATOR,'password'=>bcrypt('123456'),'email' => 'mod@unicorn.com'
         ]);
 
         User::create([
-            'username'=>'user','role'=>User::ROLE_USER,'password'=>bcrypt('123456'),'email' => 'user@unicorn.com'
+            'name'=>'user','role'=>User::ROLE_USER,'password'=>bcrypt('123456'),'email' => 'user@unicorn.com'
         ]);
     }
 }
