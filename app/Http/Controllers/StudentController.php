@@ -436,7 +436,7 @@ class StudentController extends Controller {
         return Redirect::to('/');
     }
 
-    /*
+
     public function fillscores() {
         $studentDB = unserialize(file_get_contents('../students.txt'));
 
@@ -494,7 +494,7 @@ class StudentController extends Controller {
                 'ks' => $kss,
                 'ac' => $acs,
             ]);
-        }
+        }*/
     }
 
     private function implodeToString($arr, $placeHolder, $len) {
