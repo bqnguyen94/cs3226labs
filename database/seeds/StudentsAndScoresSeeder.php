@@ -59,7 +59,7 @@ class StudentsAndScoresSeeder extends Seeder
                 if ($j < 3) {
                     $pb .= $faker->numberBetween($min = 0, $max = 1) . ",";
                 } else {
-                    $hw .= 'x,';
+                    $pb .= 'x,';
                 }
             }
             $pb = rtrim($pb, ",");
@@ -67,7 +67,7 @@ class StudentsAndScoresSeeder extends Seeder
             $ks = "";
             for ($j = 0; $j < 12; $j++) {
                 if ($j < 4) {
-                    $ks = $faker->numberBetween($min = 0, $max = 1) . ",";
+                    $ks .= $faker->numberBetween($min = 0, $max = 1) . ",";
                 } else {
                     $ks .= 'x,';
                 }
@@ -75,11 +75,11 @@ class StudentsAndScoresSeeder extends Seeder
             $ks = rtrim($ks, ",");
 
             $ac = "";
-            for ($j = 0; $j < 3; $j++) {
+            for ($j = 0; $j < 8; $j++) {
                 if ($j < 3) {
                     $ac .= $faker->numberBetween($min = 0, $max = 3) . ",";
                 } else {
-                    $ks .= 'x,';
+                    $ac .= 'x,';
                 }
             }
             $ac = rtrim($ac, ",");
