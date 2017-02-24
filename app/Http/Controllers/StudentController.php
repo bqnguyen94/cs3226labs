@@ -151,20 +151,7 @@ class StudentController extends Controller {
         if ($validator->fails()) {
             return redirect('create')->withErrors($validator)->withInput();
         } else {
-            $nick = $request->input('nick');
-            $name = $request->input('name');
-            $kattis = $request->input('kattis');
-            $country = $request->input('country');
-            $image = '/img/icons/default.png';
-
-            $file = $request->file('image');
-            if ($file) {
-                $destinationPath = 'img/icons/';
-                $filename = $nick . ".png";
-                $file->move($destinationPath, $filename);
-                $image = '/' . $destinationPath . $filename;
-            }
-            return $this->store($nick, $name, $kattis, $country, $image);
+            return $this->store($request);
         }
     }
 
@@ -250,11 +237,21 @@ class StudentController extends Controller {
                 $iso3 = $iso3_codes[$request->country];
             }
 
+            $image = $student->image;
+            $file = $request->file('image');
+            if ($file) {
+                $destinationPath = 'img/icons/';
+                $filename = (string) ($id) . ".png";
+                $file->move($destinationPath, $filename);
+                $image = '/' . $destinationPath . $filename;
+            }
+
             $student->name = $request->name;
             $student->nick = $request->nick;
             $student->kattis = $request->kattis;
             $student->country_iso2 = $request->country;
             $student->country_iso3 = $iso3;
+            $student->image = $image;
 
             $score->mc = implode(",", $request->get('mc'));
             $score->tc = implode(",", $request->get('tc'));
@@ -368,7 +365,13 @@ class StudentController extends Controller {
         return Validator::make($request->only(['nick', 'name', 'kattis', 'country']), $rules, $messages);
     }
 
-    private function store($nick, $name, $kattis, $country, $image) {
+    private function store(Request $request) {
+
+        $nick = $request->input('nick');
+        $name = $request->input('name');
+        $kattis = $request->input('kattis');
+        $country = $request->input('country');
+        $image = '/img/icons/default.png';
 
         $iso3 = "OTT";
         if ($country !== "OT") {
@@ -386,6 +389,16 @@ class StudentController extends Controller {
         ]);
 
         $id = $student->id;
+
+        $file = $request->file('image');
+        if ($file) {
+            $destinationPath = 'img/icons/';
+            $filename = (string) ($id) . ".png";
+            $file->move($destinationPath, $filename);
+            $image = '/' . $destinationPath . $filename;
+            $student->image = $image;
+            $student->save();
+        }
 
         Score::create([
             'student_id' => $id,

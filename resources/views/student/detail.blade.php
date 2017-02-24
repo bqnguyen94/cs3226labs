@@ -129,12 +129,12 @@
             <div class="col-xs-12" style="height:50px;"></div>
             @can('isAdmin', Auth::user())
                 {!! Form::open(['method' => 'DELETE', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                <div class="form-group col-md-6 col-lg-4 col-lg-offset-2">
+                <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-4 col-lg-offset-2">
                     {!! Form::hidden('id', $student->id) !!}
                     {!! Form::submit('Delete', ['class' => 'form-control btn-danger']) !!}
                 </div>
                 {!! Form::close() !!}
-                <a class="col-md-6 col-lg-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
+                <a class="col-xs-6 col-sm-6 col-md-6 col-lg-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
             @endcan
             @can('isModerator', Auth::user())
                 <a class="col-md-8 col-lg-4 col-md-offset-2 col-lg-offset-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>

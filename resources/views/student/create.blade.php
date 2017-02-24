@@ -40,7 +40,7 @@
             <div class="form-group has-feedback">
                 {!! Form::label('kattis', 'Kattis account:', ['class' => 'control-label']) !!}
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
+                    <span class="hidden-xs input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
                     <input type="text" class="form-control" name="kattis" data-minlength="4" maxlength="30" data-minlength-error="Your kattis account name really that short meh?!" required>
                 </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
