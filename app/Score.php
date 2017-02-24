@@ -29,12 +29,12 @@ class Score extends Model
 
         foreach (Score::all() as $score) {
             $all = array();
-            $all[0] = array_map("floatval", array_filter(explode(",", $score->mc), "is_numeric"));
-            $all[1] = array_map("floatval", array_filter(explode(",", $score->tc), "is_numeric"));
-            $all[2] = array_map("floatval", array_filter(explode(",", $score->hw), "is_numeric"));
-            $all[3] = array_map("floatval", array_filter(explode(",", $score->pb), "is_numeric"));
-            $all[4] = array_map("floatval", array_filter(explode(",", $score->ks), "is_numeric"));
-            $all[5] = array_map("floatval", array_filter(explode(",", $score->ac), "is_numeric"));
+            $all[0] = Score::splitScores($score->mc);
+            $all[1] = Score::splitScores($score->tc);
+            $all[2] = Score::splitScores($score->hw);
+            $all[3] = Score::splitScores($score->pb);
+            $all[4] = Score::splitScores($score->ks);
+            $all[5] = Score::splitScores($score->ac);
 
             $max = max([count($all[0]), count($all[1]), count($all[2]), count($all[3]), count($all[4]), count($all[5])]);
 
@@ -95,5 +95,17 @@ class Score extends Model
         $fp = fopen('../weeklyRanks.json', 'w');
         fwrite($fp, json_encode($data));
         fclose($fp);*/
+    }
+
+    private static function splitScores($arrStr) {
+        $scores = array();
+        foreach (explode(",", $arrStr) as $item) {
+            if (is_numeric($item)) {
+                $scores[] = $item;
+            } else {
+                $scores[] = 0;
+            }
+        }
+        return array_map("floatval", $scores);
     }
 }

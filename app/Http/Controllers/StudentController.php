@@ -232,14 +232,14 @@ class StudentController extends Controller {
         }
 
         $validator = $this->makeNameValidator($request);
-        $scoresCheck = $this->validateScores($request);
+        //$scoresCheck = $this->validateScores($request);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
-        } elseif (!$scoresCheck) {
+        } /*elseif (!$scoresCheck) {
             Session::flash('error', "Please ensure the scores are in correct format.");
             return Redirect::back()->withInput();
-        } else {
+        } else {*/
             $student = Student::where('id', $id)->first();
             $score = Score::where('student_id', $id)->first();
 
@@ -268,9 +268,9 @@ class StudentController extends Controller {
 
             Session::flash('alert-success', $student->name . "'s profile updated!");
             return Redirect::to('student/' . $id);
-        }
+        //}
     }
-
+    /*
     private function validateScores(Request $request) {
 
         $mc = $request->get('mc');
@@ -280,93 +280,69 @@ class StudentController extends Controller {
         $ks = $request->get('ks');
         $ac = $request->get('ac');
 
-        if (count($mc) === 9) {
-            foreach ($mc as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "x.y") {
+        foreach ($mc as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "x.y") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($tc) === 2) {
-            foreach ($tc as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "xy.z") {
+        foreach ($tc as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "xy.z") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($hw) === 10) {
-            foreach ($hw as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "x.y") {
+        foreach ($hw as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "x.y") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($pb) === 9) {
-            foreach ($pb as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
+        foreach ($pb as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($ks) === 12) {
-            foreach ($ks as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
+        foreach ($ks as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($ac) === 8) {
-            foreach ($ac as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
+        foreach ($ac as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
         }
 
         return true;
     }
-
+    */
     private function makeNameValidator(Request $request) {
         $rules = [
             'nick' => 'required|min:4|max:30',

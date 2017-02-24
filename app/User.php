@@ -14,7 +14,7 @@ class User extends Authenticatable
     const ROLE_MODERATOR = 3;
 
     public static $roles = [
-        self::ROLE_USER,
+        self::ROLE_USER=>'User',
         self::ROLE_ADMIN=>'Admin',
         self::ROLE_MODERATOR=>'Moderator',
     ];

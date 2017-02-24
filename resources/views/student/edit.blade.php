@@ -80,7 +80,7 @@
                     for ($i = 0; $i < count($mcs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('mc[]', $mcs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
+                        <input required="required" class="score-input form-control" name="mc[]" type="text" pattern="(^(?!0$)[0-3](?:[,.][05])?$)|x.y|4|4.0" value="<?php echo $mcs[$i] ?>">
                     </td>
                     <?php
                     }
@@ -96,7 +96,7 @@
                     for ($i = 0; $i < count($tcs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('tc[]', $tcs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
+                        <input required="required" class="score-input form-control" name="tc[]" type="text" pattern="(^(?!$)[0-3](?:[,.][05])?$)|x.y|4|4.0" value="<?php echo $tcs[$i] ?>">
                     </td>
                     <?php
                     }
@@ -112,7 +112,7 @@
                     for ($i = 0; $i < count($hws); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('hw[]', $hws[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
+                        <input required="required" class="score-input form-control" name="hw[]" type="text" pattern="(^(?!$)[0-3](?:[,.][05])?$)|x.y|4|4.0" value="<?php echo $hws[$i] ?>">
                     </td>
                     <?php
                     }
@@ -128,7 +128,7 @@
                     for ($i = 0; $i < count($pbs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('pb[]', $pbs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
+                        <input required="required" class="score-input form-control" name="pb[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $pbs[$i] ?>">
                     </td>
                     <?php
                     }
@@ -144,7 +144,7 @@
                     for ($i = 0; $i < count($kss); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('ks[]', $kss[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
+                        <input required="required" class="score-input form-control" name="ks[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $kss[$i] ?>">
                     </td>
                     <?php
                     }
@@ -160,7 +160,7 @@
                     for ($i = 0; $i < count($acs); $i++) {
                     ?>
                     <td>
-                        {!! Form::text('ac[]', $acs[$i], ['required' => 'required', 'class' => 'score-input form-control']) !!}
+                        <input required="required" class="score-input form-control" name="ac[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $acs[$i] ?>">
                     </td>
                     <?php
                     }
