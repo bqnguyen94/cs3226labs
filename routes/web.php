@@ -43,7 +43,7 @@ Route::get('/batch', 'StudentController@batch');
 
 Route::post('/batch', 'StudentController@checkBatch');
 
-Route::get('user/change-roles', 'UserController@changeRoles');
+Route::get('change', 'UserController@changeRoles');
 
 Route::get('fillscores', 'StudentController@fillscores');
 
