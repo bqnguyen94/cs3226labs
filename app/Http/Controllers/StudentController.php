@@ -61,6 +61,25 @@ class StudentController extends Controller {
         return view('chart')->with('data', Score::getWeeklyRanks());
     }
 
+    public function achievements() {
+        $data = array();
+        $data[] = array();
+        foreach (DB::table('achievements')->get() as $item) {
+            $data[] = array();
+            $data["achievements"][] = [
+                "id" => $item->id,
+                "name" => $item->achievement_name,
+            ];
+        }
+        foreach (DB::table('student_achievement')->get() as $item) {
+            $data[$item->achievement_id][] = [
+                "student_id" => $item->student_id,
+                "student_name" => Student::where('id', $item->student_id)->first()->name,
+            ];
+        }
+        return view('achievements')->with('data', $data);
+    }
+
     private function findTopStudent() {
 
         $curTopScore = 0;

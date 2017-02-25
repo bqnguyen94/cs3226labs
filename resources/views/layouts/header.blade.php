@@ -22,6 +22,7 @@
                         <li><a href="/batch">Batch Mode</a></li>
                     @endcan
                 @endif
+                <li><a href="/achievements">Hall of Fame</a></li>
                 <li><a href="/help">Help</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
