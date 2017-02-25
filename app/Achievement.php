@@ -8,6 +8,6 @@ class Achievement extends Model
 {
     //
     public function students(){
-        $this->belongsToMany();
+        $this->belongsToMany('App\Student');
     }
 }
