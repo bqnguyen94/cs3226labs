@@ -11,7 +11,7 @@
     </p>
     {!! Form::open(['files' => true, 'data-toggle' => 'validator']) !!}
     <div class="row">
-        <div class="col-md-6 col-xs-6">
+        <div class="col-sm-6 col-xs-12">
             <div class="form-group has-feedback">
                 {!! Form::label('nick', 'Nick name:', ['class' => 'control-label']) !!}
                 <input type="text" class="form-control" name="nick" value="<?php echo $student->nick ?>" data-minlength="4" maxlength="30" data-minlength-error="Your nick name really that short meh?!" required>
@@ -22,7 +22,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-6 col-xs-6">
+        <div class="col-sm-6 col-xs-12">
             <div class="form-group has-feedback">
                 {!! Form::label('name', 'Full name:', ['class' => 'control-label']) !!}
                 <input type="text" class="form-control" name="name" value="<?php echo $student->name ?>" data-minlength="4" maxlength="30" data-minlength-error="Your name really that short meh?!" required>
@@ -36,11 +36,11 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6 col-xs-6">
+        <div class="col-sm-6 col-xs-12">
             <div class="form-group has-feedback">
                 {!! Form::label('kattis', 'Kattis account:', ['class' => 'control-label']) !!}
                 <div class="input-group">
-                    <span class="hidden-xs input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
+                    <span class="input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
                     <input type="text" class="form-control" name="kattis" value="<?php echo $student->kattis ?>" data-minlength="4" maxlength="30" data-minlength-error="Your kattis account name really that short meh?!" required>
                 </div>
                 <span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -50,7 +50,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-6 col-xs-6">
+        <div class="col-sm-6 col-xs-12">
             <div class="form-group has-feedback">
                 {!! Form::label('country', 'Nationality:', ['class' => 'control-label']) !!}
                 <br />
@@ -77,7 +77,7 @@
     </div>
 
     <div class="row">
-        <div class="form-group col-md-6 col-xs-6">
+        <div class="form-group col-sm-6 col-xs-12">
             <label class="control-label">Upload a profile picture</label>
             <input name='image' id="input-1" type="file" class="file">
         </div>
