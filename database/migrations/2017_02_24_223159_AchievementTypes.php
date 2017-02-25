@@ -13,7 +13,7 @@ class AchievementTypes extends Migration
      */
     public function up()
     {
-        Schema::create('create_achievementTypes_table', function (Blueprint $table) {
+        Schema::create('create_achievement_types_table', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
