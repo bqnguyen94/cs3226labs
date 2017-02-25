@@ -13,7 +13,7 @@ class CreateStudentAchievementTable extends Migration
      */
     public function up()
     {
-        Schema::create('studentAchievement', function (Blueprint $table) {
+        Schema::create('student_achievement', function (Blueprint $table) {
 			$table->string('id');
             $table->unsignedInteger('student_id');
 			$table->unsignedInteger('achievement_id');
