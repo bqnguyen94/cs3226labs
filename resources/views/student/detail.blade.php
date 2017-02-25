@@ -1,47 +1,98 @@
 @extends('layouts.template')
 @section('main')
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-xs-12 col-sm-9">
-            <h4><b><?php echo $student->name ?></b></h4>
 
-            <p>Kattis account: <a href="#" target="_blank"><b><?php echo $student->kattis ?></b></a>
+        <div class=" col-xs-12 mx-auto row" style = "height:100px">
+        <?php
+        $flag_cdn = "/img/flag_default.jpg";
+        if ($student->country_iso2 !== "OT") {
+            $flag_cdn = "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.8.0/flags/4x3/" . strtolower($student->country_iso2) . ".svg";
+        }
+        ?>
+
+        <h1><b style="float:left" ><?php echo $student->name?>　</b>
+            <img padding="10px" style="float:left" class="img-rounded nation" src="<?php echo $flag_cdn ?>" height="34px"></h1>
+        </div>
+
+        <div class="col-xs-12 ">
+
+
+
+            <p> <span class="glyphicon glyphicon-user"></span> Kattis account: <a href="#" target="_blank"><b><?php echo $student->kattis ?></b></a><br>
+            <p> <span class="glyphicon glyphicon-star"></span> Achievement details: </p>
+
+            <ol>
+                <?php
+                foreach ($achievements as $achievement) {
+                $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
+                $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
+                if ($max != 1) {
+
+                ?>
+                <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
+                <?php
+                } else {
+                ?>
+                <li><?php echo $name ?></li>
+                <?php
+                }
+                ?>
+                <?php
+                }
+                ?>
+            </ol>
+
+            <p> <span class="glyphicon glyphicon-comment"></span> Specific (public) comments about this student: </p>
+
             </p>
-
-            <?php
-            $spe = array_sum($scores["mc"]);
-            $dil = array_sum($scores["hw"]) + array_sum($scores["pb"]) + array_sum($scores["ks"]) + array_sum($scores["ac"]);
-            $sum = $spe + $dil;
-
-            $flag_cdn = "/img/flag_default.jpg";
-            if ($student->country_iso2 !== "OT") {
-                $flag_cdn = "https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.8.0/flags/4x3/" . strtolower($student->country_iso2) . ".svg";
-            }
-            ?>
-
-            <p><b>SPE</b>(ed) component: <b><?php echo array_sum($scores["mc"]) . ' + 0 = ' . array_sum($scores["mc"]) ?></b><br>
-                <b>DIL</b>(igence) component: <b><?php echo array_sum($scores["hw"]) . ' + ' . array_sum($scores["pb"]) . ' + ' . array_sum($scores["ks"]) . ' + ' . array_sum($scores["ac"]) . ' = ' . $dil ?></b><br>
-                <b>Sum = SPE + DIL = <?php echo $spe . ' + ' . $dil . ' = ' . $sum ?></b>
-            </p>
         </div>
-        <div class="hidden-xs hidden-sm col-sm-1">
-            <img class="nation" src="<?php echo $flag_cdn ?>" width="100px">
+
         </div>
-        <div class="hidden-xs hidden-sm col-sm-2">
-            <img class="student-avatar" src="<?php echo $student->image ?>" height="100px" width="100px">
+
+        <div class="hidden-xs  col-sm-3"   style = "height:200px" >
+            <div style = "height:20px" ></div>
+            <div>
+                <img class="img-circle student-avatar" src="<?php echo $student->image ?>" height="130px" width="130px"> </div>
         </div>
+
     </div>
 
-    <div class="row">
-    <div class="col-xs-12">
-        <p>Detailed scores:
-        </p>
+    <div class="row" style = "height:50px">
 
-        <table class="table table-condensed">
+    </div>
+
+    <div class="col-xs-12 col-md-offset-3 col-md-9">
+        <ul class=" nav nav-pills" style = "height:80px" role="tablist">
+            <li role="presentation" class=" active" role="presentation" ><a href="#scoretable" aria-controls="1" role="tab" data-toggle="tab">Detialed Score</a></li>
+            <li  role="presentation"><a href="#chart" aria-controls="2" role="tab" data-toggle="tab">Graphicalized Performance</a></li>
+        </ul>
+    </div>
+
+
+    <!-- Tab panes -->
+
+
+    <div class="col-xs-12">
+
+        <?php
+        $spe = array_sum($scores["mc"]) + array_sum($scores["tc"]);
+        $dil = array_sum($scores["hw"]) + array_sum($scores["pb"]) + array_sum($scores["ks"]) + array_sum($scores["ac"]);
+        $sum = $spe + $dil;
+        ?>
+
+        <div class="tab-content">
+
+
+        <div role="tabpanel" class="tab-pane active fade in" id="scoretable">
+        <table  class="table table-condensed">
             <thead>
                 <tr>
-                    <th width="150px">Component</th>
-                    <th width="150px">Sum</th>
+                    <th width="100px"></th>
+                    <th width="100px">Component</th>
+                    <th width="100px">Sum</th>
                     <th class="hidden-xs hidden-sm">01</th>
                     <th class="hidden-xs hidden-sm">02</th>
                     <th class="hidden-xs hidden-sm">03</th>
@@ -56,7 +107,7 @@
                     <th class="hidden-xs hidden-sm">12</th>
                 </tr>
             </thead>
-            <tbody>
+            <tr>
                 <?php
                 $keymap = [
                     'mc' => "Mini Contests",
@@ -71,6 +122,17 @@
                 foreach ($keys as $key) {
                 ?>
                 <tr>
+                    <?php
+                    if($key=="mc"){ ?>
+                    <td style="vertical-align:middle" rowspan="2"> <b>SPE<br> <?php echo $spe ?></b></td>
+                        <?php
+                    }
+                        if($key=="hw"){ ?>
+                        <td style="vertical-align:middle" rowspan="4"> <b>DIL<br><?php echo $dil?> </b></td>
+                        <?php
+                    } ?>
+
+
                     <td><?php echo $keymap[$key] ?></td>
                     <?php
                     if ($key == "mc" || $key == "tc" || $key == "hw") {
@@ -106,40 +168,19 @@
                 <?php
                 }
                 ?>
+                <tr>
+                    <td colspan="2"><b>Sum</b></td>
+                    <td ><b> <?php echo $sum?> </b> </td>
+                </tr>
             </tbody>
         </table>
-
-        <p>Achievement details:
-        </p>
-
-        <ol>
-            <?php
-            foreach ($achievements as $achievement) {
-                $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
-                $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
-                if ($max != 1) {
-
-            ?>
-            <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
-            <?php
-                } else {
-            ?>
-            <li><?php echo $name ?></li>
-            <?php
-                }
-            ?>
-            <?php
-            }
-            ?>
-        </ol>
-
-        <p>Specific (public) comments about this student:
-        </p>
-        <p>Graphicalized performance:
-        </p>
-        <div class="col-xs-12 col-md-4 col-md-offset-4">
-            <canvas id="myChart" style="background-color: white" width="200" height="200"></canvas>
         </div>
+
+
+        <div role="tabpanel" class="tab-pane fade col-xs-12 col-md-4 col-md-offset-4" id="chart">
+            <canvas role="tabpanel" class="tab-pane" id="myChart"  style="background-color: white" width="200" height="200"></canvas>
+        </div>
+
         @if (Auth::check())
             <div class="col-xs-12" style="height:50px;"></div>
             @can('isAdmin', Auth::user())
@@ -155,8 +196,6 @@
                 <a class="col-md-8 col-lg-4 col-md-offset-2 col-lg-offset-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
             @endcan
         @endif
-    </div>
-
     </div>
 
 </div>
