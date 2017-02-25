@@ -274,54 +274,6 @@
         <?php
         }
         ?>
-        <!--<div class="row achievement-row">
-            <div class="col-sm-3 nopadding">
-                <div class="form-group has-feedback">
-                    <div class="input-group">
-                        <div class="input-group-btn">
-                            <button class="btn btn-danger" type="button"  onclick="remove_ac_fields();"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
-                        </div>
-                        <select class="form-control dropdown" id="ac_type" name="ac_types[]" required>
-                            <option selected="selected" value="">Achievement</option>
-                            <option value="1">Let it begins</option>
-                            <option value="2">Quick starter</option>
-                            <option value="3">Active in class</option>
-                            <option value="4">Surprise us</option>
-                            <option value="5">High determination</option>
-                            <option value="6">Bookworm</option>
-                            <option value="7">Kattis apprentice</option>
-                            <option value="8">CodeForces Specialist</option>
-                        </select>
-                    </div>
-                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="col-sm-2 nopadding">
-                <div class="form-group has-feedback">
-                    <select class="form-control dropdown" id="ac_week" name="ac_weeks[]" required>
-                        <option selected="selected" value="">Week</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
-                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="col-sm-7 nopadding">
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="" placeholder="Reason" maxlength="30" required>
-                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-        </div>-->
     </div>
 
     <button class="btn btn-success" type="button"  onclick="add_ac_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
