@@ -243,11 +243,15 @@ class StudentController extends Controller {
 
         $validator = $this->makeNameValidator($request);
         $scoresCheck = $this->validateScores($request);
+        $achievementsCheck = $this->validateAchievements($request);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         } elseif (!$scoresCheck) {
             Session::flash('error', "Please ensure the scores are in correct format.");
+            return Redirect::back()->withInput();
+        } elseif (!$achievementsCheck) {
+            Session::flash('error', "Pls lah! An achievement got more stars than it should already.");
             return Redirect::back()->withInput();
         } else {
             $student = Student::where('id', $id)->first();
@@ -316,6 +320,21 @@ class StudentController extends Controller {
             Session::flash('alert-success', $student->name . "'s profile updated!");
             return Redirect::to('student/' . $id);
         }
+    }
+
+    private function validateAchievements(Request $request) {
+        $ac_types = $request->get('ac_types');
+        $freq = array_count_values($ac_types);
+        $allAchievements = DB::table('achievements')
+                            ->select(DB::raw('id, max_stars'))
+                            ->orderBy('id')
+                            ->get();
+        for ($i = 1; $i <= count($allAchievements); $i++) {
+            if ($freq[$i] && $freq[$i] > $allAchievements->where('id', $i)->first()->max_stars) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function validateScores(Request $request) {
