@@ -16,6 +16,9 @@ class AchievementTypes extends Migration
         Schema::create('create_achievementTypes_table', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('name');
+            $table->integer('max');
+            $table->string('description');
         });
     }
 
