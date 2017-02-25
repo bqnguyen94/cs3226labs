@@ -142,3 +142,12 @@ table.dataTable tbody td {
 .score-input {
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .hidebtn-xs, .hidebtn-xs input {
+        display: block !important;
+    }
+    .hidebtn-xs .input-group-addon {
+        display: none !important;
+    }
+}
