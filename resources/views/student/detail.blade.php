@@ -113,9 +113,15 @@
         </p>
 
         <ol>
-            <li>I am ready.</li>
-            <li>The dragon becomes me!</li>
-            <li>Ryūjin no ken o kurae!</li>
+            <?php
+            foreach ($achievements as $achievement) {
+                $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
+                $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
+            ?>
+            <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
+            <?php
+            }
+            ?>
         </ol>
 
         <p>Specific (public) comments about this student:

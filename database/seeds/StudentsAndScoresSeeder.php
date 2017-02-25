@@ -74,16 +74,6 @@ class StudentsAndScoresSeeder extends Seeder
             }
             $ks = rtrim($ks, ",");
 
-            $ac = "";
-            for ($j = 0; $j < 8; $j++) {
-                if ($j < 3) {
-                    $ac .= $faker->numberBetween($min = 0, $max = 3) . ",";
-                } else {
-                    $ac .= 'x,';
-                }
-            }
-            $ac = rtrim($ac, ",");
-
             $student = Student::create([
                 'nick' => $kattis,
                 'name' => $name,
@@ -100,7 +90,6 @@ class StudentsAndScoresSeeder extends Seeder
                 'hw' => $hw,
                 'pb' => $pb,
                 'ks' => $ks,
-                'ac' => $ac,
             ]);
         }
     }

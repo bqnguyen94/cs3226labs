@@ -113,10 +113,21 @@ class StudentController extends Controller {
             'ks' => $kss,
             'ac' => $acs,
         ];
+        $allAchievements = DB::table('achievements')
+                            ->orderBy('id')
+                            ->get();
+        $achievements = DB::table('student_achievement')
+                            ->select(DB::raw('count(*) as cnt, achievement_id'))
+                            ->where('student_id', $id)
+                            ->groupBy('achievement_id')
+                            ->orderBy('achievement_id')
+                            ->get();
         return view('student.detail')
                     ->with('student', $student)
                     ->with('scores', $scores)
-                    ->with('topStudent', $this->findTopStudent());
+                    ->with('topStudent', $this->findTopStudent())
+                    ->with('achievements', $achievements)
+                    ->with('allAchievements', $allAchievements);
     }
 
     public function edit($id) {
@@ -130,7 +141,18 @@ class StudentController extends Controller {
             return Redirect::to('/');
         }
         $score = Score::where('student_id', $id)->first();
-        return view('student.edit')->with('student', $student)->with('score', $score);
+        $achievements = DB::table('student_achievement')
+                            ->where('student_id', $id)
+                            ->orderBy('achievement_id')
+                            ->get();
+        $allAchievements = DB::table('achievements')
+                            ->orderBy('id')
+                            ->get();
+        return view('student.edit')
+                    ->with('student', $student)
+                    ->with('score', $score)
+                    ->with('achievements', $achievements)
+                    ->with('allAchievements', $allAchievements);
     }
 
     public function create() {
@@ -220,14 +242,14 @@ class StudentController extends Controller {
         }
 
         $validator = $this->makeNameValidator($request);
-        //$scoresCheck = $this->validateScores($request);
+        $scoresCheck = $this->validateScores($request);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
-        } /*elseif (!$scoresCheck) {
+        } elseif (!$scoresCheck) {
             Session::flash('error', "Please ensure the scores are in correct format.");
             return Redirect::back()->withInput();
-        } else {*/
+        } else {
             $student = Student::where('id', $id)->first();
             $score = Score::where('student_id', $id)->first();
 
@@ -253,22 +275,49 @@ class StudentController extends Controller {
             $student->country_iso3 = $iso3;
             $student->image = $image;
 
+            $student->save();
+
             $score->mc = implode(",", $request->get('mc'));
             $score->tc = implode(",", $request->get('tc'));
             $score->hw = implode(",", $request->get('hw'));
             $score->pb = implode(",", $request->get('pb'));
             $score->ks = implode(",", $request->get('ks'));
-            $score->ac = implode(",", $request->get('ac'));
 
-            $student->save();
+            $ac_types = $request->get('ac_types');
+            $ac_weeks = $request->get('ac_weeks');
+            $ac_reasons = $request->get('ac_reasons');
+
+            $temp = array();
+            for ($i = 0; $i < 8; $i++) {
+                $temp[] = "x";
+                $count = 0;
+                for ($j = 0; $j < count($ac_weeks); $j++) {
+                    if ($ac_weeks[$j] == $i + 1) {
+                        $count++;
+                        $temp[$i] = (string) $count;
+                    }
+                }
+            }
+            $score->ac = implode(",", $temp);
+
             $score->save();
 
+            DB::table('student_achievement')->where('student_id', $id)->delete();
+
+            for ($i = 0; $i < count($ac_types); $i++) {
+                DB::table('student_achievement')->insert([
+                    'student_id' => $id,
+                    'achievement_id' => $ac_types[$i],
+                    'week' => $ac_weeks[$i],
+                    'reason' => $ac_reasons[$i],
+                ]);
+            }
 
             Session::flash('alert-success', $student->name . "'s profile updated!");
             return Redirect::to('student/' . $id);
-        //}
+        }
     }
-    /*
+
     private function validateScores(Request $request) {
 
         $mc = $request->get('mc');
@@ -328,19 +377,9 @@ class StudentController extends Controller {
             }
         }
 
-        foreach ($ac as $var) {
-            if (is_numeric($var)) {
-                if (!ctype_digit($var) || $var > 4) {
-                    return false;
-                }
-            } elseif ($var !== "x") {
-                return false;
-            }
-        }
-
         return true;
     }
-    */
+
     private function makeNameValidator(Request $request) {
         $rules = [
             'nick' => 'required|min:4|max:30',

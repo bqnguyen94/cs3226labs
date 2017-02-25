@@ -14,10 +14,11 @@ class CreateStudentAchievementTable extends Migration
     public function up()
     {
         Schema::create('student_achievement', function (Blueprint $table) {
-			$table->string('id');
+			$table->increments('id');
+            $table->integer('student_id')->unsigned();
+            $table->integer('achievement_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
 			$table->foreign('achievement_id')->references('id')->on('achievements')->onDelete('cascade');
-            $table->integer('stars');
             $table->string('reason');
             $table->string('week');
             $table->timestamps();

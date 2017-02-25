@@ -38,17 +38,21 @@ function updateSums() {
 $(document).ready(updateSums);
 $('.score-input').change(updateSums);
 
-var ac = 0;
-function education_fields() {
+function add_ac_fields() {
     ac++;
     var objTo = document.getElementById('achievement-panel')
     var divtest = document.createElement("div");
 	divtest.setAttribute("class", "form-group removeclass" + ac);
 	var rdiv = 'removeclass' + ac;
-    divtest.innerHTML = '<div class="row"><div class="col-sm-3 nopadding"><div class="form-group has-feedback"><div class="input-group"><div class="input-group-btn"><button class="btn btn-danger" type="button"  onclick="remove_education_fields('+ ac +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div><select class="form-control dropdown" id="ac_type" name="ac_types[]"><option selected="selected" value="">Achievement</option><option value="1">Let it begins</option><option value="2">Quick starter</option><option value="3">Active in class</option><option value="4">Surprise us</option><option value="5">High determination</option><option value="6">Bookworm</option><option value="7">Kattis apprentice</option><option value="8">CodeForces Specialist</option></select></div></div></div><div class="col-sm-2 nopadding"><div class="form-group has-feedback"><select class="form-control dropdown" id="ac_star" name="ac_stars[]"><option selected="selected" value="">Stars</option></select></div></div><div class="col-sm-2 nopadding"><div class="form-group has-feedback"><select class="form-control dropdown" id="ac_week" name="ac_weeks[]"><option selected="selected" value="">Week</option></select></div></div><div class="col-sm-5 nopadding"><div class="form-group"><input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="" placeholder="Reason"></div></div></div>';
+    divtest.innerHTML = '<div class="row achievement-row"><div class="col-sm-3 nopadding"><div class="form-group has-feedback"><div class="input-group"><div class="input-group-btn"><button class="btn btn-danger" type="button"  onclick="remove_ac_fields(' + ac + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div><select class="form-control dropdown" id="ac_type" name="ac_types[]" required><option selected="selected" value="">Achievement</option><option value="1">Let it begins</option><option value="2">Quick starter</option><option value="3">Active in class</option><option value="4">Surprise us</option><option value="5">High determination</option><option value="6">Bookworm</option><option value="7">Kattis apprentice</option><option value="8">CodeForces Specialist</option></select></div><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div></div><div class="col-sm-2 nopadding"><div class="form-group has-feedback"><select class="form-control dropdown" id="ac_week" name="ac_weeks[]" required><option selected="selected" value="">Week</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div></div><div class="col-sm-7 nopadding"><div class="form-group has-feedback"><input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="" placeholder="Reason" maxlength="30" required><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div></div></div>';
 
-    objTo.appendChild(divtest)
+    objTo.appendChild(divtest);
+    $('form').validator('update');
 }
-function remove_education_fields(rid) {
-   $('.removeclass'+rid).remove();
+function remove_ac_fields(rid) {
+   $('.removeclass' + rid).remove();
+   $('form').validator('update');
 }
+$('#btn-submit').on('click', function() {
+    $('form').validator('validate');
+});

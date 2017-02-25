@@ -188,23 +188,7 @@
                 }
                 ?>
             </tr>
-            <tr>
-                <td>Achievements</td>
-                <td id="sum-ac" class="hidden-xs"></td>
-                <?php
-                $acs = explode(",", $score["ac"]);
-                for ($i = 0; $i < count($acs); $i++) {
-                ?>
-                <td>
-                    <div class="form-group has-feedback">
-                        <input required="required" class="score-input form-control" name="ac[]" type="text" pattern="(^(?!$)[0-4]?$)|x" value="<?php echo $acs[$i] ?>" style="text-align: center">
-                        <span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
-                    </div>
-                </td>
-                <?php
-                }
-                ?>
-            </tr>
+
             <tr>
                 <td>Sub Total</td>
                 <td id="sum"></td>
@@ -216,52 +200,134 @@
         <p>
             <b>Achievements</b>
         </p>
-    </div>
+        <?php
+        $count = 0;
+        foreach ($achievements as $achievement) {
+            $count++;
+        ?>
+        <div class="form-group removeclass<?php echo $count ?>">
+        <div class="row achievement-row">
+            <div class="col-sm-3 nopadding">
+                <div class="form-group has-feedback">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn btn-danger" type="button"  onclick="remove_ac_fields(<?php echo $count ?>);"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+                        </div>
+                        <select class="form-control dropdown" id="ac_type" name="ac_types[]" required>
+                            <option value="">Achievement</option>
+                            <?php
+                            foreach ($allAchievements as $allAchievement) {
+                                if ($allAchievement->id == $achievement->achievement_id) {
+                            ?>
+                                    <option selected="selected" value="<?php echo $allAchievement->id ?>"><?php echo $allAchievement->achievement_name ?></option>
+                            <?php
+                                } else {
+                            ?>
+                                    <option value="<?php echo $allAchievement->id ?>"><?php echo $allAchievement->achievement_name ?></option>
+                            <?php
+                                }
+                            ?>
 
-    <div class="row">
-        <div class="col-sm-3 nopadding">
-            <div class="form-group has-feedback">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button class="btn btn-success" type="button"  onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                            <?php
+                            }
+                            ?>
+                        </select>
                     </div>
-                    <select class="form-control dropdown" id="ac_type" name="ac_types[]">
-                        <option selected="selected" value="">Achievement</option>
-                        <option value="1">Let it begins</option>
-                        <option value="2">Quick starter</option>
-                        <option value="3">Active in class</option>
-                        <option value="4">Surprise us</option>
-                        <option value="5">High determination</option>
-                        <option value="6">Bookworm</option>
-                        <option value="7">Kattis apprentice</option>
-                        <option value="8">CodeForces Specialist</option>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-sm-2 nopadding">
+                <div class="form-group has-feedback">
+                    <select class="form-control dropdown" id="ac_week" name="ac_weeks[]" required>
+                        <option selected="selected" value="">Week</option>
+                        <?php
+                        for ($i = 1; $i <= 8; $i++) {
+                            if ($i == $achievement->week) {
+                        ?>
+                                <option selected="selected" value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php
+                            } else {
+                        ?>
+                                <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php
+                            }
+                        ?>
+
+                        <?php
+                        }
+                        ?>
                     </select>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-sm-7 nopadding">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="<?php echo $achievement->reason ?>" placeholder="Reason" maxlength="30" required>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-2 nopadding">
-            <div class="form-group has-feedback">
-                <select class="form-control dropdown" id="ac_star" name="ac_stars[]">
-                    <option selected="selected" value="">Stars</option>
-                </select>
-            </div>
         </div>
-        <div class="col-sm-2 nopadding">
-            <div class="form-group has-feedback">
-                <select class="form-control dropdown" id="ac_week" name="ac_weeks[]">
-                    <option selected="selected" value="">Week</option>
-                </select>
+        <?php
+        }
+        ?>
+        <!--<div class="row achievement-row">
+            <div class="col-sm-3 nopadding">
+                <div class="form-group has-feedback">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn btn-danger" type="button"  onclick="remove_ac_fields();"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+                        </div>
+                        <select class="form-control dropdown" id="ac_type" name="ac_types[]" required>
+                            <option selected="selected" value="">Achievement</option>
+                            <option value="1">Let it begins</option>
+                            <option value="2">Quick starter</option>
+                            <option value="3">Active in class</option>
+                            <option value="4">Surprise us</option>
+                            <option value="5">High determination</option>
+                            <option value="6">Bookworm</option>
+                            <option value="7">Kattis apprentice</option>
+                            <option value="8">CodeForces Specialist</option>
+                        </select>
+                    </div>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-5 nopadding">
-            <div class="form-group">
-                <input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="" placeholder="Reason">
+            <div class="col-sm-2 nopadding">
+                <div class="form-group has-feedback">
+                    <select class="form-control dropdown" id="ac_week" name="ac_weeks[]" required>
+                        <option selected="selected" value="">Week</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
             </div>
-        </div>
+            <div class="col-sm-7 nopadding">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="" placeholder="Reason" maxlength="30" required>
+                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>-->
     </div>
+
+    <button class="btn btn-success" type="button"  onclick="add_ac_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
     <br />
     <div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-success">Update</button>
+        <button id="btn-submit" type="submit" class="btn btn-success">Update</button>
     </div>
     {!! Form::close() !!}
 </div>
@@ -272,4 +338,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/fileinput.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <script type="text/javascript" charset="utf8" src="/js/edit.js"></script>
+<script>
+    var ac = <?php echo count($achievements) ?>
+</script>
 @stop

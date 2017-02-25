@@ -34,7 +34,6 @@ class Score extends Model
             $all[2] = Score::splitScores($score->hw);
             $all[3] = Score::splitScores($score->pb);
             $all[4] = Score::splitScores($score->ks);
-            $all[5] = Score::splitScores($score->ac);
 
             $max = max([count($all[0]), count($all[1]), count($all[2]), count($all[3]), count($all[4]), count($all[5])]);
 

@@ -11,8 +11,9 @@ class Student extends Model
     public function score() {
         return $this.hasOne('Score');
     }
-    
+/*
     public function achievements(){
         $this->belongsToMany('App\Achievement');
     }
+*/
 }
