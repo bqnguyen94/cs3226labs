@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAchivementsTable extends Migration
+class CreateAchievementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateAchivementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('achivements', function (Blueprint $table) {
+        Schema::create('achievements', function (Blueprint $table) {
             $table->increments('id');
-			$table->timestamps();
-			$table->string('achievementName');
+			$table->string('achievement_name');
 			$table->integer('stars');
-			$table->string('reason');
-			$table->string('date');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ class CreateAchivementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('achivements');
+        Schema::dropIfExists('achievements');
     }
 }
