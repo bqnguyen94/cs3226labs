@@ -117,8 +117,17 @@
             foreach ($achievements as $achievement) {
                 $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
                 $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
+                if ($max != 1) {
+
             ?>
             <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
+            <?php
+                } else {
+            ?>
+            <li><?php echo $name ?></li>
+            <?php
+                }
+            ?>
             <?php
             }
             ?>
