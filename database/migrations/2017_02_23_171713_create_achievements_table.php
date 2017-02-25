@@ -16,7 +16,7 @@ class CreateAchievementsTable extends Migration
         Schema::create('achievements', function (Blueprint $table) {
             $table->increments('id');
 			$table->string('achievement_name');
-			$table->integer('stars');
+            $table->integer('max_stars');
             $table->timestamps();
         });
     }

@@ -17,8 +17,9 @@ class CreateStudentAchievementTable extends Migration
 			$table->string('id');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
 			$table->foreign('achievement_id')->references('id')->on('achievements')->onDelete('cascade');
+            $table->integer('stars');
             $table->string('reason');
-            $table->string('date');
+            $table->string('week');
             $table->timestamps();
         });
     }
