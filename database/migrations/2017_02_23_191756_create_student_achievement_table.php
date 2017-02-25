@@ -15,8 +15,8 @@ class CreateStudentAchievementTable extends Migration
     {
         Schema::create('student_achievement', function (Blueprint $table) {
 			$table->string('id');
-            $table->unsignedInteger('student_id');
-			$table->unsignedInteger('achievement_id');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+			$table->foreign('achievement_id')->references('id')->on('achievements')->onDelete('cascade');
             $table->string('reason');
             $table->string('date');
             $table->timestamps();
