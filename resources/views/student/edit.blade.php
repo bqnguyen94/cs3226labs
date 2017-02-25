@@ -39,8 +39,8 @@
         <div class="col-md-6 col-xs-6">
             <div class="form-group has-feedback">
                 {!! Form::label('kattis', 'Kattis account:', ['class' => 'control-label']) !!}
-                <div class="input-group hidebtn-xs">
-                    <span class="input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
+                <div class="input-group">
+                    <span class="hidden-xs input-group-addon" id="basic-addon3">https://open.kattis.com/users/</span>
                     <input type="text" class="form-control" name="kattis" value="<?php echo $student->kattis ?>" data-minlength="4" maxlength="30" data-minlength-error="Your kattis account name really that short meh?!" required>
                 </div>
                 <span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
@@ -211,6 +211,54 @@
             </tr>
         </tbody>
     </table>
+
+    <div id="achievement-panel">
+        <p>
+            <b>Achievements</b>
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 nopadding">
+            <div class="form-group has-feedback">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button class="btn btn-success" type="button"  onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                    </div>
+                    <select class="form-control dropdown" id="ac_type" name="ac_types[]">
+                        <option selected="selected" value="">Achievement</option>
+                        <option value="1">Let it begins</option>
+                        <option value="2">Quick starter</option>
+                        <option value="3">Active in class</option>
+                        <option value="4">Surprise us</option>
+                        <option value="5">High determination</option>
+                        <option value="6">Bookworm</option>
+                        <option value="7">Kattis apprentice</option>
+                        <option value="8">CodeForces Specialist</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 nopadding">
+            <div class="form-group has-feedback">
+                <select class="form-control dropdown" id="ac_star" name="ac_stars[]">
+                    <option selected="selected" value="">Stars</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-2 nopadding">
+            <div class="form-group has-feedback">
+                <select class="form-control dropdown" id="ac_week" name="ac_weeks[]">
+                    <option selected="selected" value="">Week</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-5 nopadding">
+            <div class="form-group">
+                <input type="text" class="form-control" id="ac_reason" name="ac_reasons[]" value="" placeholder="Reason">
+            </div>
+        </div>
+    </div>
     <br />
     <div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-success">Update</button>
