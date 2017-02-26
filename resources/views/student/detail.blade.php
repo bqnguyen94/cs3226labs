@@ -27,19 +27,19 @@
             <ol>
                 <?php
                 foreach ($achievements as $achievement) {
-                $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
-                $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
-                if ($max != 1) {
+                    $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
+                    $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
+                    if ($max != 1) {
 
                 ?>
-                <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
-                <?php
-                } else {
-                ?>
-                <li><?php echo $name ?></li>
-                <?php
-                }
-                ?>
+                    <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
+                    <?php
+                    } else {
+                    ?>
+                    <li><?php echo $name ?></li>
+                    <?php
+                    }
+                    ?>
                 <?php
                 }
                 ?>
@@ -90,8 +90,8 @@
         <table  class="table table-condensed">
             <thead>
                 <tr>
-                    <th width="100px"></th>
-                    <th width="100px">Component</th>
+                    <th width="70px"></th>
+                    <th width="150px">Component</th>
                     <th width="100px">Sum</th>
                     <th class="hidden-xs hidden-sm">01</th>
                     <th class="hidden-xs hidden-sm">02</th>
@@ -196,8 +196,8 @@
                 <a class="col-md-8 col-lg-4 col-md-offset-2 col-lg-offset-4 btn btn-success" href=<?php echo '"/student/' . $student->id . '/edit"' ?>>Update</a>
             @endcan
         @endif
+        </div>
     </div>
-
 </div>
 @stop
 
