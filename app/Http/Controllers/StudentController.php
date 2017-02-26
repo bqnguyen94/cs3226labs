@@ -349,7 +349,7 @@ class StudentController extends Controller {
                             ->orderBy('id')
                             ->get();
         for ($i = 1; $i <= count($allAchievements); $i++) {
-            if ($freq[$i] && $freq[$i] > $allAchievements->where('id', $i)->first()->max_stars) {
+            if (isset($freq[$i]) && $freq[$i] > $allAchievements->where('id', $i)->first()->max_stars) {
                 return false;
             }
         }
