@@ -64,9 +64,9 @@
 
     </div>
 
-    <div class="col-xs-12 col-md-offset-3 col-md-9">
-        <ul class=" nav nav-pills" style = "height:80px" role="tablist">
-            <li role="presentation" class=" active" role="presentation" ><a href="#scoretable" aria-controls="1" role="tab" data-toggle="tab">Detialed Score</a></li>
+    <div class="col-xs-12 col-md-offset-4 col-md-4">
+        <ul class=" nav nav-tabs nav-justified" style = "height:80px" role="tablist">
+            <li role="presentation" class=" active" role="presentation" ><a href="#scoretable" aria-controls="1" role="tab" data-toggle="tab">Detailed Score</a></li>
             <li  role="presentation"><a href="#chart" aria-controls="2" role="tab" data-toggle="tab">Graphicalized Performance</a></li>
         </ul>
     </div>
