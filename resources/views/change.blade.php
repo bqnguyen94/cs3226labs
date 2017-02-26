@@ -1,28 +1,28 @@
 @extends('layouts.template') <!-- use template from previous slide -->
 @section('main') <!-- define a section called main -->
-<div class="alert alert-info"> It's WORKING!!</div>
+<div class="alert alert-info"> Updating in progress...</div>
 <div class="container-fluid">
 	<table class="table table-bordered table-striped text-center table-condensed table-hover">
 		<thead>
 			<th>Name</th>
-			<th>Change</th>
+			<th>Role</th>
 			<th>Button to switch role</th>
 			<th>Button to update</th>
 		</thead>
 		<tbody>
-		
+			<script>
+			var count = 1;
+			</script>
+		@foreach($users as $user)
+			
 			<tr>
-				<td>User</td>
-				<td>Role
-				<script>
-					
-				var x = 2;	
-				</script>
+				<td>{{$user->name}}</td>
+				<td>{{$user->role}}</td>
 				
-				</td>
+				
 				<td>
 				<div>
-					<button type ="button" id="demo" onclick="myFunction()"><p id="demo2">Change Role?</p></button>
+					<button type ="button" id="demo" onclick="myFunction(this)">Click to select the role you want this user to change to.</button>
 
 					<script>
 						
@@ -30,45 +30,56 @@
 						var USER = 1;
 						var MOD = 0;
 						var admin = 2;
-						
-					function myFunction() {
+						var x = {{$user->role}}-1;
+						var newId = "demo" + parseInt(count);
+						document.getElementById("demo").setAttribute("id",newId);
+						document.getElementById("demo").setAttribute("id",newId);
+						document.getElementById(newId).setAttribute("tag",count);
+					function myFunction(element) {
 						x = (1 + x)%3;
+						var newId = element.id;
+						
 						if(x == 1){
-							document.getElementById("demo").className = "btn btn-info";
-							document.getElementById("demo").textContent="USER";
+							
+							document.getElementById(newId).className = "btn btn-info";
+							document.getElementById(newId).textContent="USER";
+							//document.getElementById("demo").setAttribute("id",newId);
 						}else if(x == 0){
-							document.getElementById("demo").className = "btn btn-warning";
-							document.getElementById("demo").textContent="MOD";
+							document.getElementById(newId).className = "btn btn-warning";
+							document.getElementById(newId).textContent="MOD";
+							//document.getElementById("demo").setAttribute("id",newId);
 						}
 						else if(x == 2){
-							document.getElementById("demo").className = "btn btn-danger";
-							document.getElementById("demo").textContent="ADMIN";
+							document.getElementById(newId).className = "btn btn-danger";
+							document.getElementById(newId).textContent="ADMIN";
+							//document.getElementById("demo").setAttribute("id",newId);
 						}else{
-							document.getElementById("demo").className = "btn btn-default";
-							document.getElementById("demo").textContent="ERROR";
+							document.getElementById(newId).className = "btn btn-default";
+							document.getElementById(newId).textContent="ERROR";
+							//document.getElementById("demo").setAttribute("id",newId);
 						}
 					}
 					</script>
 				</div>
 				
 				</td>
-				<td>Update changes to database
+				<td>
 				
 				<div>
-					<button type ="button" id="update" onclick="updateToDatabase"><p id="demo2">Update</p></button>
+					<button type ="button" id="update" onclick="updateToDatabase"><p id="updateButton">Update</p></button>
 
 					<script>
-						
-						
-					function updateToDatabase() {
-						document.getElementById("demo").className = "btn btn-info";
-						
-					}
+//					function updateToDatabase() {
+//						document.getElementById("demo").className = "btn btn-info";
+//						
+//					}
 					</script>	
 				</div>
 				
 				</td>
 			</tr>
+			<script>count = count + 1;</script>
+			@endforeach
 			
 		</tbody>
 	</table>
