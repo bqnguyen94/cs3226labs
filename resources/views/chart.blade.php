@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @section('main')
 <div class="container-fluid">
-    <div id="chart" style='width: 100%; height: 900px'></div>
+    <div id="chart" style='width: 100%; height: 1000px'></div>
     <div id="chartfilter"></div>
 </div>
 
