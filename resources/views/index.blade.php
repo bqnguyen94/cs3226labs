@@ -14,7 +14,7 @@
                     <tr>
                         <th width="10px">R</th>
                         <th width="60px" class="hidden-xs">Flag</th>
-                        <th class="hidden-xs">Name</th>
+                        <th class="hidden-xs">Student Name</th>
                         <th class="hidden-sm hidden-md hidden-lg">Nick</th>
                         <th class="hidden-xs hidden-sm row-pink">MC</th>
                         <th class="hidden-xs hidden-sm row-pink">TC</th>
