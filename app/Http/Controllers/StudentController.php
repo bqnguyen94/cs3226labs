@@ -27,7 +27,11 @@ class StudentController extends Controller {
     }
 
     public function index() {
-        $students = Student::all();
+        if(Auth::user()==User::ROLE_ADMIN){
+            $students = Student::all();
+        }else{
+            $students = Student::all()->sortByDesc('');
+        }
         $scoresDB = array();
         foreach(Score::all() as $score) {
             $mcs = array_map("floatval", array_filter(explode(",", $score->mc), "is_numeric"));
