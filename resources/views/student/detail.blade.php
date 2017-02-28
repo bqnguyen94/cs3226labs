@@ -113,75 +113,79 @@
                             <th class="hidden-xs hidden-sm">12</th>
                         </tr>
                         </thead>
-                        @can('isAdmin',Auth::user())
-                            <tbody>
-                            <tr>
+                        <tbody>
+                        <tr>
+                        <?php
+                        $keymap = [
+                                'mc' => "Mini Contests",
+                                'tc' => 'Team Contests',
+                                'hw' => 'Homework',
+                                'pb' => 'Problem Bs',
+                                'ks' => 'Kattis Sets',
+                                'ac' => 'Achievements',
+                        ];
+
+                        $keys = array_keys($scores);
+                        foreach ($keys as $key) {
+                        ?>
+                        <tr>
                             <?php
-                            $keymap = [
-                                    'mc' => "Mini Contests",
-                                    'tc' => 'Team Contests',
-                                    'hw' => 'Homework',
-                                    'pb' => 'Problem Bs',
-                                    'ks' => 'Kattis Sets',
-                                    'ac' => 'Achievements',
-                            ];
+                            if($key == "mc"){ ?>
+                            <td style="vertical-align:middle" rowspan="2"><b>SPE<br> <?php echo $spe ?></b></td>
+                            <?php
+                            }
+                            if($key == "hw"){ ?>
+                            <td style="vertical-align:middle" rowspan="4"><b>DIL<br><?php echo $dil?> </b></td>
+                            <?php
+                            } ?>
 
-                            $keys = array_keys($scores);
-                            foreach ($keys as $key) {
+
+                            <td><?php echo $keymap[$key] ?></td>
+                            <?php
+                            if ($key == "mc" || $key == "tc" || $key == "hw") {
                             ?>
-                            <tr>
-                                <?php
-                                if($key == "mc"){ ?>
-                                <td style="vertical-align:middle" rowspan="2"><b>SPE<br> <?php echo $spe ?></b></td>
-                                <?php
-                                }
-                                if($key == "hw"){ ?>
-                                <td style="vertical-align:middle" rowspan="4"><b>DIL<br><?php echo $dil?> </b></td>
-                                <?php
-                                } ?>
-
-
-                                <td><?php echo $keymap[$key] ?></td>
-                                <?php
-                                if ($key == "mc" || $key == "tc" || $key == "hw") {
-                                ?>
-                                <td><?php echo sprintf("%.1f", array_sum($scores[$key])) ?></td>
-                                <?php
-                                } else {
-                                ?>
-                                <td><?php echo array_sum($scores[$key]) ?></td>
-                                <?php
-                                }
-                                for ($i = 0; $i < count($scores[$key]); $i++) {
-                                if (is_numeric($scores[$key][$i])) {
-                                if ($key == "mc" || $key == "tc" || $key == "hw") {
-                                ?>
-                                <td class="hidden-xs hidden-sm"><?php echo sprintf("%.1f", $scores[$key][$i]) ?></td>
-                                <?php
-                                } else {
-                                ?>
-                                <td class="hidden-xs hidden-sm"><?php echo $scores[$key][$i] ?></td>
-                                <?php
-                                }
-                                } else {
-                                ?>
-                                <td class="hidden-xs hidden-sm empty"><?php echo $scores[$key][$i] ?></td>
-                                <?php
-                                }
+                            <td><?php echo sprintf("%.1f", array_sum($scores[$key])) ?></td>
+                            <?php
+                            } else {
+                            ?>
+                            <td><?php echo array_sum($scores[$key]) ?></td>
+                            <?php
+                            }
+                            for ($i = 0; $i < count($scores[$key]); $i++) {
+                            if (is_numeric($scores[$key][$i])) {
+                            if ($key == "mc" || $key == "tc" || $key == "hw") {
                                 ?>
                                 <?php
-                                }
-                                ?>
-                            </tr>
+                            }
+                            for ($i = 0; $i < count($scores[$key]); $i++) {
+                            if (is_numeric($scores[$key][$i])) {
+                            if ($key == "mc" || $key == "tc" || $key == "hw") {
+                            ?>
+                            <td class="hidden-xs hidden-sm"><?php echo sprintf("%.1f", $scores[$key][$i]) ?></td>
+                            <?php
+                            } else {
+                            ?>
+                            <td class="hidden-xs hidden-sm"><?php echo $scores[$key][$i] ?></td>
+                            <?php
+                            }
+                            } else {
+                            ?>
+                            <td class="hidden-xs hidden-sm empty"><?php echo $scores[$key][$i] ?></td>
                             <?php
                             }
                             ?>
-                            <tr>
-                                <td colspan="2"><b>Sum</b></td>
-                                <td><b> <?php echo $sum?> </b></td>
-                            </tr>
-                            </tbody>
-                        @endcan
+                            <?php
+                            }
+                            ?>
+                        </tr>
+                        <?php
+                        }
+                        ?>
+                        <tr>
+                            <td colspan="2"><b>Sum</b></td>
+                            <td><b> <?php echo $sum?> </b></td>
+                        </tr>
+                        </tbody>
                     </table>
                 </div>
 
