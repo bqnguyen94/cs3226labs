@@ -117,12 +117,12 @@
                         <tr>
                         <?php
                         $keymap = [
-                                'mc' => "Mini Contests",
-                                'tc' => 'Team Contests',
-                                'hw' => 'Homework',
-                                'pb' => 'Problem Bs',
-                                'ks' => 'Kattis Sets',
-                                'ac' => 'Achievements',
+                            'mc' => "Mini Contests",
+                            'tc' => 'Team Contests',
+                            'hw' => 'Homework',
+                            'pb' => 'Problem Bs',
+                            'ks' => 'Kattis Sets',
+                            'ac' => 'Achievements',
                         ];
 
                         $keys = array_keys($scores);
@@ -186,6 +186,7 @@
                             <td><b> <?php echo $sum?> </b></td>
                         </tr>
                         </tbody>
+                        <?php }} ?>
                     </table>
                 </div>
 
