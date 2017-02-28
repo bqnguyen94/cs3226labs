@@ -66,16 +66,7 @@
                 $max["sum"] = array_unique($max["sum"]);
                 rsort($max["sum"]);
 
-                $i = 0;
                 foreach ($scoresDB as $scores) {
-                if (!Auth::user() || Auth::user()->role() != User::ROLE_ADMIN) {
-                    if ($i >= 7) {
-                        break;
-                    }
-                    if(Auth::user()->role()==User::ROLE_USER && Auth::user()->student()->id >=7){
-                        //TODO
-                    }
-                }
                 $student = $students->where('id', $scores['student_id'])->first();
                 $flag_cdn = "/img/flag_default.jpg";
                 if ($student->country_iso2 !== "OT") {
@@ -92,7 +83,6 @@
                 $dil = $hw + $pb + $ks + $ac;
                 $sum = $spe + $dil;
 
-                $i++;
                 ?>
                 <?php
                 switch ($sum) {
