@@ -31,6 +31,7 @@ class StudentController extends Controller {
             $students = Student::all();
         }else{
             $students = Student::all()->sortByDesc('');
+            //query all students, sortByDesc by the sum, check the position of Auth::user, then limit/cut and append accordingly
         }
         $scoresDB = array();
         foreach(Score::all() as $score) {
