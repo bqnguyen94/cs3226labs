@@ -72,6 +72,9 @@
                     if ($i >= 7) {
                         break;
                     }
+                    if(Auth::user()->role()==User::ROLE_USER && Auth::user()->student()->id >=7){
+                        //TODO
+                    }
                 }
                 $student = $students->where('id', $scores['student_id'])->first();
                 $flag_cdn = "/img/flag_default.jpg";
