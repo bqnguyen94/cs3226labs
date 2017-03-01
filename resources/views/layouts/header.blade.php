@@ -79,8 +79,13 @@
                             }
                             ?>
                             </li>
-                            <li role="separator" class="divider"></li>
                         @endcan
+                        @can('isUser', Auth::user())
+                        <li>
+                            <a href="/messages">Messages</a>
+                        </li>
+                        @endcan
+                        <li role="separator" class="divider"></li>
                         <li>
                             <a href="/logout">Logout</a>
                         </li>
