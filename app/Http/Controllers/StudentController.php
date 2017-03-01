@@ -27,12 +27,7 @@ class StudentController extends Controller {
     }
 
     public function index() {
-        if(Auth::user()==User::ROLE_ADMIN){
-            $students = Student::all();
-        }else{
-            $students = Student::all()->sortByDesc('');
-            //query all students, sortByDesc by the sum, check the position of Auth::user, then limit/cut and append accordingly
-        }
+        $students = Student::all();
         $scoresDB = array();
         foreach(Score::all() as $score) {
             $mcs = array_map("floatval", array_filter(explode(",", $score->mc), "is_numeric"));

@@ -83,7 +83,7 @@
             <input name='image' id="input-1" type="file" class="file">
         </div>
     </div>
-
+    <br/>
     <div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-success">Submit</button>
     </div>

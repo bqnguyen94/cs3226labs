@@ -10,7 +10,7 @@ $("#achievement").change(function() {
         $("table tbody").append(markup);
     }
     for (var i = 0; i < data[key].length; i++) {
-        var markup = "<td style='text-align:center'><h3><a href='/student/" + data[key][i].student_id + "'>" + data[key][i].student_name + "</a></h3></td>";
+        var markup = "<tr><td style='text-align:center'><h3><a href='/student/" + data[key][i].student_id + "'>" + data[key][i].student_name + "</a></h3></td></tr>";
         $("table tbody").append(markup);
     }
 });

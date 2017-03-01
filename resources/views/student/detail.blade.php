@@ -19,27 +19,24 @@
                 </div>
 
                 <div class="col-xs-12 ">
-
-
-                    <p><span class="glyphicon glyphicon-user"></span> Kattis account: <a href="#"
-                                                                                         target="_blank"><b><?php echo $student->kattis ?></b></a><br>
+                    <p><span class="glyphicon glyphicon-user"></span> Kattis account: <a href="#" target="_blank"><b><?php echo $student->kattis ?></b></a><br>
                     <p><span class="glyphicon glyphicon-star"></span> Achievement details: </p>
 
                     <ol>
                         <?php
                         foreach ($achievements as $achievement) {
-                        $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
-                        $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
-                        if ($max != 1) {
+                            $name = $allAchievements->where('id', $achievement->achievement_id)->first()->achievement_name;
+                            $max = $allAchievements->where('id', $achievement->achievement_id)->first()->max_stars;
+                            if ($max != 1) {
 
                         ?>
-                        <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
+                                <li><?php echo $name . " " . $achievement->cnt . "/" . $max ?></li>
                         <?php
-                        } else {
+                            } else {
                         ?>
-                        <li><?php echo $name ?></li>
+                                <li><?php echo $name ?></li>
                         <?php
-                        }
+                            }
                         ?>
                         <?php
                         }
@@ -69,18 +66,12 @@
 
         <div class="col-xs-12 col-md-offset-4 col-md-4">
             <ul class=" nav nav-tabs nav-justified" style="height:80px" role="tablist">
-                <li role="presentation" class=" active" role="presentation"><a href="#scoretable" aria-controls="1"
-                                                                               role="tab" data-toggle="tab">Detailed
-                        Score</a></li>
-                <li role="presentation"><a href="#chart" aria-controls="2" role="tab" data-toggle="tab">Graphicalized
-                        Performance</a></li>
+                <li role="presentation" class=" active" role="presentation"><a href="#scoretable" aria-controls="1" role="tab" data-toggle="tab">Detailed Score</a></li>
+                <li role="presentation"><a href="#chart" aria-controls="2" role="tab" data-toggle="tab">Graphicalized Performance</a></li>
             </ul>
         </div>
 
-
         <!-- Tab panes -->
-
-
         <div class="col-xs-12">
 
             <?php
@@ -90,8 +81,6 @@
             ?>
 
             <div class="tab-content">
-
-
                 <div role="tabpanel" class="tab-pane active fade in" id="scoretable">
                     <table class="table table-condensed">
                         <thead>
@@ -130,49 +119,45 @@
                         ?>
                         <tr>
                             <?php
-                            if($key == "mc"){ ?>
-                            <td style="vertical-align:middle" rowspan="2"><b>SPE<br> <?php echo $spe ?></b></td>
+                            if($key == "mc") {
+                            ?>
+                                <td style="vertical-align:middle" rowspan="2"><b>SPE<br> <?php echo $spe ?></b></td>
                             <?php
                             }
-                            if($key == "hw"){ ?>
-                            <td style="vertical-align:middle" rowspan="4"><b>DIL<br><?php echo $dil?> </b></td>
+                            if($key == "hw") {
+                            ?>
+                                <td style="vertical-align:middle" rowspan="4"><b>DIL<br><?php echo $dil?> </b></td>
                             <?php
-                            } ?>
-
+                            }
+                            ?>
 
                             <td><?php echo $keymap[$key] ?></td>
                             <?php
                             if ($key == "mc" || $key == "tc" || $key == "hw") {
                             ?>
-                            <td><?php echo sprintf("%.1f", array_sum($scores[$key])) ?></td>
+                                <td><?php echo sprintf("%.1f", array_sum($scores[$key])) ?></td>
                             <?php
                             } else {
                             ?>
-                            <td><?php echo array_sum($scores[$key]) ?></td>
+                                <td><?php echo array_sum($scores[$key]) ?></td>
                             <?php
                             }
                             for ($i = 0; $i < count($scores[$key]); $i++) {
-                            if (is_numeric($scores[$key][$i])) {
-                            if ($key == "mc" || $key == "tc" || $key == "hw") {
-                                ?>
-                                <?php
-                            }
-                            for ($i = 0; $i < count($scores[$key]); $i++) {
-                            if (is_numeric($scores[$key][$i])) {
-                            if ($key == "mc" || $key == "tc" || $key == "hw") {
+                                if (is_numeric($scores[$key][$i])) {
+                                    if ($key == "mc" || $key == "tc" || $key == "hw") {
                             ?>
-                            <td class="hidden-xs hidden-sm"><?php echo sprintf("%.1f", $scores[$key][$i]) ?></td>
+                                        <td class="hidden-xs hidden-sm"><?php echo sprintf("%.1f", $scores[$key][$i]) ?></td>
                             <?php
-                            } else {
+                                    } else {
                             ?>
-                            <td class="hidden-xs hidden-sm"><?php echo $scores[$key][$i] ?></td>
+                                        <td class="hidden-xs hidden-sm"><?php echo $scores[$key][$i] ?></td>
                             <?php
-                            }
-                            } else {
+                                    }
+                                } else {
                             ?>
-                            <td class="hidden-xs hidden-sm empty"><?php echo $scores[$key][$i] ?></td>
+                                    <td class="hidden-xs hidden-sm empty"><?php echo $scores[$key][$i] ?></td>
                             <?php
-                            }
+                                }
                             ?>
                             <?php
                             }
@@ -186,10 +171,8 @@
                             <td><b> <?php echo $sum?> </b></td>
                         </tr>
                         </tbody>
-                        <?php }} ?>
                     </table>
                 </div>
-
 
                 <div role="tabpanel" class="tab-pane fade col-xs-12 col-md-4 col-md-offset-4" id="chart">
                     <canvas role="tabpanel" class="tab-pane" id="myChart" style="background-color: white" width="200"
