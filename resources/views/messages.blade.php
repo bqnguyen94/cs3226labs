@@ -139,21 +139,25 @@
                 </div>
             </div>
         </div>
-        <form id="student-new-message">
-            <div class="form-group">
-                {{ csrf_field() }}
-                <div class="input-group">
-                    <input id="student_id" name="student_id" type="hidden" value="<?php echo $message["student_id"] ?>">
-                    <input id="message" name="message" type="text" class="form-control" placeholder="Enter Message" required/>
-                    <span class="input-group-btn">
-                        <button id="btn-send-new-message" class="btn btn-info" type="button">SEND NEW MESSAGE</button>
-                    </span>
-                </div>
-            </div>
-        </form>
         <?php
         }
         ?>
+    <?php
+    }
+    if (Auth::user()->role == App\User::ROLE_USER) {
+    ?>
+    <form id="student-new-message">
+        <div class="form-group">
+            {{ csrf_field() }}
+            <div class="input-group">
+                <input id="student_id" name="student_id" type="hidden" value="<?php echo $message["student_id"] ?>">
+                <input id="message" name="message" type="text" class="form-control" placeholder="Enter Message" required/>
+                <span class="input-group-btn">
+                    <button id="btn-send-new-message" class="btn btn-info" type="button">SEND NEW MESSAGE</button>
+                </span>
+            </div>
+        </div>
+    </form>
     <?php
     }
     ?>
