@@ -145,12 +145,13 @@
     <?php
     }
     if (Auth::user()->role == App\User::ROLE_USER) {
+        $student_id = App\Student::where('user_id', Auth::user()->id)->first()->id;
     ?>
     <form id="student-new-message">
         <div class="form-group">
             {{ csrf_field() }}
             <div class="input-group">
-                <input id="student_id" name="student_id" type="hidden" value="<?php echo $message["student_id"] ?>">
+                <input id="student_id" name="student_id" type="hidden" value="<?php echo $student_id ?>">
                 <input id="message" name="message" type="text" class="form-control" placeholder="Enter Message" required/>
                 <span class="input-group-btn">
                     <button id="btn-send-new-message" class="btn btn-info" type="button">SEND NEW MESSAGE</button>
