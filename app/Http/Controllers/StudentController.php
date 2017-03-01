@@ -9,12 +9,129 @@ use Illuminate\Support\Facades\DB;
 use App\Student;
 use App\Score;
 use App\User;
+use App\Message;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 
 class StudentController extends Controller {
+
+    public function messages() {
+        if (!Auth::check()) {
+            Session::flash('error', "Oi login first lah!");
+            return Redirect::to('/');
+        }
+
+        $msgs = array();
+        $user = Auth::user();
+        if ($user->role == User::ROLE_ADMIN) {
+            foreach (Message::orderBy('created_at')->get() as $message) {
+                if ($message->reply == null) {
+                    $student = Student::where('id', $message->student_id)->first();
+                    $msgs[] = [
+                        "student_id" => $student->id,
+                        "student_name" => $student->name,
+                        "student_image" => $student->image,
+                        "message" => $message->message,
+                        "reply" => $message->reply,
+                        "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                        "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                    ];
+                }
+            }
+            //replied messages
+            foreach (Message::orderBy('updated_at')->get() as $message) {
+                if ($message->reply != null) {
+                    $student = Student::where('id', $message->student_id)->first();
+                    $msgs[] = [
+                        "student_id" => $student->id,
+                        "student_name" => $student->name,
+                        "student_image" => $student->image,
+                        "message" => $message->message,
+                        "reply" => $message->reply,
+                        "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                        "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                    ];
+                }
+            }
+        } elseif ($user->role == User::ROLE_USER) {
+            $student = Student::where('user_id', $user->id)->first();
+            $message = Message::where('student_id', $student->id)->first();
+            if ($message) {
+                $msgs[] = [
+                    "student_id" => $student->id,
+                    "student_name" => $student->name,
+                    "student_image" => $student->image,
+                    "message" => $message->message,
+                    "reply" => $message->reply,
+                    "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                    "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                ];
+            }
+        }
+        return view('messages')->with('msgs', $msgs);
+    }
+
+    public function adminPostReply(Request $request) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
+        $message = Message::where('student_id', $request->id)->first();
+        /*
+        if (!$message) {
+            Session::flash('error', "Message not found already leh! How ah?");
+            return $this->messages();
+        }
+        */
+        $message->reply = $request->reply;
+        $message->save();
+
+        $student = Student::where('id', $message->student_id)->first();
+        $data = [
+            "student_id" => $student->id,
+            "student_name" => $student->name,
+            "student_image" => $student->image,
+            "message" => $message->message,
+            "reply" => $message->reply,
+            "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+            "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+        ];
+        return response()->json($data);
+    }
+
+    public function studentNewMessage(Request $request) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_USER) {
+            Session::flash('error', "Oi how did you get in here???? GET OUT!");
+            return Redirect::to('/');
+        }
+        if ($request->message == null) {
+            Session::flash('error', "Oi enter something lah!");
+            return redirect()->back();
+        }
+        $message = Message::where('student_id', $request->student_id)->first();
+        if ($message) {
+            $message->delete();
+        }
+
+        $newMessage = Message::create([
+            "student_id" => $request->student_id,
+            "message" => $request->message,
+        ]);
+
+        $student = Student::where('id', $request->student_id)->first();
+        $data = [
+            "student_id" => $student->id,
+            "student_name" => $student->name,
+            "student_image" => $student->image,
+            "message" => $newMessage->message,
+            "reply" => $newMessage->reply,
+            "created_at" => date('D, M j, H:i', strtotime($newMessage->created_at)),
+            "updated_at" => date('D, M j, H:i', strtotime($newMessage->updated_at)),
+        ];
+        return response()->json($data);
+    }
 
     public function batch() {
         if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
@@ -46,15 +163,12 @@ class StudentController extends Controller {
                 'ac' => $acs,
             ];
         }
-        $updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
         $scores_updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
-        if (strtotime($updated_at) < strtotime($scores_updated_at)) {
-            $updated_at = $scores_updated_at;
-        }
+
         return view('index')
                 ->with('students', $students)
                 ->with('scoresDB', $scoresDB)
-                ->with('updated_at', $updated_at);
+                ->with('updated_at', $scores_updated_at);
     }
 
     public function chart() {

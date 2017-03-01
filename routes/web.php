@@ -45,6 +45,12 @@ Route::post('/batch', 'StudentController@checkBatch');
 
 Route::get('/achievements', 'StudentController@achievements');
 
+Route::get('/messages', 'StudentController@messages');
+
+Route::put('adminPostReply', 'StudentController@adminPostReply');
+
+Route::put('studentNewMessage', 'StudentController@studentNewMessage');
+
 //Route::get('fillscores', 'StudentController@fillscores');
 
 /*Route::get('/init', function() {
