@@ -13,6 +13,7 @@
         @yield('link')
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="/js/fade.js"></script>
+        <script type="text/javascript" src="/js/moveUp.js"></script>
     </head>
     <body>
     <script>
@@ -30,7 +31,9 @@
                 <strong>{{ Session::get('alert-success') }}</strong>
             </div>
         @endif
+        <div id="Animate" style="margin-top:20vh">
         @yield('main') <!-- Blade command: include section from child file -->
+        </div>
         @include('layouts.footer') <!-- Blade command: include other blade file -->
     </body>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
