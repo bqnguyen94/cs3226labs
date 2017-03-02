@@ -1,5 +1,5 @@
 function notDisplay(){
-	if(window.location.href!="http://"+window.location.hostname+"/chart"){
+	if(window.location.href!="https://"+window.location.hostname+"/chart"){
    		jQuery('body').css('display','none');
 	}
 }
