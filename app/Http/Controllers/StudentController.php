@@ -25,6 +25,10 @@ class StudentController extends Controller {
 
         $msgs = array();
         $user = Auth::user();
+        if ($user->role != User::ROLE_ADMIN && $user->role != User::ROLE_USER) {
+            Session::flash('error', "No messages for you honey.");
+            return Redirect::to('/');
+        }
         if ($user->role == User::ROLE_ADMIN) {
             foreach (Message::orderBy('created_at')->get() as $message) {
                 if ($message->reply == null) {
@@ -57,17 +61,19 @@ class StudentController extends Controller {
             }
         } elseif ($user->role == User::ROLE_USER) {
             $student = Student::where('user_id', $user->id)->first();
-            $message = Message::where('student_id', $student->id)->first();
-            if ($message) {
-                $msgs[] = [
-                    "student_id" => $student->id,
-                    "student_name" => $student->name,
-                    "student_image" => $student->image,
-                    "message" => $message->message,
-                    "reply" => $message->reply,
-                    "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
-                    "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
-                ];
+            if ($student) {
+                $message = Message::where('student_id', $student->id)->first();
+                if ($message) {
+                    $msgs[] = [
+                        "student_id" => $student->id,
+                        "student_name" => $student->name,
+                        "student_image" => $student->image,
+                        "message" => $message->message,
+                        "reply" => $message->reply,
+                        "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                        "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                    ];
+                }
             }
         }
         return view('messages')->with('msgs', $msgs);

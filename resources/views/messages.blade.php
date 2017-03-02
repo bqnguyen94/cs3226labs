@@ -38,10 +38,10 @@
                             <div class="form-group">
                                 {{ csrf_field() }}
                                 <div class="input-group">
-                                    <input id="student_id" name="student_id" type="hidden" value="<?php echo $message["student_id"] ?>">
-                                    <input id="reply" name="reply" type="text" class="form-control" placeholder="Enter Message" required/>
+                                    <input id="student_id_<?php echo $message["student_id"] ?>" name="student_id" type="hidden" value="<?php echo $message["student_id"] ?>">
+                                    <input id="reply_<?php echo $message["student_id"] ?>" name="reply" type="text" class="form-control" placeholder="Enter Message" required/>
                                     <span class="input-group-btn">
-                                        <button id="btn-send-reply" class="btn btn-success" type="button">REPLY</button>
+                                        <button class="btn btn-success btn-send-reply" type="button" value="<?php echo $message["student_id"] ?>">REPLY</button>
                                     </span>
                                 </div>
                             </div>
@@ -98,9 +98,11 @@
         $student = App\Student::where('user_id', Auth::user()->id)->first();
         if (!$student) {
         ?>
-        <p syle="text-align: center">
-            You are not a student (yet).
-        </p>
+        <div class="row" style="text-align: center">
+            <h4>
+                You are not a student (yet).
+            </h4>
+        </div>
         <?php
         } elseif (count($msgs) == 0) {
         ?>
@@ -124,6 +126,18 @@
                 </div>
             </div>
         </div>
+        <form id="student-new-message">
+            <div class="form-group">
+                {{ csrf_field() }}
+                <div class="input-group">
+                    <input id="student_id" name="student_id" type="hidden" value="<?php echo $student->id ?>">
+                    <input id="message" name="message" type="text" class="form-control" placeholder="Enter Message" required/>
+                    <span class="input-group-btn">
+                        <button id="btn-send-new-message" class="btn btn-info" type="button">SEND NEW MESSAGE</button>
+                    </span>
+                </div>
+            </div>
+        </form>
         <?php
         } else {
             $message = $msgs[0];
@@ -173,9 +187,6 @@
                 </div>
             </div>
         </div>
-        <?php
-        }
-        ?>
         <form id="student-new-message">
             <div class="form-group">
                 {{ csrf_field() }}
@@ -188,6 +199,10 @@
                 </div>
             </div>
         </form>
+        <?php
+        }
+        ?>
+
     <?php
     }
     ?>
