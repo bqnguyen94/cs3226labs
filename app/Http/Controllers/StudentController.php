@@ -151,8 +151,25 @@ class StudentController extends Controller {
 
     public function index() {
         $students = Student::all();
+        $scores = Score::all();
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role == User::ROLE_USER) {
+                $student_ids = Score::getTopSteven();
+                $student = Student::where('user_id', $user->id)->first();
+                if ($student) {
+                    $student_ids = Score::getTopStevenAndCurrent($student->id);
+                }
+                $students = Student::find($student_ids);
+                $scores = Score::find($student_ids);
+            }
+        } else {
+            $student_ids = Score::getTopSteven();
+            $students = Student::whereIn('id', $student_ids)->get();
+            $scores = Score::whereIn('student_id', $student_ids)->get();
+        }
         $scoresDB = array();
-        foreach(Score::all() as $score) {
+        foreach($scores as $score) {
             $mcs = array_map("floatval", array_filter(explode(",", $score->mc), "is_numeric"));
             $tcs = array_map("floatval", array_filter(explode(",", $score->tc), "is_numeric"));
             $hws = array_map("floatval", array_filter(explode(",", $score->hw), "is_numeric"));
@@ -178,7 +195,20 @@ class StudentController extends Controller {
     }
 
     public function chart() {
-        return view('chart')->with('data', Score::getWeeklyRanks());
+        $student_ids = array_column(Score::getCurrentRankings(), 'student_id');
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role == User::ROLE_USER) {
+                $student_ids = Score::getTopSteven();
+                $student = Student::where('user_id', $user->id)->first();
+                if ($student) {
+                    $student_ids = Score::getTopStevenAndCurrent($student->id);
+                }
+            }
+        } else {
+            $student_ids = Score::getTopSteven();
+        }
+        return view('chart')->with('data', Score::getWeeklyRanks($student_ids));
     }
 
     public function achievements() {

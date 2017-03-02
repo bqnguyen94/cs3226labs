@@ -14,7 +14,7 @@ class Score extends Model
         return $this->belongsTo('Student');
     }
 
-    public static function getWeeklyRanks() {
+    public static function getWeeklyRanks($student_ids) {
         //$scores = array();
 
         $data = array();
@@ -27,7 +27,8 @@ class Score extends Model
         $data[] = array();
         $data[] = array();
 
-        foreach (Score::all() as $score) {
+        foreach ($student_ids as $id) {
+            $score = Score::where('student_id', $id)->first();
             $all = array();
             $all[0] = Score::splitScores($score->mc);
             $all[1] = Score::splitScores($score->tc);
@@ -107,5 +108,69 @@ class Score extends Model
             }
         }
         return array_map("floatval", $scores);
+    }
+
+    public function getSum() {
+        $sum = 0;
+        $sum += array_sum(Score::splitScores($this->mc));
+        $sum += array_sum(Score::splitScores($this->tc));
+        $sum += array_sum(Score::splitScores($this->hw));
+        $sum += array_sum(Score::splitScores($this->pb));
+        $sum += array_sum(Score::splitScores($this->ks));
+        $sum += array_sum(Score::splitScores($this->ac));
+
+        return $sum;
+    }
+
+    public static function getCurrentRankings() {
+        $sums = array();
+        foreach (Score::all() as $score) {
+            $sums[] = [
+                "student_id" => $score->student_id,
+                "sum" => $score->getSum()
+            ];
+        }
+        usort($sums, function($a, $b) {
+            return $b['sum'] <=> $a['sum'];
+        });
+        return $sums;
+    }
+
+    public static function getStudentRank($student_id) {
+        $rankings = Score::getCurrentRankings();
+        for ($i = 0; $i < count($rankings); $i++) {
+            if ($student_id == $rankings[$i]["student_id"]) {
+                return $i;
+            }
+        }
+        return -1;
+    }
+
+    public static function getTopSteven() {
+        $topSteven = array_slice(Score::getCurrentRankings(), 0, 7);
+        $student_ids = array();
+        foreach ($topSteven as $top) {
+            $student_ids[] = $top["student_id"];
+        }
+        return $student_ids;
+    }
+
+    public static function getTopStevenAndCurrent($student_id) {
+        $topSteven = Score::getTopSteven();
+        $student_rank = Score::getStudentRank($student_id);
+        $allRankings = Score::getCurrentRankings();
+        $arr = $topSteven;
+        if ($student_rank >= 7) {
+            //at rank 9 or below
+            if ($student_rank > 7) {
+                $arr[] = $allRankings[$student_rank - 1]["student_id"];
+            }
+            $arr[] = $allRankings[$student_rank]["student_id"];
+            //at rank 49 or above
+            if ($student_rank < count($allRankings) - 1) {
+                $arr[] = $allRankings[$student_rank + 1]["student_id"];
+            }
+        }
+        return $arr;
     }
 }
