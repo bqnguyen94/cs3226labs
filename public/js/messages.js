@@ -65,4 +65,5 @@ $('#btn-send-new-message').on("click", function(e) {
             console.log('Error: ', data);
         }
     });
+    $('form')[0].reset();
 });

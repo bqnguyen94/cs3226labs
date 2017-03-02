@@ -6,9 +6,9 @@
 <div class="container">
     <h2>Messages</h2>
     <?php
-    for ($i = 0; $i < count($msgs); $i++) {
-        $message = $msgs[$i];
-        if (Auth::user()->role == App\User::ROLE_ADMIN) {
+    if (Auth::user()->role == App\User::ROLE_ADMIN) {
+        for ($i = 0; $i < count($msgs); $i++) {
+            $message = $msgs[$i];
             if ($message["reply"] == null) {
     ?>
         <div class="panel-group" id="panel_message_unread_<?php echo $message["student_id"] ?>">
@@ -93,7 +93,41 @@
         </div>
         <?php
             }
-        } elseif (Auth::user()->role == App\User::ROLE_USER) {
+        }
+    } elseif (Auth::user()->role == App\User::ROLE_USER) {
+        $student = App\Student::where('user_id', Auth::user()->id)->first();
+        if (!$student) {
+        ?>
+        <p syle="text-align: center">
+            You are not a student (yet).
+        </p>
+        <?php
+        } elseif (count($msgs) == 0) {
+        ?>
+        <div class="panel-group" id="panel_message_student_<?php echo $student->id ?>">
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-target="#message_student_<?php echo $student->id ?>" style="cursor: pointer">
+                    Your message
+                </div>
+                <div id="message_student_<?php echo $student->id ?>" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul id="student-message-list" class="media-list">
+                            <li class="media">
+                                <div class="media-body">
+                                    <p style="text-align: center">
+                                        No message
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        } else {
+            $message = $msgs[0];
+            $student_id = $student->id;
         ?>
         <div class="panel-group" id="panel_message_student_<?php echo $message["student_id"] ?>">
             <div class="panel panel-default">
@@ -142,23 +176,18 @@
         <?php
         }
         ?>
-    <?php
-    }
-    if (Auth::user()->role == App\User::ROLE_USER) {
-        $student_id = App\Student::where('user_id', Auth::user()->id)->first()->id;
-    ?>
-    <form id="student-new-message">
-        <div class="form-group">
-            {{ csrf_field() }}
-            <div class="input-group">
-                <input id="student_id" name="student_id" type="hidden" value="<?php echo $student_id ?>">
-                <input id="message" name="message" type="text" class="form-control" placeholder="Enter Message" required/>
-                <span class="input-group-btn">
-                    <button id="btn-send-new-message" class="btn btn-info" type="button">SEND NEW MESSAGE</button>
-                </span>
+        <form id="student-new-message">
+            <div class="form-group">
+                {{ csrf_field() }}
+                <div class="input-group">
+                    <input id="student_id" name="student_id" type="hidden" value="<?php echo $student->id ?>">
+                    <input id="message" name="message" type="text" class="form-control" placeholder="Enter Message" required/>
+                    <span class="input-group-btn">
+                        <button id="btn-send-new-message" class="btn btn-info" type="button">SEND NEW MESSAGE</button>
+                    </span>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
     <?php
     }
     ?>
