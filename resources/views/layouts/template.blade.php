@@ -11,8 +11,14 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         @yield('link')
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/fade.js"></script>
+        <script type="text/javascript" src="/js/moveUp.js"></script>
     </head>
     <body>
+    <script>
+        notDisplay();
+    </script>
         @include('layouts.header')
         @if (Session::has('error'))
             <div class="alert alert-danger alert-dismissable fade in" role="alert" align="center">
@@ -25,10 +31,11 @@
                 <strong>{{ Session::get('alert-success') }}</strong>
             </div>
         @endif
+        <div id="Animate" style="margin-top:20vh">
         @yield('main') <!-- Blade command: include section from child file -->
+        </div>
         @include('layouts.footer') <!-- Blade command: include other blade file -->
     </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
