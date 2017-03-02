@@ -1,9 +1,11 @@
 function notDisplay(){
-    jQuery('body').css('display','none');
+	if(window.location.href!="http://"+window.location.hostname+"/chart"){
+   		jQuery('body').css('display','none');
+	}
 }
 
 jQuery(document).ready(function(){
-    jQuery('body').fadeIn();
+  	jQuery('body').fadeIn();
     jQuery('a').on('click',function(event){
         var thetarget = this.getAttribute('target')
         if (thetarget!="_blank"){
