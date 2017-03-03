@@ -2,11 +2,19 @@
 @section('main') <!-- define a section called main -->
 <div class="container-fluid">
     <center>
-        <h5>
-            Last updated: {{ date('l F jS, Y H:i', strtotime($updated_at)) }}
-        </h5>
-        <br/>
-    </center>
+	</center>
+	<div class="row">
+		<div class="col-xs-6">
+			<h5>
+			Last updated: {{ date('l F jS, Y H:i', strtotime($updated_at)) }}
+			</h5>
+		</div>
+		<div class="col-xs-3 twitter-mod">
+			<div class="fb-like" data-href="https://ranklist.sillywebsite.tk" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>	
+<a href="https://twitter.com/share" id="twitter" style ="position:absolute;" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8" style="position:absolute;"></script>
+		</div>
+	</div>
+	</br>
     <div class="row">
         <div class="col-xs-12" id="table">
             <table id="ranktable" class="table table-condensed hover">
@@ -229,5 +237,6 @@
 @stop
 
 @section('script')
-    <script type="text/javascript" src="/js/index.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	<script> document.getElementById("twitter").position = "absolute";</script>
 @stop
