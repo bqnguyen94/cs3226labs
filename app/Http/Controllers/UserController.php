@@ -70,8 +70,12 @@ class UserController extends Controller
   }
 	
 	public function updateUser(){
-		
-		return view('updateuser');
+		if(Auth::user()->role == User::ROLE_ADMIN){
+			return view('updateuser');
+		}else{
+			Session::flash('error', "You are not authorized to do this!");
+			return Redirect::to('/');
+		}
 	}
 	
 	public function updateUserPost(Request $request){
