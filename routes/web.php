@@ -45,13 +45,14 @@ Route::post('/batch', 'StudentController@checkBatch');
 
 Route::get('change', 'UserController@changeRoles');
 
-Route::post('change', 'UserController@updated');
+//Route::post('change', 'UserController@updated');
 
 Route::get('updateuser', 'UserController@updateUser');
 
 Route::post('updateuser', 'UserController@updateUserPost');
 
 Route::get('test', 'UserController@test');
+
 Route::post('test', 'UserController@check');
 
 Route::get('fillscores', 'StudentController@fillscores');
