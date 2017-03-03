@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <!-- /.navbar--->
+        <!-- /.navbar-->
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Rank List</a></li>
@@ -20,6 +20,7 @@
                     @can('isAdmin', Auth::user())
                         <li><a href="/create">Create</a></li>
                         <li><a href="/batch">Batch Mode</a></li>
+                        <li><a href="/updateuser">Update User</a></li>
                     @endcan
                 @endif
                 <li><a href="/achievements">Hall of Fame</a></li>

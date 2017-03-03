@@ -1,6 +1,5 @@
 @extends('layouts.template') <!-- use template from previous slide -->
 @section('main') <!-- define a section called main -->
-
 <div class="alert alert-info"> Updating in progress...</div>
 <div class="container-fluid">
 	{!! Form::open(['data-toggle' => 'validator']) !!}
@@ -55,4 +54,9 @@
 
 @section('script')
 <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+<script>
+	var userlist=<?php echo json_encode($users); ?>;
+</script>
+<script type="text/javascript" charset="utf8" src="/js/update.js"></script>
+
 @stop
