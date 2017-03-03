@@ -5,13 +5,10 @@
         Batch Mode
     </h2>
     <br />
-    {!! Form::open() !!}
+    {!! Form::open(['data-toggle' => 'validator']) !!}
     <div class="row">
         <div class="form-group col-lg-2 col-md-3 col-lg-offset-4 col-xs-6 col-md-offset-3">
             {!! Form::label('category', 'Category:', ['class' => 'control-label']) !!}
-            @if ($errors->first('category'))
-                {!! $errors->first('category', '<br /><small class="error">:message</small>') !!}
-            @endif
             <br />
             {!! Form::select('category', [
                 'mc' => 'Mini Contests',
@@ -27,12 +24,12 @@
                 'id' => 'choose-category'
                 ])
             !!}
+            @if ($errors->first('category'))
+                {!! $errors->first('category', '<br /><small class="error">:message</small>') !!}
+            @endif
         </div>
         <div class="form-group col-lg-2 col-md-3 col-xs-6">
             {!! Form::label('week', 'Week:', ['class' => 'control-label']) !!}
-            @if ($errors->first('week'))
-                {!! $errors->first('week', '<br /><small class="error">:message</small>') !!}
-            @endif
             <br />
             {!! Form::select('week',
                 [],
@@ -43,6 +40,9 @@
                 'id' => 'choose-week'
                 ])
             !!}
+            @if ($errors->first('week'))
+                {!! $errors->first('week', '<br /><small class="error">:message</small>') !!}
+            @endif
         </div>
     </div>
     <div class="col-md-6 col-lg-4 col-md-offset-3 col-lg-offset-4">
@@ -60,7 +60,13 @@
                 ?>
                 <tr>
                     <td><?php echo $student->name ?></td>
-                    <td style="text-align: center">{!! Form::text('scores[]', null, ['required' => 'required', 'class' => 'score-input form-control']) !!}</td>
+                    <td style="text-align: left;">
+                        <div class="form-group has-feedback">
+                            <input type="text" class="score-input form-control" name="scores[]" required disabled="disabled">
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </td>
                 </tr>
                 <?php
                 }
@@ -69,7 +75,7 @@
         </table>
     </div>
     <div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-success">Add Score</button>
+        <button id="btn-submit" type="submit" class="btn btn-success">Add Score</button>
     </div>
     {!! Form::close() !!}
 
@@ -77,5 +83,7 @@
 </div>
 @stop
 @section('script')
+<script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 <script type="text/javascript" src="/js/batch.js"></script>
 @stop

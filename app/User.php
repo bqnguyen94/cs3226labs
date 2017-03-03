@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Student;
 
 class User extends Authenticatable
 {
@@ -14,7 +15,7 @@ class User extends Authenticatable
     const ROLE_MODERATOR = 3;
 
     public static $roles = [
-        self::ROLE_USER,
+        self::ROLE_USER=>'User',
         self::ROLE_ADMIN=>'Admin',
         self::ROLE_MODERATOR=>'Moderator',
     ];
@@ -36,4 +37,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function student(){
+        $this->hasOne('App\Student');
+    }
+
+    public static function adminGetNumberOfUnreadMsg() {
+        $msgs = 0;
+        foreach (Message::all() as $message) {
+            if ($message->message != null && $message->reply == null) {
+                $msgs++;
+            }
+        }
+        return $msgs;
+    }
 }

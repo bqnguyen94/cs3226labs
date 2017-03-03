@@ -43,6 +43,7 @@ Route::get('/batch', 'StudentController@batch');
 
 Route::post('/batch', 'StudentController@checkBatch');
 
+<<<<<<< HEAD
 Route::get('change', 'UserController@changeRoles');
 
 //Route::post('change', 'UserController@updated');
@@ -56,6 +57,17 @@ Route::get('test', 'UserController@test');
 Route::post('test', 'UserController@check');
 
 Route::get('fillscores', 'StudentController@fillscores');
+=======
+Route::get('/achievements', 'StudentController@achievements');
+
+Route::get('/messages', 'StudentController@messages');
+
+Route::put('adminPostReply', 'StudentController@adminPostReply');
+
+Route::put('studentNewMessage', 'StudentController@studentNewMessage');
+
+//Route::get('fillscores', 'StudentController@fillscores');
+>>>>>>> origin/master
 
 /*Route::get('/init', function() {
     $faker = Faker\Factory::create();

@@ -16,7 +16,7 @@ function drawChart() {
         temp.push((i + 1).toString());
         //console.log(json.rank.length);
         if (json.rank[i].length == data.getNumberOfColumns() - 1) {
-            data.addRow(temp.concat(json.rank[i]));
+            data.addRow(temp.concat(json.scores[i]));
         }
     }
 
@@ -51,8 +51,8 @@ function drawChart() {
                 width: '85%'
             },
             vAxis: {
-                direction: -1,
-                ticks: [0, 10, 20, 30, 40, 50]
+                //direction: -1,
+                ticks: [0, 5, 10, 15, 20, 25, 30, 35]
             }
         }
     });

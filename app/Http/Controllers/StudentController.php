@@ -9,12 +9,135 @@ use Illuminate\Support\Facades\DB;
 use App\Student;
 use App\Score;
 use App\User;
+use App\Message;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 
 class StudentController extends Controller {
+
+    public function messages() {
+        if (!Auth::check()) {
+            Session::flash('error', "Oi login first lah!");
+            return Redirect::to('/');
+        }
+
+        $msgs = array();
+        $user = Auth::user();
+        if ($user->role != User::ROLE_ADMIN && $user->role != User::ROLE_USER) {
+            Session::flash('error', "No messages for you honey.");
+            return Redirect::to('/');
+        }
+        if ($user->role == User::ROLE_ADMIN) {
+            foreach (Message::orderBy('created_at')->get() as $message) {
+                if ($message->reply == null) {
+                    $student = Student::where('id', $message->student_id)->first();
+                    $msgs[] = [
+                        "student_id" => $student->id,
+                        "student_name" => $student->name,
+                        "student_image" => $student->image,
+                        "message" => $message->message,
+                        "reply" => $message->reply,
+                        "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                        "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                    ];
+                }
+            }
+            //replied messages
+            foreach (Message::orderBy('updated_at')->get() as $message) {
+                if ($message->reply != null) {
+                    $student = Student::where('id', $message->student_id)->first();
+                    $msgs[] = [
+                        "student_id" => $student->id,
+                        "student_name" => $student->name,
+                        "student_image" => $student->image,
+                        "message" => $message->message,
+                        "reply" => $message->reply,
+                        "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                        "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                    ];
+                }
+            }
+        } elseif ($user->role == User::ROLE_USER) {
+            $student = Student::where('user_id', $user->id)->first();
+            if ($student) {
+                $message = Message::where('student_id', $student->id)->first();
+                if ($message) {
+                    $msgs[] = [
+                        "student_id" => $student->id,
+                        "student_name" => $student->name,
+                        "student_image" => $student->image,
+                        "message" => $message->message,
+                        "reply" => $message->reply,
+                        "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+                        "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+                    ];
+                }
+            }
+        }
+        return view('messages')->with('msgs', $msgs);
+    }
+
+    public function adminPostReply(Request $request) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
+            Session::flash('error', "In the name of all those that are holy you are forbidden!");
+            return Redirect::to('/');
+        }
+        $message = Message::where('student_id', $request->id)->first();
+        /*
+        if (!$message) {
+            Session::flash('error', "Message not found already leh! How ah?");
+            return $this->messages();
+        }
+        */
+        $message->reply = $request->reply;
+        $message->save();
+
+        $student = Student::where('id', $message->student_id)->first();
+        $data = [
+            "student_id" => $student->id,
+            "student_name" => $student->name,
+            "student_image" => $student->image,
+            "message" => $message->message,
+            "reply" => $message->reply,
+            "created_at" => date('D, M j, H:i', strtotime($message->created_at)),
+            "updated_at" => date('D, M j, H:i', strtotime($message->updated_at)),
+        ];
+        return response()->json($data);
+    }
+
+    public function studentNewMessage(Request $request) {
+        if (!Auth::check() || Auth::user()->role != User::ROLE_USER) {
+            Session::flash('error', "Oi how did you get in here???? GET OUT!");
+            return Redirect::to('/');
+        }
+        if ($request->message == null) {
+            Session::flash('error', "Oi enter something lah!");
+            return redirect()->back();
+        }
+        $message = Message::where('student_id', $request->student_id)->first();
+        if ($message) {
+            $message->delete();
+        }
+
+        $newMessage = Message::create([
+            "student_id" => $request->student_id,
+            "message" => $request->message,
+        ]);
+
+        $student = Student::where('id', $request->student_id)->first();
+        $data = [
+            "student_id" => $student->id,
+            "student_name" => $student->name,
+            "student_image" => $student->image,
+            "message" => $newMessage->message,
+            "reply" => $newMessage->reply,
+            "created_at" => date('D, M j, H:i', strtotime($newMessage->created_at)),
+            "updated_at" => date('D, M j, H:i', strtotime($newMessage->updated_at)),
+        ];
+        return response()->json($data);
+    }
 
     public function batch() {
         if (!Auth::check() || Auth::user()->role != User::ROLE_ADMIN) {
@@ -28,8 +151,25 @@ class StudentController extends Controller {
 
     public function index() {
         $students = Student::all();
+        $scores = Score::all();
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role == User::ROLE_USER) {
+                $student_ids = Score::getTopSteven();
+                $student = Student::where('user_id', $user->id)->first();
+                if ($student) {
+                    $student_ids = Score::getTopStevenAndCurrent($student->id);
+                }
+                $students = Student::find($student_ids);
+                $scores = Score::find($student_ids);
+            }
+        } else {
+            $student_ids = Score::getTopSteven();
+            $students = Student::whereIn('id', $student_ids)->get();
+            $scores = Score::whereIn('student_id', $student_ids)->get();
+        }
         $scoresDB = array();
-        foreach(Score::all() as $score) {
+        foreach($scores as $score) {
             $mcs = array_map("floatval", array_filter(explode(",", $score->mc), "is_numeric"));
             $tcs = array_map("floatval", array_filter(explode(",", $score->tc), "is_numeric"));
             $hws = array_map("floatval", array_filter(explode(",", $score->hw), "is_numeric"));
@@ -46,19 +186,48 @@ class StudentController extends Controller {
                 'ac' => $acs,
             ];
         }
-        $updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
         $scores_updated_at = Score::all()->sortByDesc('updated_at')->first()->updated_at;
-        if (strtotime($updated_at) < strtotime($scores_updated_at)) {
-            $updated_at = $scores_updated_at;
-        }
+
         return view('index')
                 ->with('students', $students)
                 ->with('scoresDB', $scoresDB)
-                ->with('updated_at', $updated_at);
+                ->with('updated_at', $scores_updated_at);
     }
 
     public function chart() {
-        return view('chart')->with('data', Score::getWeeklyRanks());
+        $student_ids = array_column(Score::getCurrentRankings(), 'student_id');
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role == User::ROLE_USER) {
+                $student_ids = Score::getTopSteven();
+                $student = Student::where('user_id', $user->id)->first();
+                if ($student) {
+                    $student_ids = Score::getTopStevenAndCurrent($student->id);
+                }
+            }
+        } else {
+            $student_ids = Score::getTopSteven();
+        }
+        return view('chart')->with('data', Score::getWeeklyRanks($student_ids));
+    }
+
+    public function achievements() {
+        $data = array();
+        $data[] = array();
+        foreach (DB::table('achievements')->get() as $item) {
+            $data[] = array();
+            $data["achievements"][] = [
+                "id" => $item->id,
+                "name" => $item->achievement_name,
+            ];
+        }
+        foreach (DB::table('student_achievement')->get() as $item) {
+            $data[$item->achievement_id][] = [
+                "student_id" => $item->student_id,
+                "student_name" => Student::where('id', $item->student_id)->first()->name,
+            ];
+        }
+        return view('achievements')->with('data', $data);
     }
 
     private function findTopStudent() {
@@ -113,10 +282,21 @@ class StudentController extends Controller {
             'ks' => $kss,
             'ac' => $acs,
         ];
+        $allAchievements = DB::table('achievements')
+                            ->orderBy('id')
+                            ->get();
+        $achievements = DB::table('student_achievement')
+                            ->select(DB::raw('count(*) as cnt, achievement_id'))
+                            ->where('student_id', $id)
+                            ->groupBy('achievement_id')
+                            ->orderBy('achievement_id')
+                            ->get();
         return view('student.detail')
                     ->with('student', $student)
                     ->with('scores', $scores)
-                    ->with('topStudent', $this->findTopStudent());
+                    ->with('topStudent', $this->findTopStudent())
+                    ->with('achievements', $achievements)
+                    ->with('allAchievements', $allAchievements);
     }
 
     public function edit($id) {
@@ -130,7 +310,18 @@ class StudentController extends Controller {
             return Redirect::to('/');
         }
         $score = Score::where('student_id', $id)->first();
-        return view('student.edit')->with('student', $student)->with('score', $score);
+        $achievements = DB::table('student_achievement')
+                            ->where('student_id', $id)
+                            ->orderBy('achievement_id')
+                            ->get();
+        $allAchievements = DB::table('achievements')
+                            ->orderBy('id')
+                            ->get();
+        return view('student.edit')
+                    ->with('student', $student)
+                    ->with('score', $score)
+                    ->with('achievements', $achievements)
+                    ->with('allAchievements', $allAchievements);
     }
 
     public function create() {
@@ -151,20 +342,7 @@ class StudentController extends Controller {
         if ($validator->fails()) {
             return redirect('create')->withErrors($validator)->withInput();
         } else {
-            $nick = $request->input('nick');
-            $name = $request->input('name');
-            $kattis = $request->input('kattis');
-            $country = $request->input('country');
-            $image = '/img/icons/default.png';
-
-            $file = $request->file('image');
-            if ($file) {
-                $destinationPath = 'img/icons/';
-                $filename = $nick . ".png";
-                $file->move($destinationPath, $filename);
-                $image = '/' . $destinationPath . $filename;
-            }
-            return $this->store($nick, $name, $kattis, $country, $image);
+            return $this->store($request);
         }
     }
 
@@ -193,6 +371,7 @@ class StudentController extends Controller {
             $i++;
         }
 
+        Session::flash('alert-success', "Batch scores added successfully!");
         return Redirect::to('/');
     }
 
@@ -233,11 +412,15 @@ class StudentController extends Controller {
 
         $validator = $this->makeNameValidator($request);
         $scoresCheck = $this->validateScores($request);
+        $achievementsCheck = $this->validateAchievements($request);
 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         } elseif (!$scoresCheck) {
             Session::flash('error', "Please ensure the scores are in correct format.");
+            return Redirect::back()->withInput();
+        } elseif (!$achievementsCheck) {
+            Session::flash('error', "Pls lah! An achievement got more stars than it should already.");
             return Redirect::back()->withInput();
         } else {
             $student = Student::where('id', $id)->first();
@@ -249,26 +432,78 @@ class StudentController extends Controller {
                 $iso3 = $iso3_codes[$request->country];
             }
 
+            $image = $student->image;
+            $file = $request->file('image');
+            if ($file) {
+                $destinationPath = 'img/icons/';
+                $filename = (string) ($id) . ".png";
+                $file->move($destinationPath, $filename);
+                $image = '/' . $destinationPath . $filename;
+            }
+
             $student->name = $request->name;
             $student->nick = $request->nick;
             $student->kattis = $request->kattis;
             $student->country_iso2 = $request->country;
             $student->country_iso3 = $iso3;
+            $student->image = $image;
+
+            $student->save();
 
             $score->mc = implode(",", $request->get('mc'));
             $score->tc = implode(",", $request->get('tc'));
             $score->hw = implode(",", $request->get('hw'));
             $score->pb = implode(",", $request->get('pb'));
             $score->ks = implode(",", $request->get('ks'));
-            $score->ac = implode(",", $request->get('ac'));
 
-            $student->save();
+            $ac_types = $request->get('ac_types');
+            $ac_weeks = $request->get('ac_weeks');
+            $ac_reasons = $request->get('ac_reasons');
+
+            $temp = array();
+            for ($i = 0; $i < 8; $i++) {
+                $temp[] = "x";
+                $count = 0;
+                for ($j = 0; $j < count($ac_weeks); $j++) {
+                    if ($ac_weeks[$j] == $i + 1) {
+                        $count++;
+                        $temp[$i] = (string) $count;
+                    }
+                }
+            }
+            $score->ac = implode(",", $temp);
+
             $score->save();
 
+            DB::table('student_achievement')->where('student_id', $id)->delete();
+
+            for ($i = 0; $i < count($ac_types); $i++) {
+                DB::table('student_achievement')->insert([
+                    'student_id' => $id,
+                    'achievement_id' => $ac_types[$i],
+                    'week' => $ac_weeks[$i],
+                    'reason' => $ac_reasons[$i],
+                ]);
+            }
 
             Session::flash('alert-success', $student->name . "'s profile updated!");
             return Redirect::to('student/' . $id);
         }
+    }
+
+    private function validateAchievements(Request $request) {
+        $ac_types = $request->get('ac_types');
+        $freq = array_count_values($ac_types);
+        $allAchievements = DB::table('achievements')
+                            ->select(DB::raw('id, max_stars'))
+                            ->orderBy('id')
+                            ->get();
+        for ($i = 1; $i <= count($allAchievements); $i++) {
+            if (isset($freq[$i]) && $freq[$i] > $allAchievements->where('id', $i)->first()->max_stars) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function validateScores(Request $request) {
@@ -280,88 +515,54 @@ class StudentController extends Controller {
         $ks = $request->get('ks');
         $ac = $request->get('ac');
 
-        if (count($mc) === 9) {
-            foreach ($mc as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "x.y") {
+        foreach ($mc as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "x.y") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($tc) === 2) {
-            foreach ($tc as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "xy.z") {
+        foreach ($tc as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "xy.z") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($hw) === 10) {
-            foreach ($hw as $var) {
-                if (is_numeric($var)) {
-                    if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
-                        return false;
-                    }
-                } elseif ($var !== "x.y") {
+        foreach ($hw as $var) {
+            if (is_numeric($var)) {
+                if (fmod($var, 0.5) !== 0.0 || $var > 4.0) {
                     return false;
                 }
+            } elseif ($var !== "x.y") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($pb) === 9) {
-            foreach ($pb as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
+        foreach ($pb as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
         }
 
-        if (count($ks) === 12) {
-            foreach ($ks as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
+        foreach ($ks as $var) {
+            if (is_numeric($var)) {
+                if (!ctype_digit($var) || $var > 4) {
                     return false;
                 }
+            } elseif ($var !== "x") {
+                return false;
             }
-        } else {
-            return false;
-        }
-
-        if (count($ac) === 8) {
-            foreach ($ac as $var) {
-                if (is_numeric($var)) {
-                    if (!ctype_digit($var) || $var > 4) {
-                        return false;
-                    }
-                } elseif ($var !== "x") {
-                    return false;
-                }
-            }
-        } else {
-            return false;
         }
 
         return true;
@@ -391,7 +592,13 @@ class StudentController extends Controller {
         return Validator::make($request->only(['nick', 'name', 'kattis', 'country']), $rules, $messages);
     }
 
-    private function store($nick, $name, $kattis, $country, $image) {
+    private function store(Request $request) {
+
+        $nick = $request->input('nick');
+        $name = $request->input('name');
+        $kattis = $request->input('kattis');
+        $country = $request->input('country');
+        $image = '/img/icons/default.png';
 
         $iso3 = "OTT";
         if ($country !== "OT") {
@@ -409,6 +616,16 @@ class StudentController extends Controller {
         ]);
 
         $id = $student->id;
+
+        $file = $request->file('image');
+        if ($file) {
+            $destinationPath = 'img/icons/';
+            $filename = (string) ($id) . ".png";
+            $file->move($destinationPath, $filename);
+            $image = '/' . $destinationPath . $filename;
+            $student->image = $image;
+            $student->save();
+        }
 
         Score::create([
             'student_id' => $id,
@@ -436,7 +653,7 @@ class StudentController extends Controller {
         return Redirect::to('/');
     }
 
-
+    /*
     public function fillscores() {
         $studentDB = unserialize(file_get_contents('../students.txt'));
 
@@ -494,7 +711,7 @@ class StudentController extends Controller {
                 'ks' => $kss,
                 'ac' => $acs,
             ]);
-        }*/
+        }
     }
 
     private function implodeToString($arr, $placeHolder, $len) {

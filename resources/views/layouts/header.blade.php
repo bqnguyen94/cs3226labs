@@ -22,6 +22,7 @@
                         <li><a href="/batch">Batch Mode</a></li>
                     @endcan
                 @endif
+                <li><a href="/achievements">Hall of Fame</a></li>
                 <li><a href="/help">Help</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -60,8 +61,35 @@
                     </ul>
                 </li>
                 @else
-                <li>
-                    <a href="/logout">Logout</a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi, <?php echo Auth::user()->name ?> <span class="caret"></span></a>
+                    <ul class="dropdown-menu loggedin">
+                        @can('isAdmin', Auth::user())
+                            <li>
+                            <?php
+                            $msgs_amt = App\User::adminGetNumberOfUnreadMsg();
+                            if ($msgs_amt != 0) {
+                            ?>
+                                <a href="/messages">Messages <span class="label label-danger label-as-badge"><?php echo $msgs_amt ?></span></a>
+                            <?php
+                            } else {
+                            ?>
+                                <a href="/messages">Messages <span class="label label-default label-as-badge">0</span></a>
+                            <?php
+                            }
+                            ?>
+                            </li>
+                        @endcan
+                        @can('isUser', Auth::user())
+                        <li>
+                            <a href="/messages">Messages</a>
+                        </li>
+                        @endcan
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
             </ul>
