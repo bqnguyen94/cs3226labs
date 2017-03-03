@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>CS3226 Labs</title>
-		
+
 		<link rel="stylesheet" type="text/css" href="/css/social.css" />
         <link rel="icon" type="image/png" href="/img/brand.png">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -42,12 +42,12 @@
 		<div class="footer">
 		@include('layouts.copyright') <!-- Blade command: include other blade file -->
 		</div>
-	
+
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "http://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+  js.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
