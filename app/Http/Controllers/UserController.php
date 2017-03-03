@@ -8,11 +8,19 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+
 use Validator;
 
 class UserController extends Controller
 {
-    //
+    
+	const ROLE_USER = 1;
+    const ROLE_ADMIN = 2;
+    const ROLE_MODERATOR = 3;
+	
 	public function changeRoles(){
 		$users = User::all();
 		//return view('change-roles',compact('users'));
@@ -68,19 +76,40 @@ class UserController extends Controller
 	public function updateUserPost(Request $request){
 		
 		
-		
 		$name = $request->input('username');
    		$email = $request->input('email');
+		$role = $request->input('role');
 		
-		//return "<p>".$name." ".$email."</p>";
-		
-		
-		if($name != null && $email != null){
-			$temp = User::where('name', $name)->first();
-			$temp->email = $email;
+		$temp=User::where('name',$name)->first();
+		if($temp==null){
+			return "<p>User cannot be found</p>";
+		}else{
+			if($email != null){
+				$temp->email = $email;
+			}
+			
+			if($role != null){
+				
+				switch($role){
+						
+					case "admin":
+						$temp->role = USER::ROLE_ADMIN;
+						break;
+					case "moderator":
+						$temp->role = USER::ROLE_MODERATOR;
+						break;
+					case "user":
+						$temp->role = USER::ROLE_USER;
+						break;
+						
+					default:
+						break;
+				}
+			}
+			
 			$temp->save();
+			
 		}
-   
 		$users = User::all();
 		return view('change')->with('users',$users);
 	}
