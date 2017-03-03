@@ -3,55 +3,56 @@
 
 <div class="alert alert-info"> Updating in progress...</div>
 <div class="container-fluid">
-	{!! Form::open() !!}
-	{!! Form::label('username', 'Enter the user name', ['class' => 'control-label']) !!}<br>
-	{!! Form::text('username', '', ['class' => 'control-label']) !!}
-	<br><br>
-	{!! Form::label('email', 'To update email address', ['class' => 'control-label']) !!}
-	{!! Form::text('email', null, ['class' => 'form-control']) !!}
-	<br><br>
-	
-	<div>
-		{!! Form::label('role', 'To change current user type', ['class' => 'control-label']) !!} <br>
-		<table style="justified text-align:center">
-			<thead>
-			<th width="80px"> Unchanged</th>
-			<th width="80px"> User</th>
-			<th width="80px"> Moderator</th>
-			<th width="80px"> Admin</th>
-			</thead>
-			<tbody>
-				<td>{{!! Form::radio('role', 'unchanged', true) !!}}</td>
-				<td>{{!! Form::radio('role', 'user', false ) !!}}</td>
-				<td>{{!! Form::radio('role', 'moderator', false) !!}}</td>
-				<td>{{!! Form::radio('role', 'admin', false) !!}}</td>
-
-			</tbody>
-
-		</table>
-
+	{!! Form::open(['data-toggle' => 'validator']) !!}
+	<div class="form-group has-feedback">
+		{!! Form::label('name', 'Select user', ['class' => 'control-label']) !!}
+		<br>
+		<select class="form-control dropdown" id="user_id" name="user_id" required>
+			<option value="">User</option>
+			<?php
+			foreach ($users as $user) {
+			?>
+			<option value="<?php echo $user->id ?>"><?php echo $user->name ?></option>
+			<?php
+			}
+			?>
+		</select>
+		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
 	</div>
-	
-	
-	
-	
-	<div class="form-group">
+	<br>
+	<div class="form-group has-feedback">
+		{!! Form::label('email', 'Update email address', ['class' => 'control-label']) !!}
+		{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
+		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
+	</div>
+	<br>
+	<div class="form-group has-feedback">
+		{!! Form::label('role', 'To change current user type', ['class' => 'control-label']) !!} <br>
+		<select class="form-control dropdown" id="user_role" name="user_role" required>
+			<option value="">Role</option>
+			<option value="1">
+				User
+			</option>
+			<option value="3">
+				Moderator
+			</option>
+			<option value="2">
+				Administrator
+			</option>
+		</select>
+		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
+	</div>
+	<br/>
+	<div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
 		<button id="formSubmitId" type="submit" class="btn btn-success" style="display:visible" >Submit</button>
     </div>
 	{!! Form::close() !!}
-</div>                
+</div>
 @stop
 
 @section('script')
-<script type="text/javascript" src="/js/index.js">
-</script>
-
- <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 @stop
