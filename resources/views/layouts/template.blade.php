@@ -4,7 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>CS3226 Labs</title>
+		<title>CS3226 Labs</title>
+		
+		<link rel="stylesheet" type="text/css" href="/css/social.css" />
         <link rel="icon" type="image/png" href="/img/brand.png">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -34,7 +36,7 @@
         <div id="Animate" style="margin-top:20vh">
         @yield('main') <!-- Blade command: include section from child file -->
         </div>
-        @include('layouts.footer') <!-- Blade command: include other blade file -->
+        @include('layouts.copyright') <!-- Blade command: include other blade file -->
     </body>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.js"></script>

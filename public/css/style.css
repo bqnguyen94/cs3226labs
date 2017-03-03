@@ -16,6 +16,16 @@ body, #ranktable thead {
     color: black;
 }
 
+
+.bg-copyright {
+	background-color: #322f30;
+	width:100%;
+}
+
+.cpright {
+	padding-left: 70px;
+}
+
 #ranktable {
     color: black;
 }
@@ -157,4 +167,12 @@ table.dataTable tbody td {
 
 .label-as-badge {
     border-radius: 1em;
+}
+
+.test {
+	color: #FFFFFF;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+
 }
