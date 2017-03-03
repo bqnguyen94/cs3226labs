@@ -1,13 +1,16 @@
 @extends('layouts.template') <!-- use template from previous slide -->
 @section('main') <!-- define a section called main -->
+
 <div class="alert alert-info"> Updating in progress...</div>
 <div class="container-fluid">
 	<table class="table table-bordered table-striped text-center table-condensed table-hover">
 		<thead>
-			<th>Name</th>
-			<th>Role</th>
-			<th>Button to switch role</th>
-			<th>Button to update</th>
+			<th > No.</th>
+			<th >Name</th>
+			<th >Role</th>
+			<th >Email</th>
+			<th >Switch role</th>
+			<th >Update</th>
 		</thead>
 		<tbody>
 			<script>
@@ -15,16 +18,26 @@
 			</script>
 		@foreach($users as $user)
 			
-			<tr>
+			<tr id="rowHeight">
+				<td>{{$user-> id}}</td>
+				
 				<td>{{$user->name}}</td>
+				<td>{{$user->email}}</td>
 				<td>{{$user->role}}</td>
 				
 				
 				<td>
 				<div>
-					<button type ="button" id="demo" onclick="myFunction(this)">Click to select the role you want this user to change to.</button>
+					<button type ="button" id="demo" onclick="myFunction(this)">Change Role</button>
 
 					<script>
+						
+						var userID = "";
+						var newRole;
+						var userEmail = "";
+						
+						var roleType;
+						var currentId;
 						
 						//var x = 1;
 						var USER = 1;
@@ -32,7 +45,6 @@
 						var admin = 2;
 						var x = {{$user->role}}-1;
 						var newId = "demo" + parseInt(count);
-						document.getElementById("demo").setAttribute("id",newId);
 						document.getElementById("demo").setAttribute("id",newId);
 						document.getElementById(newId).setAttribute("tag",count);
 					function myFunction(element) {
@@ -66,15 +78,90 @@
 				<td>
 				
 				<div>
-					<button type ="button" id="update" onclick="updateToDatabase"><p id="updateButton">Update</p></button>
+					
+
+					<button type ="button" onclick="updateToDatabase(this)" id="update"><p>Click here to update.</p></button>
+
+					
+<!--
+					<div id="mybox" style="display:visible"> 
+					<p>testing</p>
+						{!! Form::open() !!} 
+						<div class="form-group"> 
+						 
+
+												<--?php 
+
+						echo Form::text('email', $email, ['class' => 'form-control']); 
+
+
+						?>
+
+					  	{!! Form::radio('mcq', '9', false, ['class' => 'form-control']) !!}A.9
+						  {!! Form::radio('mcq', '10', false, ['class' => 'form-control']) !!}B.10
+						  {!! Form::radio('mcq', '11', false, ['class' => 'form-control']) !!}C.11
+							
+							
+							
+							
+						</div>
+							
+					</div>
+
+					<div class="form-group">
+						<button id="formSubmitId" type="submit" class="btn btn-success" style="display:visible" >Submit</button>
+						</div>
+						{!! Form::close() !!}	
+-->
 
 					<script>
-//					function updateToDatabase() {
-//						document.getElementById("demo").className = "btn btn-info";
-//						
-//					}
+						var newId = "update" + parseInt(count);
+						var newId2 = "mybox" + parseInt(count);
+						var newId3 = "formSubmitId" + parseInt(count);
+						var rowH = "rowHeight" + parseInt(count);
+						
+						document.getElementById("update").setAttribute("id",newId);
+						
+						document.getElementById("mybox").setAttribute("id",newId2);
+						document.getElementById("formSubmitId").setAttribute("id",newId3);
+						
+						document.getElementById("rowHeight").setAttribute("id", rowH);
+						
+						document.getElementById(rowH).innerHeight="50px";
+						document.getElementById(newId).setAttribute("tag",count);
+						
+						
+						
+			
+					function updateToDatabase(element) {
+						var elementId = element.id;
+						var rowNum = parseInt(element.getAttribute("tag"));
+						
+						var formId = "formSubmitId" + rowNum;
+						
+						var rowH = "rowHeight" + rowNum;
+						roleType = element.getAttribute("textContent");
+						currentId = rowNum;
+						
+						if(rowNum == 0){
+							document.getElementById(elementId).textContent = "Updated.";
+						}else{
+							document.getElementById(elementId).className = "btn btn-info";
+							console.log(rowNum);
+							console.log(elementId);
+							document.getElementById(elementId).setAttribute("tag","0");
+							document.getElementById(rowH).innerHeight="300px";
+							document.getElementById(formId).style.display = 'table-cell';
+							
+					
+							 
+						}
+						
+					}
+						
+					
 					</script>	
-				</div>
+				
 				
 				</td>
 			</tr>
@@ -83,6 +170,8 @@
 			
 		</tbody>
 	</table>
+	
+	
 </div>                
 @stop
 
