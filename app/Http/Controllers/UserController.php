@@ -80,7 +80,10 @@ class UserController extends Controller
 	
 	public function updateUserPost(Request $request){
 		
-		
+		if(Auth::user()->role != User::ROLE_ADMIN){
+			Session::flash('error', "You are not authorized to do this!");
+			return Redirect::to('/');
+		}
 		$name = $request->input('username');
    		$email = $request->input('email');
 		$role = $request->input('role');
