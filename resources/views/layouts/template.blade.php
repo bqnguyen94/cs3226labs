@@ -32,11 +32,16 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>{{ Session::get('alert-success') }}</strong>
             </div>
-        @endif
+			@endif
+		<div class="wrapper">
         <div id="Animate" style="margin-top:20vh">
         @yield('main') <!-- Blade command: include section from child file -->
-        </div>
-        @include('layouts.copyright') <!-- Blade command: include other blade file -->
+		</div>
+		<div class="push"></div>
+		</div>
+		<div class="footer">
+		@include('layouts.copyright') <!-- Blade command: include other blade file -->
+		</div>
     </body>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.js"></script>

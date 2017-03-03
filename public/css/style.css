@@ -1,9 +1,13 @@
-footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
+.footer, .push {
+    height:86px;
 }
 
+.wrapper {
+    min-height:100%;
+    height:auto !important;
+    height:100%;
+    margin:0 auto -86px;
+}
 ul.nav.navbar-nav li a {
     color: black;
 }
