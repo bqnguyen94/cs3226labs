@@ -59,6 +59,7 @@ Route::put('adminPostReply', 'StudentController@adminPostReply');
 
 Route::put('studentNewMessage', 'StudentController@studentNewMessage');
 
+Route::get('localization/{locale}','LocalizationController@index');
 //Route::get('fillscores', 'StudentController@fillscores');
 
 /*Route::get('/init', function() {
