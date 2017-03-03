@@ -37,29 +37,29 @@ class UserController extends Controller
 			Session::flash('error', "You are not authorized to do this!");
 			return Redirect::to('/');
 		}
-		$name = $request->input('username');
-   		$email = $request->input('email');
-		$role = $request->input('role');
+		$user_id = $request->input('user_id');
+   		$user_email = $request->input('user_email');
+		$user_role = $request->input('user_role');
 
-		$temp=User::where('name',$name)->first();
+		$temp=User::where('id',$user_id)->first();
 		if($temp==null){
 			return "<p>User cannot be found</p>";
 		}else{
-			if($email != null){
-				$temp->email = $email;
+			if($user_email != null){
+				$temp->email = $user_email;
 			}
 
-			if($role != null){
+			if($user_role != null){
 
-				switch($role){
+				switch($user_role){
 
-					case "admin":
+					case "2":
 						$temp->role = USER::ROLE_ADMIN;
 						break;
-					case "moderator":
+					case "3":
 						$temp->role = USER::ROLE_MODERATOR;
 						break;
-					case "user":
+					case "1":
 						$temp->role = USER::ROLE_USER;
 						break;
 
@@ -72,6 +72,6 @@ class UserController extends Controller
 
 		}
 		$users = User::all();
-		return view('change')->with('users',$users);
+		return view('updateuser')->with('users',$users);
 	}
 }

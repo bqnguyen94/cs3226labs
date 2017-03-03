@@ -5,7 +5,7 @@
 <div class="container-fluid">
 	{!! Form::open(['data-toggle' => 'validator']) !!}
 	<div class="form-group has-feedback">
-		{!! Form::label('name', 'Select user', ['class' => 'control-label']) !!}
+		{!! Form::label('user_id', 'Select user', ['class' => 'control-label']) !!}
 		<br>
 		<select class="form-control dropdown" id="user_id" name="user_id" required>
 			<option value="">User</option>
@@ -22,14 +22,14 @@
 	</div>
 	<br>
 	<div class="form-group has-feedback">
-		{!! Form::label('email', 'Update email address', ['class' => 'control-label']) !!}
-		{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
+		{!! Form::label('user_email', 'Update email address', ['class' => 'control-label']) !!}
+		{!! Form::email('user_email', null, ['class' => 'form-control', 'required' => 'required']) !!}
 		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
         <div class="help-block with-errors"></div>
 	</div>
 	<br>
 	<div class="form-group has-feedback">
-		{!! Form::label('role', 'To change current user type', ['class' => 'control-label']) !!} <br>
+		{!! Form::label('user_role', 'To change current user type', ['class' => 'control-label']) !!} <br>
 		<select class="form-control dropdown" id="user_role" name="user_role" required>
 			<option value="">Role</option>
 			<option value="1">
