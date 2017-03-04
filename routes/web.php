@@ -65,8 +65,9 @@ Route::group(['prefix' => 'zh'], function () {
     Route::get('user/add',['as'=>'user.add','uses'=>'AuthController@showRegistrationForm']);
 
     Route::post('user/add-validate',['as'=>'user.add-validate','uses'=>'AuthController@register']);
-
-    Route::get('/', 'StudentController@index');
+	
+	//Changed here
+    Route::get('/', 'LocalizationController@index');
 
     Route::get('student/{id}', 'StudentController@detail');
 
@@ -74,7 +75,8 @@ Route::group(['prefix' => 'zh'], function () {
 
     Route::get('help', function() { return view('help'); });
 
-    Route::get('create', 'StudentController@create');
+    //Changed here
+    Route::get('create', 'LocalizationController@create');
 
     Route::post('create', 'StudentController@check');
 
@@ -88,15 +90,17 @@ Route::group(['prefix' => 'zh'], function () {
 
     Route::get('/chart', 'StudentController@chart');
 
-    Route::get('/batch', 'StudentController@batch');
+    //Changed here
+    Route::get('/batch', 'LocalizationController@batch');
 
     Route::post('/batch', 'StudentController@checkBatch');
 
     Route::get('change', 'UserController@changeRoles');
 
     //Route::post('change', 'UserController@updated');
-
-    Route::get('updateuser', 'UserController@updateUser');
+    
+	//Changed here
+    Route::get('updateuser', 'LocalizationController@updateUser');
 
     Route::post('updateuser', 'UserController@updateUserPost');
 
