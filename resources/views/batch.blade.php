@@ -2,7 +2,7 @@
 @section('main')
 <div class="container-fluid">
     <h2 style="text-align: center">
-        Batch Mode
+        <?php echo trans('lang.Batch Mode'); ?>
     </h2>
     <br />
     {!! Form::open(['data-toggle' => 'validator']) !!}
