@@ -20,9 +20,9 @@
             <table id="ranktable" class="table table-condensed hover">
                 <thead>
                 <tr>
-                    <th width="10px">R</th>
-                    <th width="60px" class="hidden-xs">Flag</th>
-                    <th class="hidden-xs">Student Name</th>
+                    <th width="10px"><?php echo trans('lang.R'); ?></th>
+                    <th width="60px" class="hidden-xs"><?php echo trans('lang.Flag'); ?></th>
+                    <th class="hidden-xs"><?php echo trans('lang.Student Name'); ?></th>
                     <th class="hidden-sm hidden-md hidden-lg">Nick</th>
                     <th class="hidden-xs hidden-sm row-pink">MC</th>
                     <th class="hidden-xs hidden-sm row-pink">TC</th>
@@ -32,7 +32,7 @@
                     <th class="hidden-xs hidden-sm row-green">KS</th>
                     <th class="hidden-xs hidden-sm row-green">Ac</th>
                     <th class="row-green">DIL</th>
-                    <th>Sum</th>
+                    <th><?php echo trans('lang.Sum'); ?></th>
                 </tr>
                 </thead>
 

@@ -8,7 +8,7 @@
     {!! Form::open(['data-toggle' => 'validator']) !!}
     <div class="row">
         <div class="form-group col-lg-2 col-md-3 col-lg-offset-4 col-xs-6 col-md-offset-3">
-            {!! Form::label('category', 'Category:', ['class' => 'control-label']) !!}
+            {!! Form::label('category', trans('lang.Category:'), ['class' => 'control-label']) !!}
             <br />
             {!! Form::select('category', [
                 'mc' => 'Mini Contests',
@@ -29,7 +29,7 @@
             @endif
         </div>
         <div class="form-group col-lg-2 col-md-3 col-xs-6">
-            {!! Form::label('week', 'Week:', ['class' => 'control-label']) !!}
+            {!! Form::label('week', trans('lang.Week:'), ['class' => 'control-label']) !!}
             <br />
             {!! Form::select('week',
                 [],
@@ -49,8 +49,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th class="col-md-5" style="text-align: center">Student</th>
-                    <th class="col-md-2" style="text-align: center">Score</th>
+                    <th class="col-md-5" style="text-align: center"><?php echo trans('lang.Student'); ?></th>
+                    <th class="col-md-2" style="text-align: center"><?php echo trans('lang.Score'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@
         </table>
     </div>
     <div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
-        <button id="btn-submit" type="submit" class="btn btn-success">Add Score</button>
+        <button id="btn-submit" type="submit" class="btn btn-success"><?php echo trans('lang.Add Score'); ?></button>
     </div>
     {!! Form::close() !!}
 
