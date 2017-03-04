@@ -9,7 +9,7 @@
       'Help' => '帮助',
       'Register' => '注册',
       'Login' => '登录',
-      'R' => '排名',
+      'R' => '序',
       'Flag' => '国籍',
       'Student Name' => '姓名',
       'MC' => 'MC',
