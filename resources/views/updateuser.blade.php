@@ -3,48 +3,54 @@
 <div class="alert alert-info"> Updating in progress...</div>
 <div class="container-fluid">
 	{!! Form::open(['data-toggle' => 'validator']) !!}
-	<div class="form-group has-feedback">
-		{!! Form::label('user_id', 'Select user', ['class' => 'control-label']) !!}
-		<br>
-		<select class="form-control dropdown" id="user_id" name="user_id" required>
-			<option value="">User</option>
-			<?php
-			foreach ($users as $user) {
-			?>
-			<option value="<?php echo $user->id ?>"><?php echo $user->name ?></option>
-			<?php
-			}
-			?>
-		</select>
-		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
-        <div class="help-block with-errors"></div>
+	<div class="row">
+	<div class=" col-sm-3 col-xs-12">
+		<div class="form-group has-feedback">
+			{!! Form::label('user_id', 'Select user', ['class' => 'control-label']) !!}
+			<br>
+			<select class="form-control dropdown" id="user_id" name="user_id" required>
+				<option value="">User</option>
+				<?php
+				foreach ($users as $user) {
+				?>
+				<option value="<?php echo $user->id ?>"><?php echo $user->name ?></option>
+				<?php
+				}
+				?>
+			</select>
+			<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
+	        <div class="help-block with-errors"></div>
+		</div>
 	</div>
-	<br>
-	<div class="form-group has-feedback">
-		{!! Form::label('user_email', 'Update email address', ['class' => 'control-label']) !!}
-		{!! Form::email('user_email', null, ['class' => 'form-control', 'required' => 'required']) !!}
-		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
-        <div class="help-block with-errors"></div>
+	<div class=" col-sm-6 col-xs-12">
+		<div class="form-group has-feedback">
+			{!! Form::label('user_email', 'Update email address', ['class' => 'control-label']) !!}
+			{!! Form::email('user_email', null, ['class' => 'form-control', 'required' => 'required']) !!}
+			<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
+			<div class="help-block with-errors"></div>
+		</div>
 	</div>
-	<br>
-	<div class="form-group has-feedback">
-		{!! Form::label('user_role', 'To change current user type', ['class' => 'control-label']) !!} <br>
-		<select class="form-control dropdown" id="user_role" name="user_role" required>
-			<option value="">Role</option>
-			<option value="1">
-				User
-			</option>
-			<option value="3">
-				Moderator
-			</option>
-			<option value="2">
-				Administrator
-			</option>
-		</select>
-		<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
-        <div class="help-block with-errors"></div>
+	<div class=" col-sm-3 col-xs-12">
+		<div class="form-group has-feedback">
+			{!! Form::label('user_role', 'To change current user type', ['class' => 'control-label']) !!} <br>
+			<select class="form-control dropdown" id="user_role" name="user_role" required>
+				<option value="">Role</option>
+				<option value="1">
+					User
+				</option>
+				<option value="3">
+					Moderator
+				</option>
+				<option value="2">
+					Administrator
+				</option>
+			</select>
+			<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
+	        <div class="help-block with-errors"></div>
+		</div>
 	</div>
-	<br/>
+	</div>
+	<br />
 	<div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
 		<button id="formSubmitId" type="submit" class="btn btn-success" style="display:visible" >Submit</button>
     </div>
