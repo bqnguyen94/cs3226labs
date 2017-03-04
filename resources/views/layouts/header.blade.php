@@ -17,12 +17,24 @@
                 <li>
                     <script>
                     function changeURL() {
-                      /*var x = document.getElementById("Language").selectedIndex;
+                      var x = document.getElementById("Language").selectedIndex;
                       var y = document.getElementById("Language").options;
-                      if (y[x].value == 'en')
-                      window.location.assign('http://139.59.236.174/en');             
-                      else if (y[x].value == 'zh')
-                        window.location.assign('http://139.59.236.174/zh');*/
+                      var host='<?php echo (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]" ?>';
+                      var uri='<?php echo "$_SERVER[REQUEST_URI]" ?>';
+                      var ad_parts = uri.split("/zh");
+                      if (y[x].value == 'en'){
+                      	if(ad_parts[1]!=null){
+                      		window.location.assign(host+ad_parts[1]);  
+                      	}else{
+                      		window.location.assign(host+ad_parts[0]);
+                      	}       
+                      }else if (y[x].value == 'zh'){
+                        if(ad_parts[1]!=null){
+                      		window.location.assign(host+'/zh'+ad_parts[1]);  
+                      	}else{
+                      		window.location.assign(host+'/zh'+ad_parts[0]);
+                      	}
+                      }
                     }
                     </script>
                     <select id="Language" onchange="changeURL()" style="margin-top: 17px;">
