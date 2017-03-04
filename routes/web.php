@@ -59,6 +59,62 @@ Route::put('adminPostReply', 'StudentController@adminPostReply');
 
 Route::put('studentNewMessage', 'StudentController@studentNewMessage');
 
+Route::group(['prefix' => 'zh'], function () {
+    //app()->setLocale('zh');
+
+    Route::get('user/add',['as'=>'user.add','uses'=>'AuthController@showRegistrationForm']);
+
+    Route::post('user/add-validate',['as'=>'user.add-validate','uses'=>'AuthController@register']);
+
+    Route::get('/', 'StudentController@index');
+
+    Route::get('student/{id}', 'StudentController@detail');
+
+    Route::delete('student/{id}', 'StudentController@destroy');
+
+    Route::get('help', function() { return view('help'); });
+
+    Route::get('create', 'StudentController@create');
+
+    Route::post('create', 'StudentController@check');
+
+    Route::get('student/{id}/edit', 'StudentController@edit');
+
+    Route::post('student/{id}/edit', 'StudentController@checkEdit');
+
+    Route::post('login', 'AuthController@authenticate');
+
+    Route::get('logout', 'AuthController@logout');
+
+    Route::get('/chart', 'StudentController@chart');
+
+    Route::get('/batch', 'StudentController@batch');
+
+    Route::post('/batch', 'StudentController@checkBatch');
+
+    Route::get('change', 'UserController@changeRoles');
+
+    //Route::post('change', 'UserController@updated');
+
+    Route::get('updateuser', 'UserController@updateUser');
+
+    Route::post('updateuser', 'UserController@updateUserPost');
+
+    Route::get('test', 'UserController@test');
+
+    Route::post('test', 'UserController@check');
+
+    Route::get('fillscores', 'StudentController@fillscores');
+
+    Route::get('/achievements', 'StudentController@achievements');
+
+    Route::get('/messages', 'StudentController@messages');
+
+    Route::put('adminPostReply', 'StudentController@adminPostReply');
+
+    Route::put('studentNewMessage', 'StudentController@studentNewMessage');
+});
+
 //Route::get('fillscores', 'StudentController@fillscores');
 
 /*Route::get('/init', function() {
