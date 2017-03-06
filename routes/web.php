@@ -73,7 +73,9 @@ Route::group(['prefix' => 'zh'], function () {
 
     Route::delete('student/{id}', 'StudentController@destroy');
 
-    Route::get('help', function() { return view('help'); });
+    Route::get('help', function() { 
+        app()->setLocale('zh');
+        return view('help'); });
 
     //Changed here
     Route::get('create', 'LocalizationController@create');
@@ -88,7 +90,8 @@ Route::group(['prefix' => 'zh'], function () {
 
     Route::get('logout', 'AuthController@logout');
 
-    Route::get('/chart', 'StudentController@chart');
+    //Changed here
+    Route::get('/chart', 'LocalizationController@chart');
 
     //Changed here
     Route::get('/batch', 'LocalizationController@batch');
@@ -110,7 +113,8 @@ Route::group(['prefix' => 'zh'], function () {
 
     Route::get('fillscores', 'StudentController@fillscores');
 
-    Route::get('/achievements', 'StudentController@achievements');
+    //Changed here
+    Route::get('/achievements', 'LocalizationController@achievements');
 
     Route::get('/messages', 'StudentController@messages');
 

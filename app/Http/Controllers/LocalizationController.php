@@ -33,4 +33,18 @@ class LocalizationController extends Controller {
       
       return app('App\Http\Controllers\UserController')->updateuser();;
    }
+
+   public function chart(){
+      //set’s application’s locale
+      app()->setLocale('zh');
+      
+      return app('App\Http\Controllers\StudentController')->chart();;
+   }
+
+   public function achievements(){
+      //set’s application’s locale
+      app()->setLocale('zh');
+      
+      return app('App\Http\Controllers\StudentController')->achievements();;
+   }
 }
