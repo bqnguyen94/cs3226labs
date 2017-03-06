@@ -14,6 +14,17 @@
         <!-- /.navbar-->
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
+                <li><a href=<?php echo trans('lang./'); ?>><?php echo trans('lang.Rank List'); ?></a></li>
+                <li><a href=<?php echo trans('lang./chart'); ?>><?php echo trans('lang.Chart'); ?></a></li>
+                @if (Auth::check())
+                    @can('isAdmin', Auth::user())
+                        <li><a href=<?php echo trans('lang./create'); ?>><?php echo trans('lang.Create'); ?></a></li>
+                        <li><a href=<?php echo trans('lang./batch'); ?>><?php echo trans('lang.Batch Mode'); ?></a></li>
+                        <li><a href=<?php echo trans('lang./updateuser'); ?>><?php echo trans('lang.Update Users'); ?></a></li>
+                    @endcan
+                @endif
+                <li><a href=<?php echo trans('lang./achievements'); ?>><?php echo trans('lang.Hall of Fame'); ?></a></li>
+                <li><a href=<?php echo trans('lang./help'); ?>><?php echo trans('lang.Help'); ?></a></li>
                 <li>
                     <script>
                     function changeURL() {
@@ -43,17 +54,6 @@
                         <option value="zh" >中文</option>
                     </select>
                 </li>
-                <li><a href=<?php echo trans('lang./'); ?>><?php echo trans('lang.Rank List'); ?></a></li>
-                <li><a href=<?php echo trans('lang./chart'); ?>><?php echo trans('lang.Chart'); ?></a></li>
-                @if (Auth::check())
-                    @can('isAdmin', Auth::user())
-                        <li><a href=<?php echo trans('lang./create'); ?>><?php echo trans('lang.Create'); ?></a></li>
-                        <li><a href=<?php echo trans('lang./batch'); ?>><?php echo trans('lang.Batch Mode'); ?></a></li>
-                        <li><a href=<?php echo trans('lang./updateuser'); ?>><?php echo trans('lang.Update Users'); ?></a></li>
-                    @endcan
-                @endif
-                <li><a href=<?php echo trans('lang./achievements'); ?>><?php echo trans('lang.Hall of Fame'); ?></a></li>
-                <li><a href=<?php echo trans('lang./help'); ?>><?php echo trans('lang.Help'); ?></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
