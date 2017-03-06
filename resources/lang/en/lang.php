@@ -16,6 +16,16 @@
       'Hi,' => 'Hi, ',
       'Messages' => 'Messages ',
       'Logout' => 'Logout',
+      '/' => '/',
+      '/chart' => '/chart',
+      '/create' => '/create',
+      '/batch' => '/batch',
+      '/updateuser' => '/updateuser',
+      '/achievements' => '/achievements',
+      '/help' => '/help',
+
+
+
 
       //Index
       'R' => 'R',

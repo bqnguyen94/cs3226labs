@@ -16,6 +16,13 @@
       'Hi,' => '你好，',
       'Messages' => '消息 ',
       'Logout' => '注销',
+      '/' => '/zh',
+      '/chart' => '/zh/chart',
+      '/create' => '/zh/create',
+      '/batch' => '/zh/batch',
+      '/updateuser' => '/zh/updateuser',
+      '/achievements' => '/zh/achievements',
+      '/help' => '/zh/help',
 
       //Index
       'R' => '序',
