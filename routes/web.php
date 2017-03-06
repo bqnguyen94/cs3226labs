@@ -59,6 +59,70 @@ Route::put('adminPostReply', 'StudentController@adminPostReply');
 
 Route::put('studentNewMessage', 'StudentController@studentNewMessage');
 
+Route::group(['prefix' => 'zh'], function () {
+    //app()->setLocale('zh');
+
+    Route::get('user/add',['as'=>'user.add','uses'=>'AuthController@showRegistrationForm']);
+
+    Route::post('user/add-validate',['as'=>'user.add-validate','uses'=>'AuthController@register']);
+	
+	//Changed here
+    Route::get('/', 'LocalizationController@index');
+
+    Route::get('student/{id}', 'StudentController@detail');
+
+    Route::delete('student/{id}', 'StudentController@destroy');
+
+    Route::get('help', function() { 
+        app()->setLocale('zh');
+        return view('help'); });
+
+    //Changed here
+    Route::get('create', 'LocalizationController@create');
+
+    Route::post('create', 'StudentController@check');
+
+    Route::get('student/{id}/edit', 'StudentController@edit');
+
+    Route::post('student/{id}/edit', 'StudentController@checkEdit');
+
+    Route::post('login', 'AuthController@authenticate');
+
+    Route::get('logout', 'AuthController@logout');
+
+    //Changed here
+    Route::get('/chart', 'LocalizationController@chart');
+
+    //Changed here
+    Route::get('/batch', 'LocalizationController@batch');
+
+    Route::post('/batch', 'StudentController@checkBatch');
+
+    Route::get('change', 'UserController@changeRoles');
+
+    //Route::post('change', 'UserController@updated');
+    
+	//Changed here
+    Route::get('updateuser', 'LocalizationController@updateUser');
+
+    Route::post('updateuser', 'UserController@updateUserPost');
+
+    Route::get('test', 'UserController@test');
+
+    Route::post('test', 'UserController@check');
+
+    Route::get('fillscores', 'StudentController@fillscores');
+
+    //Changed here
+    Route::get('/achievements', 'LocalizationController@achievements');
+
+    Route::get('/messages', 'StudentController@messages');
+
+    Route::put('adminPostReply', 'StudentController@adminPostReply');
+
+    Route::put('studentNewMessage', 'StudentController@studentNewMessage');
+});
+
 //Route::get('fillscores', 'StudentController@fillscores');
 
 /*Route::get('/init', function() {

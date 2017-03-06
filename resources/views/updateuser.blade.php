@@ -1,12 +1,12 @@
 @extends('layouts.template') <!-- use template from previous slide -->
 @section('main') <!-- define a section called main -->
-<div class="alert alert-info"> Updating in progress...</div>
+<div class="alert alert-info"><?php echo trans('lang.Updating in progress...'); ?></div>
 <div class="container-fluid">
 	{!! Form::open(['data-toggle' => 'validator']) !!}
 	<div class="row">
 	<div class=" col-sm-3 col-xs-12">
 		<div class="form-group has-feedback">
-			{!! Form::label('user_id', 'Select user', ['class' => 'control-label']) !!}
+			{!! Form::label('user_id', trans('lang.Select user'), ['class' => 'control-label']) !!}
 			<br>
 			<select class="form-control dropdown" id="user_id" name="user_id" required>
 				<option value="">User</option>
@@ -24,7 +24,7 @@
 	</div>
 	<div class=" col-sm-6 col-xs-12">
 		<div class="form-group has-feedback">
-			{!! Form::label('user_email', 'Update email address', ['class' => 'control-label']) !!}
+			{!! Form::label('user_email', trans('lang.Update email address'), ['class' => 'control-label']) !!}
 			{!! Form::email('user_email', null, ['class' => 'form-control', 'required' => 'required']) !!}
 			<span class="hidden-xs glyphicon form-control-feedback" aria-hidden="true"></span>
 			<div class="help-block with-errors"></div>
@@ -32,7 +32,7 @@
 	</div>
 	<div class=" col-sm-3 col-xs-12">
 		<div class="form-group has-feedback">
-			{!! Form::label('user_role', 'To change current user type', ['class' => 'control-label']) !!} <br>
+			{!! Form::label('user_role', trans('lang.To change current user type'), ['class' => 'control-label']) !!} <br>
 			<select class="form-control dropdown" id="user_role" name="user_role" required>
 				<option value="">Role</option>
 				<option value="1">
@@ -52,7 +52,7 @@
 	</div>
 	<br />
 	<div class="form-group col-xs-12 col-sm-12 col-md-12 text-center">
-		<button id="formSubmitId" type="submit" class="btn btn-success" style="display:visible" >Submit</button>
+		<button id="formSubmitId" type="submit" class="btn btn-success" style="display:visible" ><?php echo trans('lang.Submit'); ?></button>
     </div>
 	{!! Form::close() !!}
 </div>

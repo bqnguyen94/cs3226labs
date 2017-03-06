@@ -14,25 +14,54 @@
         <!-- /.navbar-->
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Rank List</a></li>
-                <li><a href="/chart">Chart</a></li>
+                <li><a href=<?php echo trans('lang./'); ?>><?php echo trans('lang.Rank List'); ?></a></li>
+                <li><a href=<?php echo trans('lang./chart'); ?>><?php echo trans('lang.Chart'); ?></a></li>
                 @if (Auth::check())
                     @can('isAdmin', Auth::user())
-                        <li><a href="/create">Create</a></li>
-                        <li><a href="/batch">Batch Mode</a></li>
-                        <li><a href="/updateuser">Update Users</a></li>
+                        <li><a href=<?php echo trans('lang./create'); ?>><?php echo trans('lang.Create'); ?></a></li>
+                        <li><a href=<?php echo trans('lang./batch'); ?>><?php echo trans('lang.Batch Mode'); ?></a></li>
+                        <li><a href=<?php echo trans('lang./updateuser'); ?>><?php echo trans('lang.Update Users'); ?></a></li>
                     @endcan
                 @endif
-                <li><a href="/achievements">Hall of Fame</a></li>
-                <li><a href="/help">Help</a></li>
+                <li><a href=<?php echo trans('lang./achievements'); ?>><?php echo trans('lang.Hall of Fame'); ?></a></li>
+                <li><a href=<?php echo trans('lang./help'); ?>><?php echo trans('lang.Help'); ?></a></li>
+                <li>
+                    <script>
+                    function changeURL() {
+                      var x = document.getElementById("Language").selectedIndex;
+                      var y = document.getElementById("Language").options;
+                      var host='<?php echo (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]" ?>';
+                      var uri='<?php echo "$_SERVER[REQUEST_URI]" ?>';
+                      var ad_parts = uri.split("/zh");
+                      if (y[x].value == 'en'){
+                      	if(ad_parts[1]!=null){
+                      		window.location.assign(host+ad_parts[1]);  
+                      	}else{
+                      		window.location.assign(host+ad_parts[0]);
+                      	}       
+                      }else if (y[x].value == 'zh'){
+                        if(ad_parts[1]!=null){
+                      		window.location.assign(host+'/zh'+ad_parts[1]);  
+                      	}else{
+                      		window.location.assign(host+'/zh'+ad_parts[0]);
+                      	}
+                      }
+                    }
+                    </script>
+                    <select id="Language" onchange="changeURL()" style="margin-top: 17px;">
+                    	<option selected>Language</option>
+                        <option value="en" >English</option>
+                        <option value="zh" >中文</option>
+                    </select>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                 <li>
-                    <a href="/user/add">Register</a>
+                    <a href="/user/add"><?php echo trans('lang.Register'); ?></a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo trans('lang.Login'); ?></a>
                     <ul class="dropdown-menu login">
                         <li>
                             <div class="row">
@@ -46,14 +75,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label>
-                                              <input type="checkbox" name="rememberMe"> Remember me
+                                              <input type="checkbox" name="rememberMe"><?php echo trans('lang.Remember me'); ?>
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                                            <button type="submit" class="btn btn-success btn-block"><?php echo trans('lang.Sign in'); ?></button>
                                         </div>
                                         <a class="btn btn-link" href="{{ url('/password/reset') }}">
-                                            Forgot Your Password?
+                                            <?php echo trans('lang.Forgot Your Password?'); ?>
                                         </a>
                                     {!! Form::close() !!}
                                 </div>
@@ -63,7 +92,7 @@
                 </li>
                 @else
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi, <?php echo Auth::user()->name ?> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo trans('lang.Hi,'); ?><?php echo Auth::user()->name ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu loggedin">
                         @can('isAdmin', Auth::user())
                             <li>
@@ -71,11 +100,11 @@
                             $msgs_amt = App\User::adminGetNumberOfUnreadMsg();
                             if ($msgs_amt != 0) {
                             ?>
-                                <a href="/messages">Messages <span class="label label-danger label-as-badge"><?php echo $msgs_amt ?></span></a>
+                                <a href="/messages"><?php echo trans('lang.Messages'); ?><span class="label label-danger label-as-badge"><?php echo $msgs_amt ?></span></a>
                             <?php
                             } else {
                             ?>
-                                <a href="/messages">Messages <span class="label label-default label-as-badge">0</span></a>
+                                <a href="/messages"><?php echo trans('lang.Messages'); ?><span class="label label-default label-as-badge">0</span></a>
                             <?php
                             }
                             ?>
@@ -83,12 +112,12 @@
                         @endcan
                         @can('isUser', Auth::user())
                         <li>
-                            <a href="/messages">Messages</a>
+                            <a href="/messages"><?php echo trans('lang.Messages'); ?></a>
                         </li>
                         @endcan
                         <li role="separator" class="divider"></li>
                         <li>
-                            <a href="/logout">Logout</a>
+                            <a href="/logout"><?php echo trans('lang.Logout'); ?></a>
                         </li>
                     </ul>
                 </li>
